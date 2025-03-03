@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.regex.Pattern;
 
 public record Password(
-        @Column(nullable = false, length = 50, unique = false)
+        @Column(nullable = false)
         String hashedPassword
 ) {
     // (?!.*\\s) : 공백(띄어쓰기, 탭 등)이 포함되지 않아야 함
