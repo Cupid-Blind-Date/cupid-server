@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 
 public enum MemberExceptionCode implements ExceptionCode {
 
-    INVALID_NICKNAME(HttpStatus.BAD_REQUEST, "M0", "유효하지 않은 닉네임입니다.");
+    INVALID_NICKNAME(HttpStatus.BAD_REQUEST, "M0", "유효하지 않은 닉네임입니다."),
+    INVALID_USERNAME(HttpStatus.BAD_REQUEST, "M1", "유효하지 않은 아이디입니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
