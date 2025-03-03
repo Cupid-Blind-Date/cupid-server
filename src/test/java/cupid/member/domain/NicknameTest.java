@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayName("닉네임 (Nickname) 은(는)")
@@ -77,5 +78,18 @@ class NicknameTest {
                 () -> Nickname.from(value)
         ).getCode();
         assertThat(code).isEqualTo(INVALID_NICKNAME);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "안 녕,안녕",
+            "  안  녕  ,안녕",
+    }, delimiterString = ",")
+    void 공백이_들어오면_제거된다(String input, String expected) {
+        // when
+        Nickname actual = Nickname.from(input);
+
+        // then
+        assertThat(actual.nickname()).isEqualTo(expected);
     }
 }

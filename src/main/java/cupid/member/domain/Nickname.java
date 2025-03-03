@@ -3,6 +3,7 @@ package cupid.member.domain;
 import static cupid.member.exception.MemberExceptionCode.INVALID_NICKNAME;
 
 import cupid.common.exception.ApplicationException;
+import cupid.common.utils.StringUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import java.util.regex.Pattern;
@@ -15,9 +16,9 @@ public record Nickname(
     private static final Pattern NICKNAME_PATTERN = Pattern.compile("^[가-힣a-zA-Z0-9]{2,10}$");
 
     public static Nickname from(String nickname) {
-        String trimNickname = nickname.trim();
-        validate(trimNickname);
-        return new Nickname(trimNickname);
+        String removeWhitespace = StringUtils.removeWhitespace(nickname);
+        validate(removeWhitespace);
+        return new Nickname(removeWhitespace);
     }
 
     private static void validate(String nickname) {

@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayName("아이디 (Username) 은(는)")
@@ -87,5 +88,18 @@ class UsernameTest {
                 () -> Username.from(value)
         ).getCode();
         assertThat(code).isEqualTo(INVALID_USERNAME);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "a b c d,abcd",
+            "  a  b  c d   ,abcd",
+    }, delimiterString = ",")
+    void 공백이_들어오면_제거된다(String input, String expected) {
+        // when
+        Username actual = Username.from(input);
+
+        // then
+        assertThat(actual.username()).isEqualTo(expected);
     }
 }
