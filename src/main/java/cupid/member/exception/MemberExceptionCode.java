@@ -12,7 +12,9 @@ public enum MemberExceptionCode implements ExceptionCode {
 
     INVALID_CREDENTIALS(HttpStatus.UNAUTHORIZED, "M4", "아이디 혹은 비밀번호가 잘못되어 로그인에 실패하였습니다."),
 
-    DUPLICATE_USERNAME(HttpStatus.CONFLICT, "M4", "아이디가 중복되었습니다. 다른 아이디를 사용해주세요."),
+    DUPLICATE_USERNAME(HttpStatus.CONFLICT, "M5", "아이디가 중복되었습니다. 다른 아이디를 사용해주세요."),
+
+    NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "M6", "해당 id를 가진 회원이 없습니다."),
     ;
 
     private final HttpStatus httpStatus;
