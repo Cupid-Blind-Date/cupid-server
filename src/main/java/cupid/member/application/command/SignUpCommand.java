@@ -3,7 +3,7 @@ package cupid.member.application.command;
 import cupid.member.domain.Gender;
 import cupid.member.domain.Member;
 
-public record SignupCommand(
+public record SignUpCommand(
         String username,
         String password,
         String nickname,

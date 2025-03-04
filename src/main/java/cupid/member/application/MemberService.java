@@ -1,6 +1,6 @@
 package cupid.member.application;
 
-import cupid.member.application.command.SignupCommand;
+import cupid.member.application.command.SignUpCommand;
 import cupid.member.domain.Member;
 import cupid.member.domain.service.MemberRegister;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ public class MemberService {
 
     private final MemberRegister memberRegister;
 
-    public Long signup(SignupCommand command) {
+    public Long signUp(SignUpCommand command) {
         Member member = command.toMember();
         Member registeredMember = memberRegister.register(member);
         return registeredMember.getId();

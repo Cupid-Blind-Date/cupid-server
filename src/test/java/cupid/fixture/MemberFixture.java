@@ -1,12 +1,12 @@
 package cupid.fixture;
 
-import cupid.member.application.command.SignupCommand;
+import cupid.member.application.command.SignUpCommand;
 import cupid.member.domain.Gender;
 
 public class MemberFixture {
 
-    public static SignupCommand donghunSignupCommand() {
-        return new SignupCommand(
+    public static SignUpCommand donghunSignupCommand() {
+        return new SignUpCommand(
                 "donghun",
                 "Password1234@",
                 "donghun",
@@ -15,8 +15,8 @@ public class MemberFixture {
         );
     }
 
-    public static SignupCommand minjeongSignupCommand() {
-        return new SignupCommand(
+    public static SignUpCommand minjeongSignupCommand() {
+        return new SignUpCommand(
                 "minjeong",
                 "Password1234@",
                 "minjeong",
@@ -25,8 +25,8 @@ public class MemberFixture {
         );
     }
 
-    public static SignupCommand invalidPasswordSignupCommand() {
-        return new SignupCommand(
+    public static SignUpCommand invalidPasswordSignupCommand() {
+        return new SignUpCommand(
                 "username",
                 "invalid",
                 "invalid",

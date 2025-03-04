@@ -6,6 +6,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 import cupid.common.exception.ApplicationException;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -23,26 +24,25 @@ public class Member {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Embedded
-    private Username username;
+    @Column(nullable = false, length = 50, unique = true)
+    private String username;
 
     @Embedded
     private Password password;
 
-    @Embedded
-    private Nickname nickname;
+    @Column(nullable = false, length = 10, unique = false)
+    private String nickname;
 
-    @Embedded
-    private Age age;
+    private int age;
 
     @Enumerated(STRING)
     private Gender gender;
 
     public Member(String username, String password, String nickname, int age, Gender gender) {
-        this.username = Username.from(username);
+        this.username = username;
         this.password = Password.hashPassword(password);
-        this.nickname = Nickname.from(nickname);
-        this.age = Age.from(age);
+        this.nickname = nickname;
+        this.age = age;
         this.gender = gender;
     }
 
