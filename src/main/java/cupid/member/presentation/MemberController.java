@@ -4,6 +4,7 @@ import cupid.auth.Token;
 import cupid.auth.TokenService;
 import cupid.member.application.MemberService;
 import cupid.member.application.command.SignUpCommand;
+import cupid.member.presentation.request.LoginRequest;
 import cupid.member.presentation.request.SignUpRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,15 @@ public class MemberController {
     ) {
         SignUpCommand command = request.toCommand();
         Long id = memberService.signUp(command);
+        Token token = tokenService.createToken(id);
+        return ResponseEntity.ok(token);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Token> login(
+            @RequestBody @Valid LoginRequest request
+    ) {
+        Long id = memberService.login(request.username(), request.password());
         Token token = tokenService.createToken(id);
         return ResponseEntity.ok(token);
     }
