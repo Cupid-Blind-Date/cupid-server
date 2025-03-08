@@ -1,10 +1,12 @@
 package cupid.member.domain;
 
+import static cupid.common.SQLRestrictionClause.DELETED_AT_IS_NULL;
 import static cupid.member.exception.MemberExceptionCode.INVALID_CREDENTIALS;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
+import cupid.common.domain.SoftDeletedDomain;
 import cupid.common.exception.ApplicationException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -12,13 +14,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
+@SQLRestriction(DELETED_AT_IS_NULL)
+@SQLDelete(sql = "UPDATE member SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
+@Table(name = "member")
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @Entity
-public class Member {
+public class Member extends SoftDeletedDomain {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

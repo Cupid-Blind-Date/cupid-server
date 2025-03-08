@@ -1,8 +1,10 @@
 package cupid.couple.domain;
 
+import static cupid.common.SQLRestrictionClause.DELETED_AT_IS_NULL;
 import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 
+import cupid.common.domain.SoftDeletedDomain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -12,8 +14,13 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
+@SQLRestriction(DELETED_AT_IS_NULL)
+@SQLDelete(sql = "UPDATE arrow SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @Table(
+        name = "arrow",
         uniqueConstraints = {
                 @UniqueConstraint(name = "unique_arrow_sender_target", columnNames = {"senderId", "targetId"})
         }
@@ -21,7 +28,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @Entity
-public class Arrow {
+public class Arrow extends SoftDeletedDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
