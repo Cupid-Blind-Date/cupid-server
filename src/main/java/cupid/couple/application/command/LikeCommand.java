@@ -3,7 +3,7 @@ package cupid.couple.application.command;
 import cupid.couple.domain.Arrow;
 import cupid.couple.domain.LikeType;
 
-public record ShootArrowCommand(
+public record LikeCommand(
         Long senderId,
         Long targetId
 ) {

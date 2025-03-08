@@ -1,6 +1,6 @@
 package cupid.couple.application;
 
-import cupid.couple.application.command.ShootArrowCommand;
+import cupid.couple.application.command.LikeCommand;
 import cupid.couple.domain.Arrow;
 import cupid.couple.domain.ArrowRepository;
 import cupid.couple.domain.LikeType;
@@ -19,7 +19,7 @@ public class CoupleService {
     /**
      * 좋아요 요청
      */
-    public MatchResult shootLikeArrow(ShootArrowCommand command) {
+    public MatchResult like(LikeCommand command) {
         Arrow arrow = command.toArrow(LikeType.LIKE);
         arrowRepository.save(arrow);
         return cupid.match(arrow);
@@ -28,8 +28,8 @@ public class CoupleService {
     /**
      * 싫어요 요청
      */
-    public void shootUnLikeArrow(ShootArrowCommand command) {
-        Arrow arrow = command.toArrow(LikeType.UNLIKE);
+    public void dislike(LikeCommand command) {
+        Arrow arrow = command.toArrow(LikeType.DISLIKE);
         arrowRepository.save(arrow);
     }
 }

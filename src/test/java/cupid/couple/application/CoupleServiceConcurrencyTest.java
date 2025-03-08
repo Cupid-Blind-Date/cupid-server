@@ -1,6 +1,6 @@
 package cupid.couple.application;
 
-import cupid.couple.application.command.ShootArrowCommand;
+import cupid.couple.application.command.LikeCommand;
 import cupid.support.ApplicationTest;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -30,14 +30,14 @@ class CoupleServiceConcurrencyTest extends ApplicationTest {
 
         // when
         for (long i = 2; i < 1000; i++) {
-            ShootArrowCommand c1 = new ShootArrowCommand(1L, i);
-            ShootArrowCommand c2 = new ShootArrowCommand(i, 1L);
+            LikeCommand c1 = new LikeCommand(1L, i);
+            LikeCommand c2 = new LikeCommand(i, 1L);
             executorService.submit(() -> {
-                coupleService.shootLikeArrow(c1);
+                coupleService.like(c1);
                 countDownLatch.countDown();
             });
             executorService.submit(() -> {
-                coupleService.shootLikeArrow(c2);
+                coupleService.like(c2);
                 countDownLatch.countDown();
             });
         }
