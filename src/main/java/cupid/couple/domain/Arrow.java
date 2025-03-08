@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 
 @Table(
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"senderId", "targetId"})
+                @UniqueConstraint(name = "unique_arrow_sender_target", columnNames = {"senderId", "targetId"})
         }
 )
 @Getter

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 @Table(
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"higherId", "lowerId"})
+                @UniqueConstraint(name = "unique_couple_higher_id_lower_id", columnNames = {"higherId", "lowerId"})
         }
 )
 @Getter
