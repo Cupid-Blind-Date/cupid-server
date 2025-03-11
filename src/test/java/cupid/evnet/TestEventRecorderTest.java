@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-@DisplayName("EventRecorder 은(는)")
+@DisplayName("TestEventRecorder 은(는)")
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(ReplaceUnderscores.class)
-class EventRecorderTest extends ApplicationTest {
+class TestEventRecorderTest extends ApplicationTest {
 
     @Autowired
     private EventRecorder eventRecorder;

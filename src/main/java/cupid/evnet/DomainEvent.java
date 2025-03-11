@@ -47,4 +47,12 @@ public abstract class DomainEvent extends SoftDeletedDomain {
     public void regenerateUuid() {
         this.uuid = UUID.randomUUID().toString();
     }
+
+    public void publishSuccess() {
+        this.state = EventState.PUBLISH_SUCCESS;
+    }
+
+    public void publishFail() {
+        this.state = EventState.PUBLISH_FAIL;
+    }
 }
