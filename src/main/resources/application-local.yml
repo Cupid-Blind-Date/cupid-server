@@ -1,7 +1,3 @@
-logging:
-  level:
-    org.hibernate.orm.jdbc.bind: TRACE
-
 spring:
   jpa:
     show-sql: true
@@ -14,9 +10,21 @@ spring:
     hibernate:
       ddl-auto: create
 
+  kafka:
+    producer:
+      bootstrap-servers: "localhost:9092"
+    consumer:
+      bootstrap-servers: "localhost:9092"
+      group-id: "cupid-group"
+
 cors:
   allowedOrigins: http://localhost:3000
 
 token:
   secretKey: "dsakljqd1idj8qwjddj12idjdsakljqd1idj8qwjddj12idjdsakljqd1idj8qwjddj12idjdsakljqd1idj8qwjddj12idjdsakljqd1idj8qwjddj12idj"
   accessTokenExpirationMillis: 2000000
+
+
+logging:
+  level:
+    org.hibernate.orm.jdbc.bind: TRACE

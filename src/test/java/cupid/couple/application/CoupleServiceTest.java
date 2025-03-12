@@ -52,6 +52,19 @@ class CoupleServiceTest extends ApplicationTest {
     }
 
     @Test
+    void 커플_생성시_이벤트_발행() {
+        // given
+        coupleService.like(new LikeCommand(targetId, myId));
+
+        LikeCommand likeCommand = new LikeCommand(myId, targetId);
+
+        // when
+        coupleService.like(likeCommand);
+
+        // then
+    }
+
+    @Test
     void 좋아요_요청시_상대방이_나에게_좋아요를_보내지_않았다면_그대로_반환() {
         // given
         LikeCommand likeCommand = new LikeCommand(myId, targetId);
