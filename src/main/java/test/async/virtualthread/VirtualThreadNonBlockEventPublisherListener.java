@@ -1,6 +1,6 @@
-package test.async.singlethread;
+package test.async.virtualthread;
 
-import static test.async.singlethread.SingleThreadAsyncConfig.SINGLE_THREAD_ASYNC_TASK_EXECUTOR;
+import static test.async.virtualthread.VirtualThreadAsyncConfig.VIRTUAL_THREAD_ASYNC_TASK_EXECUTOR;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,28 +8,28 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
+import test.async.event.TestDomainEventPublishCallback;
 import test.async.event.TestDomainEventRepository;
 import test.async.event.TestEventPublisher;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class SingleThreadEventPublisherListener {
+public class VirtualThreadNonBlockEventPublisherListener {
 
-    private final TestDomainEventRepository domainEventRepository;
+    private final TestDomainEventPublishCallback callback;
+    private final TestDomainEventRepository testDomainEventRepository;
     private final TestEventPublisher eventPublisher;
 
-    @Async(SINGLE_THREAD_ASYNC_TASK_EXECUTOR)
+    @Async(VIRTUAL_THREAD_ASYNC_TASK_EXECUTOR)
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void publishEvent(SingleThreadBlockEvent domainEvent) {
+    public void publishEvent(VirtualThreadNonBlockEvent domainEvent) {
         try {
-            eventPublisher.publish(domainEvent);
-            domainEvent.publishSuccess();
-            domainEventRepository.save(domainEvent);
+            eventPublisher.publish(domainEvent, callback);
         } catch (Exception e) {
             log.error("Exception occurred during publish event. e: {}. message: {}", e.getClass(), e.getMessage());
             domainEvent.publishFail();
-            domainEventRepository.save(domainEvent);
+            testDomainEventRepository.save(domainEvent);
         }
     }
 }

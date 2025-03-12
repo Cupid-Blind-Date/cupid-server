@@ -18,7 +18,7 @@ public class TestEventRecorder {
     public TestDomainEvent record(TestDomainEvent testDomainEvent) {
         while (true) {
             try {
-                log.info("Try to record event.");
+                log.info("Try to record event. uuid: {}", testDomainEvent.getUuid());
                 TestDomainEvent save = testDomainEventRepository.save(testDomainEvent);
                 log.info("Successfully record event. id: {}", save.getId());
                 return save;

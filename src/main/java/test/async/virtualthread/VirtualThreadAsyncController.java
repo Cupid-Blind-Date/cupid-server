@@ -16,14 +16,23 @@ import test.async.event.TestEventTxService;
 @RequestMapping("/test/async/virtual-thread")
 public class VirtualThreadAsyncController {
 
-    private final AtomicLong atomicId = new AtomicLong(0);
+    private final AtomicLong blockAtomicId = new AtomicLong(0);
+    private final AtomicLong nonBlockAtomicId = new AtomicLong(0);
     private final TestEventTxService eventTxService;
 
-    @GetMapping
-    public ResponseEntity<Void> call() {
-        long id = atomicId.incrementAndGet();
-        log.info("[virtual thread]id: {}", id);
-        eventTxService.produce(new VirtualThreadEvent(id));
+    @GetMapping("/block")
+    public ResponseEntity<Void> callBlock() {
+        long id = blockAtomicId.incrementAndGet();
+        log.info("[block virtual thread] id: {}", id);
+        eventTxService.produce(new VirtualThreadBlockEvent(id));
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/non-block")
+    public ResponseEntity<Void> callNonBlock() {
+        long id = nonBlockAtomicId.incrementAndGet();
+        log.info("[non block virtual thread] id: {}", id);
+        eventTxService.produce(new VirtualThreadNonBlockEvent(id));
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

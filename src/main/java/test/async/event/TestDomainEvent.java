@@ -36,32 +36,38 @@ public abstract class TestDomainEvent extends SoftDeletedDomain {
     protected String uuid;
 
     protected Long requestId;
-    protected LocalDateTime produceTime;  // ApplicationEventListener 에 의해 produce 된 시점
-    protected LocalDateTime processedTime; // 실제 처리된 시점
+    protected LocalDateTime initializedDate; // 객체 생성 시점
+    protected LocalDateTime processedDate; // 실제 처리된 시점
+
+    // 객체 생성 시점 - DB 기록 시점
+    protected long initializedDateToCreatedDateDuration;
+
+    // DB 기록 시점 - 처리 완료 시점
+    protected long createdDateToProcessedDateDuration;
+
+    // 객체 생성 시점 - 처리 완료 시점
+    protected long initializedDateToProcessedDateDuration;
 
     @Enumerated(EnumType.STRING)
     protected TestEventState state;
 
-
     public TestDomainEvent(Long requestId) {
-        this.requestId = requestId;
-        this.produceTime = LocalDateTime.now();
-    }
-
-    public void init() {
+        this.initializedDate = LocalDateTime.now();
         this.uuid = UUID.randomUUID().toString();
         this.state = TestEventState.INIT;
+        this.requestId = requestId;
     }
 
     public void publishSuccess() {
         this.state = TestEventState.PUBLISH_SUCCESS;
-        this.processedTime = LocalDateTime.now();
-        LocalDateTime produceTime = getProduceTime();
-        LocalDateTime processedTime = getProcessedTime();
-        // 시간 차이 계산
-        Duration duration = Duration.between(produceTime, processedTime);
-        log.info("총 초 차이: {} s", duration.getSeconds());
-        log.info("총 밀리초 차이: {} ms", duration.toMillis());
+        this.processedDate = LocalDateTime.now();
+        log.info("이벤트 객체 생성 시점: {}, DB 기록 시점: {}, 처리 완료 시점: {}", initializedDate, getCreatedDate(), processedDate);
+        initializedDateToCreatedDateDuration = Duration.between(initializedDate, getCreatedDate()).toMillis();
+        createdDateToProcessedDateDuration = Duration.between(getCreatedDate(), processedDate).toMillis();
+        initializedDateToProcessedDateDuration = Duration.between(initializedDate, processedDate).toMillis();
+        log.info("객체 생성 시점 - DB 기록 시점: {}ms", initializedDateToCreatedDateDuration);
+        log.info("DB 기록 시점 - 처리 완료 시점: {}ms", createdDateToProcessedDateDuration);
+        log.info("객체 생성 시점 - 처리 완료 시점: {}ms", initializedDateToProcessedDateDuration);
     }
 
     public void regenerateUuid() {

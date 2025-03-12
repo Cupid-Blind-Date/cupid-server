@@ -18,7 +18,6 @@ public class TestEventRecordListener {
      */
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     public void recordEvent(TestDomainEvent testDomainEvent) {
-        testDomainEvent.init();
         testEventRecorder.record(testDomainEvent);
     }
 }

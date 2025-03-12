@@ -42,7 +42,7 @@ class AsyncTest {
     // This method is continuously executed until you stop the test
     @Test
     public void test() {
-        HTTPResponse result = request.GET("http://localhost:8080/test/async/single-thread")
+        HTTPResponse result = request.GET("http://localhost:8080/test/async/virtual-thread/non-block")
         if (result.statusCode == 301 || result.statusCode == 302) {
             grinder.logger.warn("Warning. The response may not be correct. The response code was {}.", result.statusCode);
         } else {

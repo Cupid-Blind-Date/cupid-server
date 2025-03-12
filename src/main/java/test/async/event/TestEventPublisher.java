@@ -2,6 +2,7 @@ package test.async.event;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -9,13 +10,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class TestEventPublisher {
 
+    private final KafkaTemplate<String, Object> kafkaTemplate;
+
     public void publish(TestDomainEvent domainEvent) {
+        log.info("Try to publish event: {}, id: {}", domainEvent.getClass().getSimpleName(), domainEvent.getId());
         try {
-            log.info("메세지 브로커에 전송 시도. id: {}", domainEvent.getId());
-            //Thread.sleep(250);
-            Thread.sleep(50);
-            log.info("메세지 브로커에 전송 완료. id: {}", domainEvent.getId());
-        } catch (InterruptedException e) {
+            // 응답이 올때까지 block
+            kafkaTemplate.send(domainEvent.getClass().getSimpleName(), domainEvent.getUuid()).get();
+        } catch (Exception e) {
+            log.error("Exception occur!. id: {}", domainEvent.getId());
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void publish(TestDomainEvent domainEvent, TestDomainEventPublishCallback callback) {
+        log.info("Try to publish event: {}, id: {}", domainEvent.getClass().getSimpleName(), domainEvent.getId());
+        try {
+            // non block
+            kafkaTemplate.send(domainEvent.getClass().getSimpleName(), domainEvent.getUuid()).whenComplete(callback);
+        } catch (Exception e) {
+            log.error("Exception occur!. id: {}", domainEvent.getId());
             throw new RuntimeException(e);
         }
     }

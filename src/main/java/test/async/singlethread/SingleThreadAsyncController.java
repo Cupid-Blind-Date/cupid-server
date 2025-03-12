@@ -22,8 +22,9 @@ public class SingleThreadAsyncController {
     @GetMapping
     public ResponseEntity<Void> call() {
         long id = atomicId.incrementAndGet();
-        log.info("[single thread] id: {}", id);
-        eventTxService.produce(new SingleThreadEvent(id));
+        log.info("[single thread] start id: {}", id);
+        eventTxService.produce(new SingleThreadBlockEvent(id));
+        log.info("[single thread] end id: {}", id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

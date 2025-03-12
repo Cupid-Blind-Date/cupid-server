@@ -1,6 +1,6 @@
-package test.async.singlethread;
+package test.async.threadpool;
 
-import static test.async.singlethread.SingleThreadAsyncConfig.SINGLE_THREAD_ASYNC_TASK_EXECUTOR;
+import static test.async.threadpool.ThreadPoolAsyncConfig.THREAD_POOL_ASYNC_TASK_EXECUTOR;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,14 +14,14 @@ import test.async.event.TestEventPublisher;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class SingleThreadEventPublisherListener {
+public class ThreadPoolBlockEventPublisherListener {
 
     private final TestDomainEventRepository domainEventRepository;
     private final TestEventPublisher eventPublisher;
 
-    @Async(SINGLE_THREAD_ASYNC_TASK_EXECUTOR)
+    @Async(THREAD_POOL_ASYNC_TASK_EXECUTOR)
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void publishEvent(SingleThreadBlockEvent domainEvent) {
+    public void publishEvent(ThreadPoolBlockEvent domainEvent) {
         try {
             eventPublisher.publish(domainEvent);
             domainEvent.publishSuccess();
