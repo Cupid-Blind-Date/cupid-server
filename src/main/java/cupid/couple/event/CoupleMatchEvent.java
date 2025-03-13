@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("CoupleMatchEvent")
 public class CoupleMatchEvent extends DomainEvent {
 
-    private static final String TOPIC = "CoupleMatchEvent";
+    public static final String COUPLE_MATCH_EVENT_TOPIC = "CoupleMatchEvent";
 
     public CoupleMatchEvent(Long coupleId) {
         super(coupleId);
@@ -22,6 +22,6 @@ public class CoupleMatchEvent extends DomainEvent {
 
     @Override
     public String getTopic() {
-        return TOPIC;
+        return COUPLE_MATCH_EVENT_TOPIC;
     }
 }
