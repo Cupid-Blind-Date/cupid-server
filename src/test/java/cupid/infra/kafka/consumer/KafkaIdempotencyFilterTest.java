@@ -55,23 +55,9 @@ class KafkaIdempotencyFilterTest extends ApplicationTest {
     }
 
     @Test
-    void 중복_메세지라도_예외가_발생한_이력이_있는_메세지는_재시도한다() {
+    void 예외가_발생한_이력이_있는_중복_메세지라도_처리하지_않는다() {
         // given
         deadLetterRepository.save(new DeadLetter("uuid", "fail", false));
-        kafkaMessageProcessHistoryRepository.save(new KafkaMessageConsumeHistory("topic", "uuid"));
-        ConsumerRecord record = new ConsumerRecord("topic", 1, 1L, "", new KafkaDomainEventMessage(1L, "uuid", 1L));
-
-        // when
-        boolean skip = kafkaIdempotencyFilter.filter(record);
-
-        // then
-        assertThat(skip).isFalse();
-    }
-
-    @Test
-    void 중복_메세지이며_dead_letter_에_존재하지만_복구된_경우라면_처리하지_않는다() {
-        // given
-        deadLetterRepository.save(new DeadLetter("uuid", "fail", true));
         kafkaMessageProcessHistoryRepository.save(new KafkaMessageConsumeHistory("topic", "uuid"));
         ConsumerRecord record = new ConsumerRecord("topic", 1, 1L, "", new KafkaDomainEventMessage(1L, "uuid", 1L));
 
