@@ -10,7 +10,6 @@ import cupid.support.ApplicationWithKafkaTest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
@@ -21,10 +20,6 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 
-/**
- * 설정값을 변경한 경우 테스트한다.
- */
-@Disabled
 @DisplayName("카프카 컨슈머 설정 테스트 (KafkaConsumerConfig) 은(는)")
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -55,7 +50,7 @@ class KafkaConsumerConfigTest extends ApplicationWithKafkaTest {
     }
 
     @Test
-    void 중복_요청인_경우_무시한다() throws InterruptedException {
+    void 중복_요청인_경우_무시한다() {
         // given
         String uuid = UUID.randomUUID().toString();
         kafkaProducer.produce("KafkaConsumerConfigTest", new KafkaDomainEventMessage(
@@ -70,7 +65,7 @@ class KafkaConsumerConfigTest extends ApplicationWithKafkaTest {
                 uuid,
                 1L
         ));
-        Thread.sleep(2000);
+        waitingConsumeTopicSync("KafkaConsumerConfigTest");
 
         // then
         assertThat(processedUuids.stream()
@@ -79,7 +74,7 @@ class KafkaConsumerConfigTest extends ApplicationWithKafkaTest {
     }
 
     @Test
-    void 예외가_발생하면_재처리하지_않고_dead_letter_에_저장한다() throws InterruptedException {
+    void 예외가_발생하면_재처리하지_않고_dead_letter_에_저장한다() {
         // given
         String uuid = UUID.randomUUID().toString();
 
@@ -89,7 +84,7 @@ class KafkaConsumerConfigTest extends ApplicationWithKafkaTest {
                 uuid,
                 EXCEPTION_ID
         ));
-        Thread.sleep(2000);
+        waitingConsumeTopicSync("KafkaConsumerConfigTest");
 
         // then
         assertThat(deadLetterRepository.findByUuid(uuid)).isPresent();
