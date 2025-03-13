@@ -40,6 +40,10 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.5")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.5")
 
+    // Kafka
+    implementation("org.springframework.kafka:spring-kafka")
+    testImplementation("org.springframework.kafka:spring-kafka-test")
+
     // MapStruct
     implementation("org.mapstruct:mapstruct:1.5.5.Final")
 
@@ -59,4 +63,13 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.register<JavaExec>("checkVirtualThreadPinningRun") {
+    group = "virtual-thread"
+    description = "Run the application with -Djdk.tracePinnedThreads=full to check virtual thread pinning"
+
+    mainClass.set("cupid.CupidApplication")
+    classpath = sourceSets.main.get().runtimeClasspath
+    jvmArgs = listOf("-Djdk.tracePinnedThreads=full")
 }

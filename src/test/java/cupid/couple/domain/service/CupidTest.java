@@ -3,12 +3,15 @@ package cupid.couple.domain.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import cupid.couple.domain.Arrow;
 import cupid.couple.domain.ArrowRepository;
 import cupid.couple.domain.Couple;
 import cupid.couple.domain.CoupleRepository;
 import cupid.couple.domain.LikeType;
+import cupid.evnet.DomainEvent;
 import cupid.support.UnitTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -16,6 +19,7 @@ import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
 
 @DisplayName("Cupid 은(는)")
@@ -32,6 +36,9 @@ class CupidTest extends UnitTest {
     @Mock
     private CoupleRepository coupleRepository;
 
+    @Mock
+    private ApplicationEventPublisher applicationEventPublisher;
+
     private Long myId = 1L;
     private Long targetId = 2L;
 
@@ -47,6 +54,8 @@ class CupidTest extends UnitTest {
 
         // then
         assertThat(result).isEqualTo(MatchResult.SUCCESS);
+        verify(applicationEventPublisher, times(1))
+                .publishEvent(any(DomainEvent.class));
     }
 
     @Test
