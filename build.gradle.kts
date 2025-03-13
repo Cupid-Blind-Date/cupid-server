@@ -64,3 +64,12 @@ dependencies {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+tasks.register<JavaExec>("checkVirtualThreadPinningRun") {
+    group = "virtual-thread"
+    description = "Run the application with -Djdk.tracePinnedThreads=full to check virtual thread pinning"
+
+    mainClass.set("cupid.CupidApplication")
+    classpath = sourceSets.main.get().runtimeClasspath
+    jvmArgs = listOf("-Djdk.tracePinnedThreads=full")
+}

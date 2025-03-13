@@ -23,9 +23,11 @@ public class VirtualThreadBlockEventPublisherListener {
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void publishEvent(VirtualThreadBlockEvent domainEvent) {
         try {
+            log.info("Consume event");
             eventPublisher.publish(domainEvent);
             domainEvent.publishSuccess();
             testDomainEventRepository.save(domainEvent);
+            log.info("Successfully produce topic");
         } catch (Exception e) {
             log.error("Exception occurred during publish event. e: {}. message: {}", e.getClass(), e.getMessage());
             domainEvent.publishFail();
