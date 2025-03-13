@@ -8,6 +8,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import cupid.common.exception.ApplicationException;
+import cupid.kafka.producer.KafkaProducer;
 import cupid.support.UnitTest;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;

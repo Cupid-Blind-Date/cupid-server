@@ -2,7 +2,9 @@ package cupid.infra.kafka.deadletter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import cupid.infra.kafka.KafkaDomainEventMessage;
+import cupid.kafka.KafkaDomainEventMessage;
+import cupid.kafka.deadletter.DeadLetterRecorder;
+import cupid.kafka.deadletter.DeadLetterRepository;
 import cupid.support.ApplicationTest;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.jupiter.api.DisplayName;

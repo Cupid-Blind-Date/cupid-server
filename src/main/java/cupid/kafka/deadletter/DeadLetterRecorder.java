@@ -1,6 +1,6 @@
-package cupid.infra.kafka.deadletter;
+package cupid.kafka.deadletter;
 
-import cupid.infra.kafka.KafkaDomainEventMessage;
+import cupid.kafka.KafkaDomainEventMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;

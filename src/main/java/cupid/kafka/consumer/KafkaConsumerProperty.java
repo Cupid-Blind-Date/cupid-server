@@ -1,4 +1,4 @@
-package cupid.infra.kafka.consumer;
+package cupid.kafka.consumer;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

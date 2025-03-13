@@ -8,24 +8,24 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
-import test.async.event.TestDomainEventPublishCallback;
 import test.async.event.TestDomainEventRepository;
-import test.async.event.TestEventPublisher;
+import test.async.event.TestEventProducer;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class ThreadPoolNonBlockEventPublisherListener {
+public class ThreadPoolBlockEventProducerListener {
 
-    private final TestDomainEventPublishCallback callback;
     private final TestDomainEventRepository domainEventRepository;
-    private final TestEventPublisher eventPublisher;
+    private final TestEventProducer eventPublisher;
 
     @Async(THREAD_POOL_ASYNC_TASK_EXECUTOR)
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void publishEvent(ThreadPoolNonBlockEvent domainEvent) {
+    public void publishEvent(ThreadPoolBlockEvent domainEvent) {
         try {
-            eventPublisher.publish(domainEvent, callback);
+            eventPublisher.publish(domainEvent);
+            domainEvent.publishSuccess();
+            domainEventRepository.save(domainEvent);
         } catch (Exception e) {
             log.error("Exception occurred during publish event. e: {}. message: {}", e.getClass(), e.getMessage());
             domainEvent.publishFail();

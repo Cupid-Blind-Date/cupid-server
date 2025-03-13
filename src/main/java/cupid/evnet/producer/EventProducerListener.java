@@ -1,4 +1,4 @@
-package cupid.evnet.publisher;
+package cupid.evnet.producer;
 
 import static cupid.evnet.outbox.EventAsyncTaskExecutorConfig.EVENT_ASYNC_TASK_EXECUTOR;
 
@@ -13,9 +13,9 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class EventPublishListener {
+public class EventProducerListener {
 
-    private final EventPublisher eventPublisher;
+    private final EventProducer eventProducer;
 
     // 트랜잭션 커밋 후, 메세지 브로커에 메시지 전송
     @Async(EVENT_ASYNC_TASK_EXECUTOR)
@@ -24,6 +24,6 @@ public class EventPublishListener {
         Long eventId = domainEvent.getId();
         String topic = domainEvent.getTopic();
         log.info("Consume domain event. id: {}, topic: {}", eventId, topic);
-        eventPublisher.publish(domainEvent);
+        eventProducer.produce(domainEvent);
     }
 }

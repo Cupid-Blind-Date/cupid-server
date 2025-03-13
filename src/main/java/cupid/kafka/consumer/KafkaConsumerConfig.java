@@ -1,9 +1,9 @@
-package cupid.infra.kafka.consumer;
+package cupid.kafka.consumer;
 
 import static org.springframework.kafka.listener.ContainerProperties.AckMode.MANUAL_IMMEDIATE;
 
-import cupid.infra.kafka.KafkaDomainEventMessage;
-import cupid.infra.kafka.deadletter.DeadLetterRecorder;
+import cupid.kafka.KafkaDomainEventMessage;
+import cupid.kafka.deadletter.DeadLetterRecorder;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;

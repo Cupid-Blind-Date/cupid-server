@@ -1,15 +1,15 @@
-package cupid.evnet.publisher;
+package cupid.evnet.producer;
 
-import static cupid.evnet.EventState.PUBLISH_FAIL;
-import static cupid.evnet.EventState.PUBLISH_SUCCESS;
+import static cupid.evnet.EventState.PRODUCE_FAIL;
+import static cupid.evnet.EventState.PRODUCE_SUCCESS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.willThrow;
 
 import cupid.evnet.DomainEventRepository;
 import cupid.evnet.mock.TestEventService;
-import cupid.infra.kafka.KafkaDomainEventMessage;
-import cupid.infra.kafka.producer.KafkaProducer;
+import cupid.kafka.KafkaDomainEventMessage;
+import cupid.kafka.producer.KafkaProducer;
 import cupid.support.ApplicationTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Disabled;
@@ -21,10 +21,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-@DisplayName("EventPublishListener 은(는)")
+@DisplayName("EventProducerListener 은(는)")
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(ReplaceUnderscores.class)
-class EventPublishListenerTest extends ApplicationTest {
+class EventProducerListenerTest extends ApplicationTest {
 
     @MockitoBean
     private KafkaProducer<KafkaDomainEventMessage> kafkaProducer;
@@ -52,7 +52,7 @@ class EventPublishListenerTest extends ApplicationTest {
             Thread.sleep(2000);
 
             // then
-            assertThat(domainEventRepository.findAll().get(0).getState()).isEqualTo(PUBLISH_SUCCESS);
+            assertThat(domainEventRepository.findAll().get(0).getState()).isEqualTo(PRODUCE_SUCCESS);
         }
 
         // 비동기 스레드에서 작업되므로, 1초 멈춰야 테스트 성공
@@ -68,7 +68,7 @@ class EventPublishListenerTest extends ApplicationTest {
             Thread.sleep(2000);
 
             // then
-            assertThat(domainEventRepository.findAll().get(0).getState()).isEqualTo(PUBLISH_FAIL);
+            assertThat(domainEventRepository.findAll().get(0).getState()).isEqualTo(PRODUCE_FAIL);
         }
     }
 }

@@ -1,4 +1,4 @@
-package cupid.infra.kafka;
+package cupid.kafka;
 
 import cupid.evnet.DomainEvent;
 

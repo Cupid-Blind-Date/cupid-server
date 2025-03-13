@@ -1,4 +1,4 @@
-package cupid.infra.kafka.producer;
+package cupid.kafka.producer;
 
 import static cupid.common.exception.InternalServerExceptionCode.UNKNOWN_EXCEPTION;
 
@@ -20,11 +20,12 @@ public class KafkaProducer<T> {
 
     public void produce(String topic, T message) {
         try {
-            log.info("Try to produce topic: {}, message: {}", topic, message);
+            log.info("Try to produce topic using kafkaTemplate. topic: {}, message: {}", topic, message);
             kafkaTemplate.send(topic, message).get();
-            log.info("Successfully produced topic: {}, message: {}", topic, message);
+            log.info("Successfully produced topic using kafkaTemplate. topic: {}, message: {}", topic, message);
         } catch (Exception e) {
-            log.error("Unexpected exception while send topic: {}, message: {}", topic, message, e);
+            log.error("Unexpected exception while send topic using kafkaTemplate. topic: {}, message: {}",
+                    topic, message, e);
             throw new ApplicationException(UNKNOWN_EXCEPTION);
         }
     }

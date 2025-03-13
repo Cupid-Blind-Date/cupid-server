@@ -1,4 +1,4 @@
-package cupid.infra.kafka.producer;
+package cupid.kafka.producer;
 
 import java.util.HashMap;
 import java.util.Map;

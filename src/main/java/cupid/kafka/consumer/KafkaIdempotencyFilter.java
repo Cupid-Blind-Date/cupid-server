@@ -1,6 +1,6 @@
-package cupid.infra.kafka.consumer;
+package cupid.kafka.consumer;
 
-import cupid.infra.kafka.KafkaDomainEventMessage;
+import cupid.kafka.KafkaDomainEventMessage;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

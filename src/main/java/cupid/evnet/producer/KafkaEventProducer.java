@@ -1,4 +1,4 @@
-package cupid.evnet.publisher;
+package cupid.evnet.producer;
 
 
 import static cupid.common.exception.InternalServerExceptionCode.UNKNOWN_EXCEPTION;
@@ -6,8 +6,8 @@ import static cupid.common.exception.InternalServerExceptionCode.UNKNOWN_EXCEPTI
 import cupid.common.exception.ApplicationException;
 import cupid.evnet.DomainEvent;
 import cupid.evnet.DomainEventRepository;
-import cupid.infra.kafka.KafkaDomainEventMessage;
-import cupid.infra.kafka.producer.KafkaProducer;
+import cupid.kafka.KafkaDomainEventMessage;
+import cupid.kafka.producer.KafkaProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,28 +15,28 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class KafkaEventPublisher implements EventPublisher {
+public class KafkaEventProducer implements EventProducer {
 
     private final KafkaProducer<KafkaDomainEventMessage> kafkaProducer;
     private final DomainEventRepository domainEventRepository;
 
     @Override
-    public void publish(DomainEvent domainEvent) {
+    public void produce(DomainEvent domainEvent) {
         String topic = domainEvent.getTopic();
         Long eventId = domainEvent.getId();
         try {
             KafkaDomainEventMessage message = KafkaDomainEventMessage.from(domainEvent);
-            log.info("Try to publish kafka topic. topic: {}, eventId: {}", topic, eventId);
+            log.info("Try to produce kafka topic. topic: {}, eventId: {}", topic, eventId);
             kafkaProducer.produce(topic, message);
-            log.info("Successfully publish kafka topic. topic: {}, eventId: {}", topic, eventId);
-            domainEvent.publishSuccess();
+            log.info("Successfully produce kafka topic. topic: {}, eventId: {}", topic, eventId);
+            domainEvent.produceSuccess();
             domainEventRepository.save(domainEvent);
-            log.info("Successfully update domainEvent state to publish success. id: {}", domainEvent.getId());
+            log.info("Successfully update domainEvent state to produce success. id: {}", domainEvent.getId());
         } catch (Exception e) {
-            log.error("Unexpected exception while publish kafka topic: {}, message: {}", topic, e.getMessage(), e);
-            domainEvent.publishFail(e);
+            log.error("Unexpected exception while produce kafka topic: {}, message: {}", topic, e.getMessage(), e);
+            domainEvent.produceFail(e);
             domainEventRepository.save(domainEvent);
-            log.info("Successfully update domainEvent state to publish fail. id: {}", domainEvent.getId());
+            log.info("Successfully update domainEvent state to produce fail. id: {}", domainEvent.getId());
             throw new ApplicationException(UNKNOWN_EXCEPTION);
         }
     }

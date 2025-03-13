@@ -1,7 +1,7 @@
-package cupid.infra.kafka.deadletter;
+package cupid.kafka.deadletter;
 
 import cupid.common.domain.SoftDeletedDomain;
-import cupid.infra.kafka.KafkaDomainEventMessage;
+import cupid.kafka.KafkaDomainEventMessage;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,11 +1,11 @@
 package cupid.infra.kafka.consumer;
 
-import static cupid.infra.kafka.consumer.KafkaConsumerConfig.DOMAIN_EVENT_CONTAINER_FACTORY;
+import static cupid.kafka.consumer.KafkaConsumerConfig.DOMAIN_EVENT_CONTAINER_FACTORY;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import cupid.infra.kafka.KafkaDomainEventMessage;
-import cupid.infra.kafka.deadletter.DeadLetterRepository;
-import cupid.infra.kafka.producer.KafkaProducer;
+import cupid.kafka.KafkaDomainEventMessage;
+import cupid.kafka.deadletter.DeadLetterRepository;
+import cupid.kafka.producer.KafkaProducer;
 import cupid.support.ApplicationWithKafkaTest;
 import java.util.ArrayList;
 import java.util.List;

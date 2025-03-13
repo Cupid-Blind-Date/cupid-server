@@ -1,6 +1,6 @@
-package test.async.threadpool;
+package test.async.virtualthread;
 
-import static test.async.threadpool.ThreadPoolAsyncConfig.THREAD_POOL_ASYNC_TASK_EXECUTOR;
+import static test.async.virtualthread.VirtualThreadAsyncConfig.VIRTUAL_THREAD_ASYNC_TASK_EXECUTOR;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,27 +9,29 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 import test.async.event.TestDomainEventRepository;
-import test.async.event.TestEventPublisher;
+import test.async.event.TestEventProducer;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class ThreadPoolBlockEventPublisherListener {
+public class VirtualThreadBlockEventProducerListener {
 
-    private final TestDomainEventRepository domainEventRepository;
-    private final TestEventPublisher eventPublisher;
+    private final TestDomainEventRepository testDomainEventRepository;
+    private final TestEventProducer eventPublisher;
 
-    @Async(THREAD_POOL_ASYNC_TASK_EXECUTOR)
+    @Async(VIRTUAL_THREAD_ASYNC_TASK_EXECUTOR)
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void publishEvent(ThreadPoolBlockEvent domainEvent) {
+    public void publishEvent(VirtualThreadBlockEvent domainEvent) {
         try {
+            log.info("Consume event");
             eventPublisher.publish(domainEvent);
             domainEvent.publishSuccess();
-            domainEventRepository.save(domainEvent);
+            testDomainEventRepository.save(domainEvent);
+            log.info("Successfully produce topic");
         } catch (Exception e) {
             log.error("Exception occurred during publish event. e: {}. message: {}", e.getClass(), e.getMessage());
             domainEvent.publishFail();
-            domainEventRepository.save(domainEvent);
+            testDomainEventRepository.save(domainEvent);
         }
     }
 }

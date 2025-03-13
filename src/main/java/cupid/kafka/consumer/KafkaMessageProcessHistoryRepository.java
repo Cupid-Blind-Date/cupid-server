@@ -1,4 +1,4 @@
-package cupid.infra.kafka.consumer;
+package cupid.kafka.consumer;
 
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

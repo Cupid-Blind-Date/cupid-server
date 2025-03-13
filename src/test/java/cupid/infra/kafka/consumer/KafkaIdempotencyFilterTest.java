@@ -2,9 +2,12 @@ package cupid.infra.kafka.consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import cupid.infra.kafka.KafkaDomainEventMessage;
-import cupid.infra.kafka.deadletter.DeadLetter;
-import cupid.infra.kafka.deadletter.DeadLetterRepository;
+import cupid.kafka.KafkaDomainEventMessage;
+import cupid.kafka.consumer.KafkaIdempotencyFilter;
+import cupid.kafka.consumer.KafkaMessageConsumeHistory;
+import cupid.kafka.consumer.KafkaMessageProcessHistoryRepository;
+import cupid.kafka.deadletter.DeadLetter;
+import cupid.kafka.deadletter.DeadLetterRepository;
 import cupid.support.ApplicationTest;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.jupiter.api.DisplayName;

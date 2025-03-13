@@ -1,7 +1,7 @@
-package cupid.evnet.publisher;
+package cupid.evnet.producer;
 
-import static cupid.evnet.EventState.PUBLISH_FAIL;
-import static cupid.evnet.EventState.PUBLISH_SUCCESS;
+import static cupid.evnet.EventState.PRODUCE_FAIL;
+import static cupid.evnet.EventState.PRODUCE_SUCCESS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -11,8 +11,8 @@ import cupid.common.exception.ApplicationException;
 import cupid.evnet.DomainEventRepository;
 import cupid.evnet.EventState;
 import cupid.evnet.mock.TestEvent;
-import cupid.infra.kafka.KafkaDomainEventMessage;
-import cupid.infra.kafka.producer.KafkaProducer;
+import cupid.kafka.KafkaDomainEventMessage;
+import cupid.kafka.producer.KafkaProducer;
 import cupid.support.ApplicationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -21,13 +21,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-@DisplayName("KafkaEventPublisher 은(는)")
+@DisplayName("KafkaEventProducer 은(는)")
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(ReplaceUnderscores.class)
-class KafkaEventPublisherTest extends ApplicationTest {
+class KafkaEventProducerTest extends ApplicationTest {
 
     @Autowired
-    private KafkaEventPublisher kafkaEventPublisher;
+    private KafkaEventProducer kafkaEventPublisher;
 
     @MockitoBean
     private KafkaProducer<KafkaDomainEventMessage> kafkaProducer;
@@ -41,11 +41,11 @@ class KafkaEventPublisherTest extends ApplicationTest {
         TestEvent topic = new TestEvent(1L, "topic");
 
         // when
-        kafkaEventPublisher.publish(topic);
+        kafkaEventPublisher.produce(topic);
 
         // then
         EventState state = domainEventRepository.getByUuid(topic.getUuid()).getState();
-        assertThat(state).isEqualTo(PUBLISH_SUCCESS);
+        assertThat(state).isEqualTo(PRODUCE_SUCCESS);
     }
 
     @Test
@@ -58,12 +58,12 @@ class KafkaEventPublisherTest extends ApplicationTest {
 
         // when
         assertThatThrownBy(() -> {
-            kafkaEventPublisher.publish(topic);
+            kafkaEventPublisher.produce(topic);
         }).isInstanceOf(ApplicationException.class);
 
         // then
         EventState state = domainEventRepository.getByUuid(topic.getUuid()).getState();
-        assertThat(state).isEqualTo(PUBLISH_FAIL);
+        assertThat(state).isEqualTo(PRODUCE_FAIL);
     }
 
 }
