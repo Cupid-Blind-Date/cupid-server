@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    group:
+      local:
+        common-local
+
+      stage:
+
+      prod:
+
+
+    active: local
