@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 public class RequiresNewDeadLockTest2 {
 
     @Autowired
-    private TestEventPublisher testEventPublisher;
+    private TestEventProducer testEventProducer;
 
     @Test
     void 데드락이_발생하지_않는다() throws InterruptedException {
@@ -29,7 +29,7 @@ public class RequiresNewDeadLockTest2 {
         for (long i = 0; i < 2; i++) {
             final long id = i;
             executorService.submit(() -> {
-                testEventPublisher.publishEvent(new TestEvent(id));
+                testEventProducer.publishEvent(new TestEvent(id));
                 countDownLatch.countDown();
             });
         }

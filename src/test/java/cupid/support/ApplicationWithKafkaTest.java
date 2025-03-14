@@ -1,5 +1,11 @@
 package cupid.support;
 
+import cupid.support.db.DataClearExtension;
+import cupid.support.kafka.KafkaConsumerPolling;
+import java.util.concurrent.CompletableFuture;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 
 @EmbeddedKafka(
@@ -9,5 +15,15 @@ import org.springframework.kafka.test.context.EmbeddedKafka;
         },
         ports = {9092}
 )
-public class ApplicationWithKafkaTest extends ApplicationTest {
+@ExtendWith(DataClearExtension.class)
+@SpringBootTest
+public class ApplicationWithKafkaTest extends CommonTest {
+
+    protected <T> ConsumerRecords<String, T> waitingConsumeTopicSync(String topic) {
+        return KafkaConsumerPolling.waitingSync(topic);
+    }
+
+    protected <T> CompletableFuture<ConsumerRecords<String, T>> waitingConsumeTopicAsync(String topic) {
+        return KafkaConsumerPolling.waitingAsync(topic);
+    }
 }

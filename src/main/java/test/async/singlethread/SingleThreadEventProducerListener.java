@@ -1,6 +1,6 @@
-package test.async.queuecapacity;
+package test.async.singlethread;
 
-import static test.async.queuecapacity.QueueCapacityCheckConfig.QUEUE_CAPACITY_CHECK_TASK_EXECUTOR;
+import static test.async.singlethread.SingleThreadAsyncConfig.SINGLE_THREAD_ASYNC_TASK_EXECUTOR;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,21 +11,18 @@ import org.springframework.transaction.event.TransactionalEventListener;
 import test.async.event.TestDomainEventRepository;
 import test.async.event.TestEventProducer;
 
-
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class QueueCapacityCheckEventListener {
+public class SingleThreadEventProducerListener {
 
     private final TestDomainEventRepository domainEventRepository;
     private final TestEventProducer eventPublisher;
 
-    @Async(QUEUE_CAPACITY_CHECK_TASK_EXECUTOR)
+    @Async(SINGLE_THREAD_ASYNC_TASK_EXECUTOR)
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void publishEvent(QueueCapacityCheckEvent domainEvent) {
+    public void publishEvent(SingleThreadBlockEvent domainEvent) {
         try {
-            log.info("MaxQueueCapacityCheckEventListener.publishEvent(). id: {}", domainEvent.getRequestId());
-            Thread.sleep(60 * 60 * 1000);  // 1시간 대기
             eventPublisher.publish(domainEvent);
             domainEvent.publishSuccess();
             domainEventRepository.save(domainEvent);

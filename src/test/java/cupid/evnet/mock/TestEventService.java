@@ -14,7 +14,9 @@ public class TestEventService {
     }
 
     @Transactional
-    public void eventOccur(Long testId) {
-        applicationEventPublisher.publishEvent(new TestEvent(testId));
+    public TestEvent eventOccur(Long testId) {
+        TestEvent event = new TestEvent(testId);
+        applicationEventPublisher.publishEvent(event);
+        return event;
     }
 }
