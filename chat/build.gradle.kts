@@ -16,6 +16,9 @@ java {
 }
 
 dependencies {
+    implementation(project(":common"))
+    testImplementation(testFixtures(project(":common")))
+
     implementation("org.springframework.boot:spring-boot-starter")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
