@@ -20,8 +20,9 @@ public class ChatMessageService {
     public ChatMessage saveMessage(SendChatMessageCommand command) {
         log.info("Try to send chat message. chatRoomId: {}", command.chatRoomId());
         ChatRoom room = chatRoomRepository.getById(command.chatRoomId());
-        room.validateParticipants(command.senderId(), command.targetId());
-        ChatMessage chatMessage = command.toChatMessage();
+        room.validateParticipants(command.senderId());
+        Long targetId = room.getTargetId(command.senderId());
+        ChatMessage chatMessage = command.toChatMessage(targetId);
         chatMessageRepository.save(chatMessage);
         log.info("Successfully save chat message. chatId: {}", chatMessage.getId());
         return chatMessage;

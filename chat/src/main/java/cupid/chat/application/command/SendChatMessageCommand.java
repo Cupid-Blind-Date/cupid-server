@@ -6,11 +6,10 @@ import cupid.chat.domain.ChatMessageType;
 public record SendChatMessageCommand(
         Long chatRoomId,
         Long senderId,
-        Long targetId,
         String message,
         ChatMessageType chatMessageType
 ) {
-    public ChatMessage toChatMessage() {
+    public ChatMessage toChatMessage(Long targetId) {
         return new ChatMessage(
                 chatRoomId,
                 senderId,

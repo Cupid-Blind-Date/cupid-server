@@ -28,7 +28,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
         // Spring 에서 제공해주는 내장 STOMP 브로커 사용
         // 클라이언트는 /sub/~~ 를 구독한다. (stompClient.subscribe('/sub/~~~'))
-        registry.enableSimpleBroker(CLIENT_DESTINATION_PREFIX);
+        registry.enableSimpleBroker(CLIENT_DESTINATION_PREFIX, "/queue");  // 🔥 브로커가 이 경로의 메시지를 클라이언트로 전달함.
 
         // 클라이언트가 메시지를 보낼 때 사용 (stompClient.send('/pub/~~~'))
         registry.setApplicationDestinationPrefixes("/pub");
@@ -37,15 +37,15 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         log.info("WebSocketProperties: {}", webSocketProperties);
+        registry.setErrorHandler(webSocketExceptionHandler);
 
-        if (webSocketProperties.allowOrigins() == null || webSocketProperties.allowOrigins().length == 0) {
+        if (webSocketProperties.allowedOrigins() == null || webSocketProperties.allowedOrigins().length == 0) {
             log.warn("Websocket AllowOrigins is empty. so using *");
-            registry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS();
+            registry.addEndpoint("/ws").setAllowedOriginPatterns("*").withSockJS();
             return;
         }
-        registry.addEndpoint("/ws").setAllowedOrigins(webSocketProperties.allowOrigins()).withSockJS();
+        registry.addEndpoint("/ws").setAllowedOrigins(webSocketProperties.allowedOrigins()).withSockJS();
 
-        registry.setErrorHandler(webSocketExceptionHandler);
     }
 
     @Override

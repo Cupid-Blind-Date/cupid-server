@@ -12,7 +12,6 @@ public record ChatMessageRequest(
         return new SendChatMessageCommand(
                 roomId,
                 senderId,
-                targetId,
                 message,
                 chatMessageType
         );

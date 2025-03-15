@@ -1,6 +1,5 @@
 package cupid.chat.domain;
 
-import static cupid.chat.exception.ChatExceptionCode.INVALID_PARTICIPATION_ID;
 import static cupid.chat.exception.ChatExceptionCode.NO_AUTHORITY_TO_SEND_MESSAGE;
 import static cupid.common.SQLRestrictionClause.DELETED_AT_IS_NULL;
 
@@ -44,18 +43,19 @@ public class ChatRoom extends SoftDeletedDomain {
         this.lowerId = lowerId;
     }
 
-    public void validateParticipants(Long senderId, Long targetId) {
+    public void validateParticipants(Long senderId) {
         Set<Long> participants = Set.of(higherId, lowerId);
         // 내가 해당 채팅방에 참여하지 않은 경우
         boolean contains = participants.contains(senderId);
         if (!contains) {
             throw new ApplicationException(NO_AUTHORITY_TO_SEND_MESSAGE);
         }
+    }
 
-        // 대상이 해당 채팅방에 참여하지 않은 경우
-        boolean targetContains = participants.contains(targetId);
-        if (!targetContains) {
-            throw new ApplicationException(INVALID_PARTICIPATION_ID);
+    public Long getTargetId(Long senderId) {
+        if (higherId.equals(senderId)) {
+            return lowerId;
         }
+        return higherId;
     }
 }

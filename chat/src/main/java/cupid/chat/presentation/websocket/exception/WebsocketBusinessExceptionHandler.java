@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 @ControllerAdvice
 public class WebsocketBusinessExceptionHandler {
 
+    // 클라이언트가 접속 시 /user/queue/errors 를 구독해야 함.
     @MessageExceptionHandler
     @SendToUser(value = "/queue/errors", broadcast = false)
     public WebsocketExceptionResponse handleCustomException(ApplicationException exception) {
