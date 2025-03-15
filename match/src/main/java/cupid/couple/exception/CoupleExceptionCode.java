@@ -7,6 +7,7 @@ public enum CoupleExceptionCode implements ExceptionCode {
 
     NOT_FOUND_COUPLE(HttpStatus.NOT_FOUND, "C0", "해당 id를 가진 커플이 없습니다."),
     DUPLICATED_COUPLE(HttpStatus.CONFLICT, "C1", "이미 매치된 커플입니다."),
+    SAME_SENDER_TARGET(HttpStatus.BAD_REQUEST, "C2", "자기 자신에게 좋아요/싫어요를 보낼 수 없습니다."),
     ;
 
     private final HttpStatus httpStatus;
