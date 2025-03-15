@@ -21,10 +21,13 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    public static final String CLIENT_DESTINATION_PREFIX = "/sub";
+    public static final String CLIENT_SUBSCRIBE_PREFIX = "/sub";
+    public static final String CLIENT_ERROR_SUBSCRIBE_PREFIX = "/queue";
+    public static final String CLIENT_CHAT_SUBSCRIBE_PREFIX = "/sub/chat/";
 
     private final WebSocketProperties webSocketProperties;
     private final WebsocketAuthInterceptor authInterceptor;
+    private final WebsocketEnterRoomInterceptor websocketEnterRoomInterceptor;
     private final WebsocketExceptionHandler webSocketExceptionHandler;
 
     @Override
@@ -33,7 +36,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
         // Spring 에서 제공해주는 내장 STOMP 브로커 사용
         // 클라이언트는 /sub/~~ 를 구독한다. (stompClient.subscribe('/sub/~~~'))
-        registry.enableSimpleBroker(CLIENT_DESTINATION_PREFIX, "/queue");
+        registry.enableSimpleBroker(CLIENT_SUBSCRIBE_PREFIX, CLIENT_ERROR_SUBSCRIBE_PREFIX);
 
         // 클라이언트가 메시지를 보낼 때 사용 (stompClient.send('/pub/~~~'))
         registry.setApplicationDestinationPrefixes("/pub");
@@ -55,7 +58,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.interceptors(authInterceptor);
+        registration.interceptors(authInterceptor, websocketEnterRoomInterceptor);
         registration.executor(websocketVirtualThreadTaskExecutor());
     }
 

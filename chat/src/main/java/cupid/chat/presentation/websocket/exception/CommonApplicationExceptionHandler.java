@@ -21,22 +21,35 @@ public class CommonApplicationExceptionHandler implements StompExceptionHandler 
 
     @Override
     public boolean canHandle(Throwable ex) {
-        return ex instanceof ApplicationException ae;
+        return ex instanceof ApplicationException ||
+               // MessageDeliveryException 로 Wrapping 됨
+               ex.getCause() instanceof ApplicationException;
     }
 
     @Override
     public Message<byte[]> handle(Message<byte[]> clientMessage, Throwable cause) {
         StompHeaderAccessor errorHeaderAccessor = StompHeaderAccessor.create(StompCommand.ERROR);
-
-        WebsocketExceptionResponse response = null;
-        if (cause instanceof ApplicationException ae) {
-            response = WebsocketExceptionResponse.from(ae);
-            log.info("Exception occur when connect websocket. response: {}", response);
-            errorHeaderAccessor.setMessage(ae.getCode().getCode());
-            errorHeaderAccessor.setLeaveMutable(true);
-            response = WebsocketExceptionResponse.from(ae);
+        ApplicationException ae = getApplicationException(cause);
+        if (ae == null) {
+            log.info("Unexpected exception occur in websocket.", cause);
+            return createMessage(errorHeaderAccessor, null);
         }
+
+        WebsocketExceptionResponse response = WebsocketExceptionResponse.from(ae);
+        log.info("Expected exception occur in websocket. response: {}", response);
+        errorHeaderAccessor.setMessage(ae.getCode().getCode());
+        errorHeaderAccessor.setLeaveMutable(true);
+        response = WebsocketExceptionResponse.from(ae);
         return createMessage(errorHeaderAccessor, response);
+    }
+
+    private ApplicationException getApplicationException(Throwable cause) {
+        if (cause instanceof ApplicationException ae) {
+            return ae;
+        } else if (cause.getCause() instanceof ApplicationException ae) {
+            return ae;
+        }
+        return null;
     }
 
     private Message<byte[]> createMessage(
