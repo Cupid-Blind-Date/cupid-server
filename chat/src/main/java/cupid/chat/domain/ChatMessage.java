@@ -26,6 +26,8 @@ public class ChatMessage extends SoftDeletedDomain {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long chatRoomId;
+
     private Long senderId;
     private Long targetId;
 
@@ -34,10 +36,24 @@ public class ChatMessage extends SoftDeletedDomain {
     @Enumerated(EnumType.STRING)
     private ChatMessageType chatMessageType;
 
-    public ChatMessage(Long senderId, Long targetId, String message, ChatMessageType chatMessageType) {
+    private boolean sendSuccess;
+    private boolean read;
+
+    public ChatMessage(Long chatRoomId, Long senderId, Long targetId, String message, ChatMessageType chatMessageType) {
+        this.chatRoomId = chatRoomId;
         this.senderId = senderId;
         this.targetId = targetId;
         this.message = message;
         this.chatMessageType = chatMessageType;
+        this.sendSuccess = false;
+        this.read = false;
+    }
+
+    public void sendSuccess() {
+        this.sendSuccess = true;
+    }
+
+    public void read() {
+        this.read = true;
     }
 }

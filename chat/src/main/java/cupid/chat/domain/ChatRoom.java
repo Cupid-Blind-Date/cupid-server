@@ -1,14 +1,18 @@
 package cupid.chat.domain;
 
+import static cupid.chat.exception.ChatExceptionCode.INVALID_PARTICIPATION_ID;
+import static cupid.chat.exception.ChatExceptionCode.NO_AUTHORITY_TO_SEND_MESSAGE;
 import static cupid.common.SQLRestrictionClause.DELETED_AT_IS_NULL;
 
 import cupid.common.domain.SoftDeletedDomain;
+import cupid.common.exception.ApplicationException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,5 +42,20 @@ public class ChatRoom extends SoftDeletedDomain {
     public ChatRoom(Long higherId, Long lowerId) {
         this.higherId = higherId;
         this.lowerId = lowerId;
+    }
+
+    public void validateParticipants(Long senderId, Long targetId) {
+        Set<Long> participants = Set.of(higherId, lowerId);
+        // 내가 해당 채팅방에 참여하지 않은 경우
+        boolean contains = participants.contains(senderId);
+        if (!contains) {
+            throw new ApplicationException(NO_AUTHORITY_TO_SEND_MESSAGE);
+        }
+
+        // 대상이 해당 채팅방에 참여하지 않은 경우
+        boolean targetContains = participants.contains(targetId);
+        if (!targetContains) {
+            throw new ApplicationException(INVALID_PARTICIPATION_ID);
+        }
     }
 }
