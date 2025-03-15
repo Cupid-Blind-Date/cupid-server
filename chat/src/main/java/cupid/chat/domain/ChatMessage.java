@@ -36,7 +36,6 @@ public class ChatMessage extends SoftDeletedDomain {
     @Enumerated(EnumType.STRING)
     private ChatMessageType chatMessageType;
 
-    private boolean sendSuccess;
     private boolean read;
 
     public ChatMessage(Long chatRoomId, Long senderId, Long targetId, String message, ChatMessageType chatMessageType) {
@@ -45,12 +44,7 @@ public class ChatMessage extends SoftDeletedDomain {
         this.targetId = targetId;
         this.message = message;
         this.chatMessageType = chatMessageType;
-        this.sendSuccess = false;
         this.read = false;
-    }
-
-    public void sendSuccess() {
-        this.sendSuccess = true;
     }
 
     public void read() {

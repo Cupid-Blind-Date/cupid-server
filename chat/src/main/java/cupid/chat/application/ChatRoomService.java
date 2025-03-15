@@ -14,7 +14,7 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
 
     public Long createChatRoom(Long higherId, Long lowerId) {
-        log.info("Try to create chat room. higherId:{}, lowerId: {}", higherId, lowerId);
+        log.info("Try to create chat room. higherId: {}, lowerId: {}", higherId, lowerId);
         ChatRoom chatRoom = new ChatRoom(higherId, lowerId);
         ChatRoom save = chatRoomRepository.save(chatRoom);
         log.info("Successfully create chat room. roomId: {}, higherId:{}, lowerId: {}",
