@@ -1,5 +1,7 @@
 package cupid.common.auth;
 
+import static cupid.common.auth.Token.BEARER_PREFIX;
+
 import cupid.common.exception.ApplicationException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +41,7 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
 
     private static String extractAccessToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
             return bearerToken.substring(7);
         }
         throw new ApplicationException(TokenExceptionCode.REQUIRED_TOKEN);
