@@ -1,8 +1,7 @@
-package cupid.couple.event;
+package cupid.common.evnet;
 
 import static lombok.AccessLevel.PROTECTED;
 
-import cupid.common.evnet.DomainEvent;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -16,8 +15,8 @@ public class CoupleMatchEvent extends DomainEvent {
 
     public static final String COUPLE_MATCH_EVENT_TOPIC = "CoupleMatchEvent";
 
-    public CoupleMatchEvent(Long coupleId) {
-        super(coupleId);
+    public CoupleMatchEvent(Long targetDomainId) {
+        super(targetDomainId);
     }
 
     @Override

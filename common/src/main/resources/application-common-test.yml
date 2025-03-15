@@ -5,9 +5,6 @@ spring:
     consumer:
       bootstrap-servers: "localhost:49092"
 
-cors:
-  allowedOrigins: http://localhost:3000
-
 token:
   secretKey: "dsakljqd1idj8qwjddj12idjdsakljqd1idj8qwjddj12idjdsakljqd1idj8qwjddj12idjdsakljqd1idj8qwjddj12idjdsakljqd1idj8qwjddj12idj"
   accessTokenExpirationMillis: 2000000

@@ -1,13 +1,13 @@
 package cupid.couple.domain.service;
 
+import cupid.common.evnet.CoupleMatchEvent;
+import cupid.common.evnet.publisher.DomainEventPublisher;
 import cupid.couple.domain.Arrow;
 import cupid.couple.domain.ArrowRepository;
 import cupid.couple.domain.Couple;
 import cupid.couple.domain.CoupleRepository;
-import cupid.couple.event.CoupleMatchEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,7 @@ public class Cupid {
 
     private final ArrowRepository arrowRepository;
     private final CoupleRepository coupleRepository;
-    private final ApplicationEventPublisher eventPublisher;
+    private final DomainEventPublisher eventPublisher;
 
     /**
      * 커플 매칭
@@ -36,7 +36,7 @@ public class Cupid {
             coupleRepository.save(couple);
             log.info("Successfully created Couple. id={}", couple.getId());
 
-            eventPublisher.publishEvent(new CoupleMatchEvent(couple.getId()));
+            eventPublisher.publishWithTx(new CoupleMatchEvent(couple.getId()));
             return MatchResult.SUCCESS;
         } catch (DataIntegrityViolationException e) {
             // 동시에 좋아요를 보내 발생하는 Couple 중복생성 오류, 해당 오류는 무시하면 됨

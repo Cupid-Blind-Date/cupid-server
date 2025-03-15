@@ -1,0 +1,28 @@
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        highlight_sql: true
+
+    hibernate:
+      ddl-auto: create
+
+  kafka:
+    consumer:
+      group-id: "cupid-chat-server-group"
+
+websocket:
+  allowedOrigins: http://localhost:3000
+
+cors:
+  allowedOrigins: http://localhost:3000
+
+logging:
+  level:
+    org.hibernate.orm.jdbc.bind: TRACE
+
+client:
+  math-server-internal-url: "http://localhost:8080/internal"

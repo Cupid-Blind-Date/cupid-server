@@ -19,7 +19,15 @@ dependencies {
     implementation(project(":common"))
     testImplementation(testFixtures(project(":common")))
 
-    implementation("org.springframework.boot:spring-boot-starter")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    implementation("org.springframework.boot:spring-boot-starter-websocket")
+
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    implementation("org.springframework.kafka:spring-kafka")
+
+    runtimeOnly("com.h2database:h2")
+    runtimeOnly("com.mysql:mysql-connector-j")
 }

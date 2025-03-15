@@ -20,8 +20,3 @@ cors:
 logging:
   level:
     org.hibernate.orm.jdbc.bind: TRACE
-
-
-token:
-  secretKey: "sssssssssssssssssssssssssssssssss"
-  accessTokenExpirationMillis: 2000000

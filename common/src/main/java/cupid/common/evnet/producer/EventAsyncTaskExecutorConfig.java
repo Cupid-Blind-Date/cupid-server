@@ -1,4 +1,4 @@
-package cupid.common.evnet.outbox;
+package cupid.common.evnet.producer;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;

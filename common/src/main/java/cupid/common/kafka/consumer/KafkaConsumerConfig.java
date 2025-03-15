@@ -38,9 +38,6 @@ public class KafkaConsumerConfig {
 
         // 메세지 유실을 방지하기 위해 earliest 로 설정
         configs.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-
-        configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         return configs;
     }
 

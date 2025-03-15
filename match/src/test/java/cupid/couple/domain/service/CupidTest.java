@@ -7,20 +7,20 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import cupid.common.evnet.DomainEvent;
+import cupid.common.evnet.publisher.DomainEventPublisher;
 import cupid.couple.domain.Arrow;
 import cupid.couple.domain.ArrowRepository;
 import cupid.couple.domain.Couple;
 import cupid.couple.domain.CoupleRepository;
 import cupid.couple.domain.LikeType;
+import cupid.support.UnitTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
-import cupid.support.UnitTest;
 
 @DisplayName("Cupid 은(는)")
 @SuppressWarnings("NonAsciiCharacters")
@@ -37,7 +37,7 @@ class CupidTest extends UnitTest {
     private CoupleRepository coupleRepository;
 
     @Mock
-    private ApplicationEventPublisher applicationEventPublisher;
+    private DomainEventPublisher domainEventPublisher;
 
     private Long myId = 1L;
     private Long targetId = 2L;
@@ -54,8 +54,8 @@ class CupidTest extends UnitTest {
 
         // then
         assertThat(result).isEqualTo(MatchResult.SUCCESS);
-        verify(applicationEventPublisher, times(1))
-                .publishEvent(any(DomainEvent.class));
+        verify(domainEventPublisher, times(1))
+                .publishWithTx(any(DomainEvent.class));
     }
 
     @Test
@@ -73,7 +73,7 @@ class CupidTest extends UnitTest {
     }
 
     @Test
-    void 상대방이_나에게_좋아요를_보낸_상태이나_이미_상대방과_내가_커플인_경우_로깅만_하고_별도의_처리는_하지_않는다() {
+    void 상대방이_나에게_좋아요를_보낸_상태이나_이미_상대방과_내가_커플인_경우_로깅후_별도의_처리를_하지_않는다() {
         // given
         given(arrowRepository.doesNotExistsTargetLikeArrow(targetId, myId))
                 .willReturn(false);

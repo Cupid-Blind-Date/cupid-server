@@ -1,1 +1,15 @@
-spring.application.name=chat
+server:
+  port: 8081
+
+spring:
+  profiles:
+    group:
+      local:
+        common-local
+
+      stage:
+
+      prod:
+
+
+    active: local
