@@ -2,6 +2,7 @@ package cupid.chat.domain;
 
 import static cupid.common.SQLRestrictionClause.DELETED_AT_IS_NULL;
 
+import cupid.common.domain.SoftDeletedDomain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +26,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class ChatRoom {
+public class ChatRoom extends SoftDeletedDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
