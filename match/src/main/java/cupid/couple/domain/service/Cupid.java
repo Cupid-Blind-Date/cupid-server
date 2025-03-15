@@ -1,10 +1,10 @@
 package cupid.couple.domain.service;
 
+import cupid.common.evnet.CoupleMatchEvent;
 import cupid.couple.domain.Arrow;
 import cupid.couple.domain.ArrowRepository;
 import cupid.couple.domain.Couple;
 import cupid.couple.domain.CoupleRepository;
-import cupid.couple.event.CoupleMatchEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
