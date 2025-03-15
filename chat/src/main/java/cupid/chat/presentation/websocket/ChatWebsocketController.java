@@ -40,11 +40,11 @@ public class ChatWebsocketController {
             @Payload ChatMessageRequest request,
             StompHeaderAccessor headerAccessor
     ) {
+        log.info("Try to send message. roomId: {}", roomId);
         Long memberId = (Long) headerAccessor.getSessionAttributes().get("memberId");
         if (memberId == null) {
             throw new ApplicationException(TokenExceptionCode.REQUIRED_TOKEN);
         }
-
         ChatMessage message = chatMessageService.saveMessage(request.toCommand(roomId, memberId));
         chatProducer.produce(message);
         log.info("Successfully produce chat message. chatId: {}", message.getId());

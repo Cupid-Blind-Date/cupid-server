@@ -1,6 +1,6 @@
 package cupid.common.evnet.producer;
 
-import static cupid.common.evnet.outbox.EventAsyncTaskExecutorConfig.EVENT_ASYNC_TASK_EXECUTOR;
+import static cupid.common.evnet.producer.EventAsyncTaskExecutorConfig.EVENT_ASYNC_TASK_EXECUTOR;
 
 import cupid.common.evnet.DomainEvent;
 import lombok.RequiredArgsConstructor;
