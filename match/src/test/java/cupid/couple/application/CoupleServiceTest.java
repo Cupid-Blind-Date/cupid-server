@@ -4,25 +4,25 @@ import static cupid.couple.domain.LikeType.DISLIKE;
 import static cupid.couple.domain.LikeType.LIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import cupid.common.evnet.DomainEventRepository;
 import cupid.couple.application.command.LikeCommand;
 import cupid.couple.domain.Arrow;
 import cupid.couple.domain.ArrowRepository;
 import cupid.couple.domain.Couple;
 import cupid.couple.domain.CoupleRepository;
 import cupid.couple.domain.service.MatchResult;
+import cupid.support.ApplicationWithKafkaTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import cupid.support.ApplicationTest;
 
-@Transactional
+
 @DisplayName("CoupleService 은(는)")
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(ReplaceUnderscores.class)
-class CoupleServiceTest extends ApplicationTest {
+class CoupleServiceTest extends ApplicationWithKafkaTest {
 
     @Autowired
     private CoupleService coupleService;
@@ -32,6 +32,9 @@ class CoupleServiceTest extends ApplicationTest {
 
     @Autowired
     private ArrowRepository arrowRepository;
+
+    @Autowired
+    private DomainEventRepository domainEventRepository;
 
     private Long myId = 10L;
     private Long targetId = 5L;
@@ -62,6 +65,7 @@ class CoupleServiceTest extends ApplicationTest {
         coupleService.like(likeCommand);
 
         // then
+        assertThat(domainEventRepository.findAll()).hasSize(1);
     }
 
     @Test
