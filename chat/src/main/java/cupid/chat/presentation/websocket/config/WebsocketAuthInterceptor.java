@@ -5,6 +5,7 @@ import static cupid.common.auth.Token.BEARER_PREFIX;
 import cupid.common.auth.TokenExceptionCode;
 import cupid.common.auth.TokenService;
 import cupid.common.exception.ApplicationException;
+import cupid.common.exception.InternalServerExceptionCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
@@ -26,8 +27,12 @@ public class WebsocketAuthInterceptor implements ChannelInterceptor {
     // https://docs.spring.io/spring-framework/reference/web/websocket/stomp/authentication-token-based.html 참고
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
-        log.info("Try to preSend Websocket Request");
+        log.info("Try to auth Websocket Request");
         StompHeaderAccessor headerAccessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
+        if (headerAccessor == null) {
+            log.error("Not found header accessor");
+            throw new ApplicationException(InternalServerExceptionCode.UNKNOWN_EXCEPTION);
+        }
         if (headerAccessor.getCommand() != StompCommand.CONNECT) {
             // 연결이 아닌 경우
             return message;

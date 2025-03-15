@@ -1,7 +1,7 @@
 package cupid.chat.presentation.websocket;
 
 
-import static cupid.chat.presentation.websocket.config.WebSocketConfig.CLIENT_DESTINATION_PREFIX;
+import static cupid.chat.presentation.websocket.config.WebSocketConfig.CLIENT_CHAT_SUBSCRIBE_PREFIX;
 import static cupid.kafka.consumer.ChatKafkaConsumerConfig.CHAT_CONTAINER_FACTORY;
 
 import cupid.chat.application.ChatMessageService;
@@ -60,7 +60,7 @@ public class ChatWebsocketController {
         Long messageId = message.chatMessageId();
         log.info("Try to consume chat message topic. messageId:{}, offset: {}", messageId, offset);
         Long roomId = message.roomId();
-        messagingTemplate.convertAndSend(CLIENT_DESTINATION_PREFIX + "/chat/" + roomId, message);
+        messagingTemplate.convertAndSend(CLIENT_CHAT_SUBSCRIBE_PREFIX + roomId, message);
         ack.acknowledge();
         log.info("Successfully consume chat message topic. messageId:{}, offset: {}", messageId, offset);
     }
