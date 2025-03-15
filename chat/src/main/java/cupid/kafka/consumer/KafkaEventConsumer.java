@@ -1,4 +1,4 @@
-package cupid.chat.kafka.consumer;
+package cupid.kafka.consumer;
 
 import static cupid.common.kafka.consumer.KafkaConsumerConfig.DOMAIN_EVENT_CONTAINER_FACTORY;
 

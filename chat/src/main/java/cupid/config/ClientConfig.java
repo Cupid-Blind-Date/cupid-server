@@ -1,4 +1,4 @@
-package cupid.chat.client.config;
+package cupid.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

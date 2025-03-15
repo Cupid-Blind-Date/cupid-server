@@ -1,4 +1,4 @@
-package cupid.chat.kafka.consumer;
+package cupid.chat.broker.consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

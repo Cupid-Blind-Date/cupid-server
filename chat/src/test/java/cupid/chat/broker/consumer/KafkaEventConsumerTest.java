@@ -1,4 +1,4 @@
-package cupid.chat.kafka.consumer;
+package cupid.chat.broker.consumer;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -9,6 +9,7 @@ import cupid.chat.application.ChatRoomService;
 import cupid.chat.client.CoupleClient;
 import cupid.chat.client.response.GetCoupleResponse;
 import cupid.common.kafka.KafkaDomainEventMessage;
+import cupid.kafka.consumer.KafkaEventConsumer;
 import cupid.support.UnitTest;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;

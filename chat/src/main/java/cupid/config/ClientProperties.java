@@ -1,4 +1,4 @@
-package cupid.chat.client.config;
+package cupid.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
