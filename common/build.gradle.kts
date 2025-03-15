@@ -44,12 +44,6 @@ dependencies {
     // MapStruct
     implementation("org.mapstruct:mapstruct:1.5.5.Final")
 
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
-
-    runtimeOnly("com.h2database:h2")
-    runtimeOnly("com.mysql:mysql-connector-j")
-
     testFixturesImplementation("org.springframework.boot:spring-boot-starter-test")
     testFixturesRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
