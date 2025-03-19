@@ -1,6 +1,6 @@
 package cupid.chat.domain;
 
-import static cupid.chat.exception.ChatExceptionCode.NO_AUTHORITY_TO_SEND_MESSAGE;
+import static cupid.chat.exception.ChatExceptionCode.NO_AUTHORITY_FOR_CHAT_ROOM;
 import static cupid.common.SQLRestrictionClause.DELETED_AT_IS_NULL;
 
 import cupid.common.domain.SoftDeletedDomain;
@@ -48,7 +48,7 @@ public class ChatRoom extends SoftDeletedDomain {
         // 내가 해당 채팅방에 참여하지 않은 경우
         boolean contains = participants.contains(senderId);
         if (!contains) {
-            throw new ApplicationException(NO_AUTHORITY_TO_SEND_MESSAGE);
+            throw new ApplicationException(NO_AUTHORITY_FOR_CHAT_ROOM);
         }
     }
 

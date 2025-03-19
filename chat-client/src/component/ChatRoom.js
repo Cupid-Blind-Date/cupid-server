@@ -13,7 +13,8 @@ const ChatRoom = ({ roomId, token }) => {
         const client = new Client({
             webSocketFactory: () => socket, // ✅ WebSocket 대신 SockJS 사용
             connectHeaders: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
+                RoomId: `${roomId}`
             },
             onConnect: () => {
                 console.log("✅ WebSocket 연결 성공");
