@@ -5,6 +5,7 @@ import static org.mockito.BDDMockito.given;
 
 import cupid.member.domain.Member;
 import cupid.member.domain.MemberRepository;
+import cupid.support.UnitTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -13,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.dao.DataIntegrityViolationException;
-import cupid.support.UnitTest;
 
 @DisplayName("MemberRegister 은(는)")
 @SuppressWarnings("NonAsciiCharacters")

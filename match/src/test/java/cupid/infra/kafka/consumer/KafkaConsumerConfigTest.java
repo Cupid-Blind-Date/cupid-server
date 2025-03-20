@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import cupid.common.kafka.KafkaDomainEventMessage;
 import cupid.common.kafka.deadletter.DeadLetterRepository;
 import cupid.common.kafka.producer.KafkaProducer;
+import cupid.support.ApplicationWithKafkaTest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +19,6 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
-import cupid.support.ApplicationWithKafkaTest;
 
 @DisplayName("카프카 컨슈머 설정 테스트 (KafkaConsumerConfig) 은(는)")
 @SuppressWarnings("NonAsciiCharacters")

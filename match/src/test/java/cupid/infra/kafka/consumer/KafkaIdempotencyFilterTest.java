@@ -8,6 +8,7 @@ import cupid.common.kafka.consumer.KafkaMessageConsumeHistory;
 import cupid.common.kafka.consumer.KafkaMessageProcessHistoryRepository;
 import cupid.common.kafka.deadletter.DeadLetter;
 import cupid.common.kafka.deadletter.DeadLetterRepository;
+import cupid.support.ApplicationTest;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -15,7 +16,6 @@ import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import cupid.support.ApplicationTest;
 
 @Transactional
 @DisplayName("KafkaIdempotencyFilter 은(는)")

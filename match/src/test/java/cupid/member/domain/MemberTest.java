@@ -3,12 +3,12 @@ package cupid.member.domain;
 import static com.navercorp.fixturemonkey.api.expression.JavaGetterMethodPropertySelector.javaGetter;
 import static cupid.member.exception.MemberExceptionCode.INVALID_CREDENTIALS;
 
+import cupid.support.UnitTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
-import cupid.support.UnitTest;
 
 @DisplayName("회원 (Member) 은(는)")
 @SuppressWarnings("NonAsciiCharacters")

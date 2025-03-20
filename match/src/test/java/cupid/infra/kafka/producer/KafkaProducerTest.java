@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 
 import cupid.common.exception.ApplicationException;
 import cupid.common.kafka.producer.KafkaProducer;
+import cupid.support.UnitTest;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import org.junit.jupiter.api.Assertions;
@@ -19,7 +20,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.kafka.core.KafkaTemplate;
-import cupid.support.UnitTest;
 
 @DisplayName("KafkaProducer 단위 테스트")
 @SuppressWarnings("NonAsciiCharacters")

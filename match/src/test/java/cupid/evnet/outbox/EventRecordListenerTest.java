@@ -8,13 +8,13 @@ import static org.mockito.Mockito.verify;
 import cupid.common.evnet.DomainEvent;
 import cupid.common.evnet.outbox.EventRecordListener;
 import cupid.common.evnet.outbox.EventRecorder;
+import cupid.support.UnitTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import cupid.support.UnitTest;
 
 @DisplayName("EventRecordListener 은(는)")
 @SuppressWarnings("NonAsciiCharacters")

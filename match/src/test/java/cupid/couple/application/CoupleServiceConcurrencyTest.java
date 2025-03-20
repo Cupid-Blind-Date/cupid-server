@@ -1,6 +1,7 @@
 package cupid.couple.application;
 
 import cupid.couple.application.command.LikeCommand;
+import cupid.support.ApplicationTest;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import cupid.support.ApplicationTest;
 
 @DisplayName("커플 매칭 동시성 테스트")
 @SuppressWarnings("NonAsciiCharacters")
