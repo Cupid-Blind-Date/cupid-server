@@ -53,7 +53,7 @@ public class WebsocketAuthorizationInterceptor implements ChannelInterceptor {
         Long targetId = room.getTargetId(memberId);
 
         // 세션에 roomId, TargetId 저장
-        putRoomId(headerAccessor, room.getId());
+        putRoomId(headerAccessor, roomId);
         putTargetId(headerAccessor, targetId);
         log.info("User {} authorized for chat room {}. targetId: {}", memberId, roomId, targetId);
     }

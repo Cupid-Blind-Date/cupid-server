@@ -27,29 +27,32 @@ public class WebsocketValidateRoomInterceptor implements ChannelInterceptor {
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         log.info("Try to validate room Websocket Request");
         StompHeaderAccessor headerAccessor = StompHeaderAccessorUtils.getStompHeaderAccessor(message);
-
         StompCommand command = headerAccessor.getCommand();
-
         // pub/sub 하는 요청이 아닌 경우
         if (command != StompCommand.SEND && command != StompCommand.SUBSCRIBE) {
             log.info("No need to validate room Websocket Request");
             return message;
         }
 
-        // 채팅방에 대한 pub/sub 이 아닌 경우 (ex - 예외 채널 구독)
+        // 채팅방에 pub/sub 하는 요청인 경우
         String destination = headerAccessor.getDestination();
         log.info("Websocket subscribe destination is {}", destination);
-        if (destination == null
-            || (!destination.startsWith(CLIENT_CHAT_SUBSCRIBE_PREFIX)
-                && !destination.startsWith(CLIENT_CHAT_PUBLISH_PREFIX))
-        ) {
-            log.info("No need to validate room Websocket Request");
+        if (isSubscribeOrPublishDestination(destination)) {
+            validateRoomId(headerAccessor);
             return message;
         }
 
-        // 채팅방에 pub/sub 하는 요청인 경우
-        validateRoomId(headerAccessor);
+        // 채팅방에 대한 pub/sub 이 아닌 경우 (ex - 예외 채널 구독)
+        log.info("No need to validate room Websocket Request");
         return message;
+    }
+
+    private boolean isSubscribeOrPublishDestination(String destination) {
+        if (destination == null) {
+            return false;
+        }
+        return destination.startsWith(CLIENT_CHAT_SUBSCRIBE_PREFIX)
+               || destination.startsWith(CLIENT_CHAT_PUBLISH_PREFIX);
     }
 
     private void validateRoomId(StompHeaderAccessor headerAccessor) {

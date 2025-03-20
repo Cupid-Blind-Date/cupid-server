@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class KafkaEventConsumer {
+public class KafkaConsumer {
 
     private final CoupleClient client;
     private final ChatRoomService chatRoomService;

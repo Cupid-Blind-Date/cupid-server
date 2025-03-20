@@ -36,7 +36,6 @@ public class WebsocketAuthenticationInterceptor implements ChannelInterceptor {
             authentication(headerAccessor);
             return message;
         }
-
         log.info("No need to authenticate Websocket Request");
         return message;
     }
