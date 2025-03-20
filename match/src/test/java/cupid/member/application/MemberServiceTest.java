@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import cupid.fixture.MemberFixture;
 import cupid.member.application.command.SignUpCommand;
 import cupid.member.domain.MemberRepository;
+import cupid.support.ApplicationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -16,7 +17,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import cupid.support.ApplicationTest;
 
 @Transactional
 @DisplayName("MemberService 은(는)")

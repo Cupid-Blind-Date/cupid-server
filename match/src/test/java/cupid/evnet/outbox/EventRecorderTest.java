@@ -7,6 +7,7 @@ import cupid.common.evnet.DomainEventRepository;
 import cupid.common.evnet.EventState;
 import cupid.common.evnet.outbox.EventRecorder;
 import cupid.evnet.mock.TestDomainEvent;
+import cupid.support.ApplicationTest;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -14,7 +15,6 @@ import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import cupid.support.ApplicationTest;
 
 @Transactional
 @DisplayName("EventRecorder 은(는)")

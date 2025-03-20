@@ -1,14 +1,11 @@
 package cupid.common.auth;
 
-import static cupid.common.auth.Token.BEARER_PREFIX;
-
 import cupid.common.exception.ApplicationException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -20,6 +17,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final TokenService tokenService;
+    private final BearerTokenExtractor bearerTokenExtractor;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -39,11 +37,11 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
         return tokenService.extractMemberId(token);
     }
 
-    private static String extractAccessToken(HttpServletRequest request) {
+    private String extractAccessToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
-            return bearerToken.substring(7);
+        if (bearerToken == null) {
+            throw new ApplicationException(TokenExceptionCode.REQUIRED_BEARER_TOKEN);
         }
-        throw new ApplicationException(TokenExceptionCode.REQUIRED_TOKEN);
+        return bearerTokenExtractor.extract(bearerToken);
     }
 }

@@ -14,13 +14,13 @@ import cupid.common.exception.ApplicationException;
 import cupid.common.kafka.KafkaDomainEventMessage;
 import cupid.common.kafka.producer.KafkaProducer;
 import cupid.evnet.mock.TestDomainEvent;
+import cupid.support.ApplicationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import cupid.support.ApplicationTest;
 
 @DisplayName("KafkaEventProducer 은(는)")
 @SuppressWarnings("NonAsciiCharacters")

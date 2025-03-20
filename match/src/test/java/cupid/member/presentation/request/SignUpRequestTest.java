@@ -1,11 +1,11 @@
 package cupid.member.presentation.request;
 
 import cupid.member.domain.Gender;
+import cupid.support.RequestDataTest;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import cupid.support.RequestDataTest;
 
 class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
 

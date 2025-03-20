@@ -7,8 +7,8 @@ import static cupid.common.auth.TokenExceptionCode.INVALID_TOKEN;
 import cupid.common.auth.Token;
 import cupid.common.auth.TokenProperty;
 import cupid.common.auth.TokenService;
-import org.junit.jupiter.api.Test;
 import cupid.support.UnitTest;
+import org.junit.jupiter.api.Test;
 
 class TokenServiceTest extends UnitTest {
 

@@ -1,7 +1,7 @@
 package cupid.chat.domain;
 
 public enum ChatMessageType {
-    STRING,
+    TEXT,
     IMAGE,
     FILE,
     VIDEO

@@ -10,6 +10,7 @@ import cupid.common.evnet.DomainEventRepository;
 import cupid.common.kafka.KafkaDomainEventMessage;
 import cupid.common.kafka.producer.KafkaProducer;
 import cupid.evnet.mock.TestEventService;
+import cupid.support.ApplicationTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +20,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import cupid.support.ApplicationTest;
 
 @DisplayName("EventProducerListener 은(는)")
 @SuppressWarnings("NonAsciiCharacters")

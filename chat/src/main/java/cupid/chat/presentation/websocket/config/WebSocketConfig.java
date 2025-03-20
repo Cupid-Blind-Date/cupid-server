@@ -24,11 +24,13 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public static final String CLIENT_SUBSCRIBE_PREFIX = "/sub";
     public static final String CLIENT_ERROR_SUBSCRIBE_PREFIX = "/queue";
     public static final String CLIENT_CHAT_SUBSCRIBE_PREFIX = "/sub/chat/";
+    public static final String CLIENT_CHAT_PUBLISH_PREFIX = "/pub/chat/";
 
     private final WebSocketProperties webSocketProperties;
-    private final WebsocketAuthInterceptor authInterceptor;
-    private final WebsocketEnterRoomInterceptor websocketEnterRoomInterceptor;
     private final WebsocketExceptionHandler webSocketExceptionHandler;
+    private final WebsocketAuthenticationInterceptor websocketAuthenticationInterceptor;
+    private final WebsocketAuthorizationInterceptor websocketAuthorizationInterceptor;
+    private final WebsocketValidateRoomInterceptor websocketValidateRoomInterceptor;
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
@@ -53,12 +55,15 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
             return;
         }
         registry.addEndpoint("/ws").setAllowedOrigins(webSocketProperties.allowedOrigins()).withSockJS();
-
     }
 
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.interceptors(authInterceptor, websocketEnterRoomInterceptor);
+        registration.interceptors(
+                websocketAuthenticationInterceptor,
+                websocketAuthorizationInterceptor,
+                websocketValidateRoomInterceptor
+        );
         registration.executor(websocketVirtualThreadTaskExecutor());
     }
 

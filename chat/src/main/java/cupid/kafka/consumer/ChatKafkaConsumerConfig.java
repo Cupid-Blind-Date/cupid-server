@@ -62,6 +62,7 @@ public class ChatKafkaConsumerConfig {
         ConcurrentKafkaListenerContainerFactory<String, ChatTopicMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
         // 수동 커밋
         factory.getContainerProperties().setAckMode(MANUAL_IMMEDIATE);
+
         factory.setConsumerFactory(chatTopicMessageConsumerFactory());
 
         // 파티션 수와 동일하게 맞춰야 성능이 좋음. 파티션에는 최대 1개의 스레드만 할당됨.

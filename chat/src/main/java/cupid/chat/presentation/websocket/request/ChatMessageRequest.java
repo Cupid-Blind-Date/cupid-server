@@ -8,10 +8,11 @@ public record ChatMessageRequest(
         String message,
         ChatMessageType chatMessageType
 ) {
-    public SendChatMessageCommand toCommand(Long roomId, Long senderId) {
+    public SendChatMessageCommand toCommand(Long roomId, Long senderId, Long targetId) {
         return new SendChatMessageCommand(
                 roomId,
                 senderId,
+                targetId,
                 message,
                 chatMessageType
         );
