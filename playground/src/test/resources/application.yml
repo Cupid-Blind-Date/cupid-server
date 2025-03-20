@@ -3,6 +3,10 @@ spring:
     group:
       test:
         common-test
+      requiresnewdeadlock1:
+        common-test
+      requiresnewdeadlock2:
+        common-test
     active: test
   jpa:
     show-sql: true
