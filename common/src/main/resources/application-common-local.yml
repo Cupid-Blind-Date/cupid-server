@@ -7,4 +7,4 @@ spring:
 
 token:
   secretKey: "dsakljqd1idj8qwjddj12idjdsakljqd1idj8qwjddj12idjdsakljqd1idj8qwjddj12idjdsakljqd1idj8qwjddj12idjdsakljqd1idj8qwjddj12idj"
-  accessTokenExpirationMillis: 2000000
+  accessTokenExpirationMillis: 2000000000

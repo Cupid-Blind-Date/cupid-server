@@ -3,7 +3,6 @@ package cupid.chat.application;
 import cupid.chat.application.command.SendChatMessageCommand;
 import cupid.chat.domain.ChatMessage;
 import cupid.chat.domain.ChatMessageRepository;
-import cupid.chat.domain.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ChatMessageService {
 
-    private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
 
     public ChatMessage saveMessage(SendChatMessageCommand command) {

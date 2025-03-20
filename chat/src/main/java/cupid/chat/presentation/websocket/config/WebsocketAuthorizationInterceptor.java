@@ -25,7 +25,6 @@ public class WebsocketAuthorizationInterceptor implements ChannelInterceptor {
 
     private final ChatRoomRepository chatRoomRepository;
 
-    // https://docs.spring.io/spring-framework/reference/web/websocket/stomp/authentication-token-based.html 참고
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         log.info("Try to authorization Websocket Request");
