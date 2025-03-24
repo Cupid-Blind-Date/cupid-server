@@ -1,7 +1,7 @@
-package cupid.common.evnet.outbox;
+package cupid.common.event.outbox;
 
-import cupid.common.evnet.DomainEvent;
-import cupid.common.evnet.DomainEventRepository;
+import cupid.common.event.DomainEvent;
+import cupid.common.event.DomainEventRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;

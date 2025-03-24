@@ -1,7 +1,7 @@
 package cupid.couple.domain.service;
 
-import cupid.common.evnet.CoupleMatchEvent;
-import cupid.common.evnet.publisher.DomainEventPublisher;
+import cupid.common.event.CoupleMatchEvent;
+import cupid.common.event.publisher.DomainEventPublisher;
 import cupid.couple.domain.Arrow;
 import cupid.couple.domain.ArrowRepository;
 import cupid.couple.domain.Couple;

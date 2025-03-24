@@ -1,10 +1,10 @@
-package cupid.common.evnet.producer;
+package cupid.common.event.producer;
 
 
 import static cupid.common.exception.InternalServerExceptionCode.UNKNOWN_EXCEPTION;
 
-import cupid.common.evnet.DomainEvent;
-import cupid.common.evnet.DomainEventRepository;
+import cupid.common.event.DomainEvent;
+import cupid.common.event.DomainEventRepository;
 import cupid.common.exception.ApplicationException;
 import cupid.common.kafka.KafkaDomainEventMessage;
 import cupid.common.kafka.producer.KafkaProducer;

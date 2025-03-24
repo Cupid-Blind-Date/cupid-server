@@ -1,6 +1,6 @@
 package cupid.common.kafka;
 
-import cupid.common.evnet.DomainEvent;
+import cupid.common.event.DomainEvent;
 
 public record KafkaDomainEventMessage(
         Long id,

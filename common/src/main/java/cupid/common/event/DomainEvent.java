@@ -1,4 +1,4 @@
-package cupid.common.evnet;
+package cupid.common.event;
 
 import static cupid.common.SQLRestrictionClause.DELETED_AT_IS_NULL;
 import static jakarta.persistence.EnumType.STRING;

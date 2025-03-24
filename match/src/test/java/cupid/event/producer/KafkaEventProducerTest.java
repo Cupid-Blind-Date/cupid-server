@@ -1,19 +1,19 @@
-package cupid.evnet.producer;
+package cupid.event.producer;
 
-import static cupid.common.evnet.EventState.PRODUCE_FAIL;
-import static cupid.common.evnet.EventState.PRODUCE_SUCCESS;
+import static cupid.common.event.EventState.PRODUCE_FAIL;
+import static cupid.common.event.EventState.PRODUCE_SUCCESS;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.willThrow;
 
-import cupid.common.evnet.DomainEventRepository;
-import cupid.common.evnet.EventState;
-import cupid.common.evnet.producer.KafkaEventProducer;
+import cupid.common.event.DomainEventRepository;
+import cupid.common.event.EventState;
+import cupid.common.event.producer.KafkaEventProducer;
 import cupid.common.exception.ApplicationException;
 import cupid.common.kafka.KafkaDomainEventMessage;
 import cupid.common.kafka.producer.KafkaProducer;
-import cupid.evnet.mock.TestDomainEvent;
+import cupid.event.mock.TestDomainEvent;
 import cupid.support.ApplicationTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;

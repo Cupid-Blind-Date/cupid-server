@@ -1,4 +1,4 @@
-package cupid.evnet.mock;
+package cupid.event.mock;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;

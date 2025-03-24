@@ -1,4 +1,4 @@
-package cupid.common.evnet.producer;
+package cupid.common.event.producer;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;

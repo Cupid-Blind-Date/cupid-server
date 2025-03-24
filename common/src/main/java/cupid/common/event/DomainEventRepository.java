@@ -1,6 +1,6 @@
-package cupid.common.evnet;
+package cupid.common.event;
 
-import static cupid.common.evnet.exception.DomainEventExceptionCode.NOT_FOUND_DOMAIN_EVENT;
+import static cupid.common.event.exception.DomainEventExceptionCode.NOT_FOUND_DOMAIN_EVENT;
 
 import cupid.common.exception.ApplicationException;
 import java.util.Optional;
