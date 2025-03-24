@@ -69,13 +69,13 @@ class ChatMessageServiceTest extends ApplicationTest {
         @Test
         void 채팅방에_대한_권한이_없으면_예외() {
             assertDoesNotThrow(() -> {
-                chatMessageService.readAllMessage(윈터_ID, chatRoomId);
+                chatMessageService.readAllMessages(윈터_ID, chatRoomId);
             });
             assertDoesNotThrow(() -> {
-                chatMessageService.readAllMessage(동훈_ID, chatRoomId);
+                chatMessageService.readAllMessages(동훈_ID, chatRoomId);
             });
             assertThatThrownBy(() -> {
-                chatMessageService.readAllMessage(3L, chatRoomId);
+                chatMessageService.readAllMessages(3L, chatRoomId);
             });
         }
 
@@ -99,7 +99,7 @@ class ChatMessageServiceTest extends ApplicationTest {
             ));
 
             // when
-            chatMessageService.readAllMessage(윈터_ID, chatRoomId);
+            chatMessageService.readAllMessages(윈터_ID, chatRoomId);
 
             // then
             assertThat(chatMessageRepository.findAll())

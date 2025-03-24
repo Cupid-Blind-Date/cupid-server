@@ -32,7 +32,7 @@ public class ChatMessageService {
     /**
      * 채팅방 입장시 호출. 채팅방에 입장하면 모든 메시지를 읽음 처리한다.
      */
-    public void readAllMessage(
+    public void readAllMessages(
             Long memberId,
             Long chatRoomId
     ) {

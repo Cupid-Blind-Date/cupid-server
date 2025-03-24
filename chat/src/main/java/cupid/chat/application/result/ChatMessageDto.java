@@ -2,8 +2,6 @@ package cupid.chat.application.result;
 
 import cupid.chat.domain.ChatMessage;
 import cupid.chat.domain.ChatMessageType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 
 public record ChatMessageDto(
         Long id,
@@ -11,7 +9,6 @@ public record ChatMessageDto(
         Long senderId,
         Long targetId,
         String message,
-        @Enumerated(EnumType.STRING)
         ChatMessageType chatMessageType,
         boolean read
 ) {
