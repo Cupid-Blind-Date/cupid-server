@@ -8,18 +8,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/chat/{chatroomId}/messages")
 @RestController
 public class ChatMessageController {
 
     private final ChatMessageService chatMessageService;
 
-    @PostMapping("/read")
+    @PostMapping("/chat/{chatRoomId}/messages/read")
     public void readAllMessages(
             @PathVariable("chatRoomId") Long chatroomId,
             @Auth Long memberId
@@ -27,12 +25,12 @@ public class ChatMessageController {
         chatMessageService.readAllMessages(memberId, chatroomId);
     }
 
-    @GetMapping
+    @GetMapping("/chat/{chatRoomId}/messages")
     public Page<ChatMessageResponse> findMessages(
             @PathVariable("chatRoomId") Long chatroomId,
             @Auth Long memberId,
-            @RequestParam(name = "lastReadId") Long lastReadId,
-            @RequestParam(name = "size", defaultValue = "10") int size
+            @RequestParam(name = "lastReadId", required = false) Long lastReadId,
+            @RequestParam(name = "size", defaultValue = "10", required = false) int size
     ) {
         return chatMessageService.findPreviousMessages(lastReadId, memberId, chatroomId, size)
                 .map(ChatMessageResponse::from);

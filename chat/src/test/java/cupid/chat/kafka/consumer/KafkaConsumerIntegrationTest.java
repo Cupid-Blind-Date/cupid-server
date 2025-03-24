@@ -1,18 +1,18 @@
-package cupid.kafka.consumer;
+package cupid.chat.kafka.consumer;
 
-import static cupid.chat.presentation.websocket.config.WebSocketConfig.CLIENT_CHAT_SUBSCRIBE_PREFIX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import cupid.chat.application.ChatProducer;
 import cupid.chat.client.CoupleClient;
 import cupid.chat.client.response.GetCoupleResponse;
 import cupid.chat.domain.ChatMessage;
 import cupid.chat.domain.ChatMessageType;
 import cupid.chat.domain.ChatRoomRepository;
-import cupid.chat.presentation.websocket.ChatTopicMessage;
+import cupid.chat.kafka.producer.SendChatProducer;
+import cupid.chat.kafka.topic.SendChatTopicMessage;
+import cupid.chat.presentation.websocket.channel.ChattingChannelConfig.SendChatChannel;
 import cupid.common.event.CoupleMatchEvent;
 import cupid.common.event.publisher.DomainEventPublisher;
 import cupid.support.ApplicationWithKafkaTest;
@@ -42,7 +42,7 @@ class KafkaConsumerIntegrationTest extends ApplicationWithKafkaTest {
     private SimpMessagingTemplate messagingTemplate;
 
     @Autowired
-    private ChatProducer chatProducer;
+    private SendChatProducer sendChatProducer;
 
     @Test
     void 커플_매치_이벤트를_받아_채팅방을_생성한다() {
@@ -68,12 +68,12 @@ class KafkaConsumerIntegrationTest extends ApplicationWithKafkaTest {
                 "mesasge",
                 ChatMessageType.TEXT
         );
-        chatProducer.produce(chatMessage);
-        ChatTopicMessage message = ChatTopicMessage.from(chatMessage);
-        waitingConsumeTopicSync(ChatProducer.CHAT_TOPIC);
+        sendChatProducer.produce(chatMessage);
+        SendChatTopicMessage message = SendChatTopicMessage.from(chatMessage);
+        waitingConsumeTopicSync(SendChatProducer.SEND_CHAT_TOPIC);
 
         // then
         verify(messagingTemplate, times(1))
-                .convertAndSend(CLIENT_CHAT_SUBSCRIBE_PREFIX + 1L, message);
+                .convertAndSend(SendChatChannel.SUB + 1L, message);
     }
 }

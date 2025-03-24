@@ -1,12 +1,12 @@
 package cupid.chat.presentation.websocket.config;
 
 import static cupid.chat.exception.ChatExceptionCode.NO_AUTHORITY_FOR_CHAT_ROOM;
-import static cupid.chat.presentation.websocket.config.WebSocketConfig.CLIENT_CHAT_PUBLISH_PREFIX;
-import static cupid.chat.presentation.websocket.config.WebSocketConfig.CLIENT_CHAT_SUBSCRIBE_PREFIX;
 import static cupid.chat.presentation.websocket.utils.StompHeaderAccessorUtils.getDestinationChatRoomId;
 import static cupid.chat.presentation.websocket.utils.StompHeaderAccessorUtils.getRoomId;
 
 import cupid.chat.exception.ChatExceptionCode;
+import cupid.chat.presentation.websocket.channel.ChattingChannelConfig.ReadChatChannel;
+import cupid.chat.presentation.websocket.channel.ChattingChannelConfig.SendChatChannel;
 import cupid.chat.presentation.websocket.utils.StompHeaderAccessorUtils;
 import cupid.common.exception.ApplicationException;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class WebsocketValidateRoomInterceptor implements ChannelInterceptor {
         // 채팅방에 pub/sub 하는 요청인 경우
         String destination = headerAccessor.getDestination();
         log.info("Websocket subscribe destination is {}", destination);
-        if (isSubscribeOrPublishDestination(destination)) {
+        if (isSubscribeOrPublishChatRoomDestination(destination)) {
             validateRoomId(headerAccessor);
             return message;
         }
@@ -47,12 +47,11 @@ public class WebsocketValidateRoomInterceptor implements ChannelInterceptor {
         return message;
     }
 
-    private boolean isSubscribeOrPublishDestination(String destination) {
+    private boolean isSubscribeOrPublishChatRoomDestination(String destination) {
         if (destination == null) {
             return false;
         }
-        return destination.startsWith(CLIENT_CHAT_SUBSCRIBE_PREFIX)
-               || destination.startsWith(CLIENT_CHAT_PUBLISH_PREFIX);
+        return SendChatChannel.accept(destination) || ReadChatChannel.accept(destination);
     }
 
     private void validateRoomId(StompHeaderAccessor headerAccessor) {

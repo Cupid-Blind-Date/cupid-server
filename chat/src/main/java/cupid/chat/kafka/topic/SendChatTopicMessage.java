@@ -1,10 +1,10 @@
-package cupid.chat.presentation.websocket;
+package cupid.chat.kafka.topic;
 
 import cupid.chat.domain.ChatMessage;
 import cupid.chat.domain.ChatMessageType;
 import java.time.LocalDateTime;
 
-public record ChatTopicMessage(
+public record SendChatTopicMessage(
         Long chatMessageId,
         Long roomId,
         Long senderId,
@@ -13,8 +13,8 @@ public record ChatTopicMessage(
         ChatMessageType chatMessageType,
         LocalDateTime createdDate
 ) {
-    public static ChatTopicMessage from(ChatMessage chatMessage) {
-        return new ChatTopicMessage(
+    public static SendChatTopicMessage from(ChatMessage chatMessage) {
+        return new SendChatTopicMessage(
                 chatMessage.getId(),
                 chatMessage.getChatRoomId(),
                 chatMessage.getSenderId(),
