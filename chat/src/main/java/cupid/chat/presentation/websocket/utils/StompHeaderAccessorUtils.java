@@ -1,9 +1,8 @@
 package cupid.chat.presentation.websocket.utils;
 
-import static cupid.chat.presentation.websocket.config.WebSocketConfig.CLIENT_CHAT_PUBLISH_PREFIX;
-import static cupid.chat.presentation.websocket.config.WebSocketConfig.CLIENT_CHAT_SUBSCRIBE_PREFIX;
-
 import cupid.chat.exception.ChatExceptionCode;
+import cupid.chat.presentation.websocket.channel.ChattingChannelConfig.ReadChatChannel;
+import cupid.chat.presentation.websocket.channel.ChattingChannelConfig.SendChatChannel;
 import cupid.common.exception.ApplicationException;
 import cupid.common.exception.InternalServerExceptionCode;
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +52,10 @@ public final class StompHeaderAccessorUtils {
 
     public static String getDestinationChatRoomId(StompHeaderAccessor headerAccessor) {
         String destination = headerAccessor.getDestination();
-        return destination.replace(CLIENT_CHAT_SUBSCRIBE_PREFIX, "")
-                .replace(CLIENT_CHAT_PUBLISH_PREFIX, "");
+        return destination
+                .replace(SendChatChannel.SUB, "")
+                .replace(SendChatChannel.PUB, "")
+                .replace(ReadChatChannel.SUB, "")
+                .replace(ReadChatChannel.PUB, "");
     }
 }

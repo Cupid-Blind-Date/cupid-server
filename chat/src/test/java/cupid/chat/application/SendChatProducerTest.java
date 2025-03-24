@@ -8,7 +8,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import cupid.chat.domain.ChatMessage;
-import cupid.chat.presentation.websocket.ChatTopicMessage;
+import cupid.chat.kafka.producer.SendChatProducer;
+import cupid.chat.kafka.topic.SendChatTopicMessage;
 import cupid.common.exception.ApplicationException;
 import cupid.common.exception.ExceptionCode;
 import cupid.common.kafka.producer.KafkaProducer;
@@ -20,16 +21,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-@DisplayName("ChatProducer 은(는)")
+@DisplayName("SendChatProducer 은(는)")
 @SuppressWarnings("NonAsciiCharacters")
 @DisplayNameGeneration(ReplaceUnderscores.class)
-class ChatProducerTest extends UnitTest {
+class SendChatProducerTest extends UnitTest {
 
     @InjectMocks
-    private ChatProducer chatProducer;
+    private SendChatProducer sendChatProducer;
 
     @Mock
-    private KafkaProducer<ChatTopicMessage> kafkaProducer;
+    private KafkaProducer<SendChatTopicMessage> kafkaProducer;
 
     @Test
     void 채팅_메세지를_카프카로_전송한다() {
@@ -38,11 +39,11 @@ class ChatProducerTest extends UnitTest {
                 .sample();
 
         // when
-        chatProducer.produce(message);
+        sendChatProducer.produce(message);
 
         // then
         verify(kafkaProducer, times(1))
-                .produce(ChatProducer.CHAT_TOPIC, ChatTopicMessage.from(message));
+                .produce(SendChatProducer.SEND_CHAT_TOPIC, SendChatTopicMessage.from(message));
     }
 
     @Test
@@ -50,14 +51,14 @@ class ChatProducerTest extends UnitTest {
         // given
         ChatMessage message = sut.giveMeBuilder(ChatMessage.class)
                 .sample();
-        ChatTopicMessage from = ChatTopicMessage.from(message);
+        SendChatTopicMessage from = SendChatTopicMessage.from(message);
         willThrow(RuntimeException.class)
                 .given(kafkaProducer)
-                .produce(ChatProducer.CHAT_TOPIC, from);
+                .produce(SendChatProducer.SEND_CHAT_TOPIC, from);
 
         // when & then
         ExceptionCode code = assertThrows(ApplicationException.class, () -> {
-            chatProducer.produce(message);
+            sendChatProducer.produce(message);
         }).getCode();
         assertThat(code).isEqualTo(UNKNOWN_EXCEPTION);
     }

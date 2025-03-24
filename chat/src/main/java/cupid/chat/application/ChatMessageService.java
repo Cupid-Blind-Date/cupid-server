@@ -60,4 +60,11 @@ public class ChatMessageService {
         return chatMessageRepository.findAllByRoomAndTargetAndIdBefore(chatRoomId, lastReadId, pageRequest)
                 .map(ChatMessageDto::from);
     }
+
+    public ChatMessage read(Long messageId) {
+        ChatMessage message = chatMessageRepository.getById(messageId);
+        message.processRead();
+        chatMessageRepository.save(message);
+        return message;
+    }
 }

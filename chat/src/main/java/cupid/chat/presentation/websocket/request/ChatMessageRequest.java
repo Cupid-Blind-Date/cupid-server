@@ -4,7 +4,6 @@ import cupid.chat.application.command.SendChatMessageCommand;
 import cupid.chat.domain.ChatMessageType;
 
 public record ChatMessageRequest(
-        Long targetId,
         String message,
         ChatMessageType chatMessageType
 ) {

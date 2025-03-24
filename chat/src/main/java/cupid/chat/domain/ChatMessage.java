@@ -52,4 +52,8 @@ public class ChatMessage extends SoftDeletedDomain {
         this.chatMessageType = chatMessageType;
         this.read = false;
     }
+
+    public void processRead() {
+        this.read = true;
+    }
 }

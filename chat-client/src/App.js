@@ -10,7 +10,7 @@ const App = () => {
         <Router>
             <Routes>
                 <Route path="/" element={<Login setToken={setToken} />} />
-                <Route path="/chatroom" element={token ? <ChatRoom roomId={1} token={token} /> : <Navigate to="/" />} />
+                <Route path="/chatroom" element={token ? <ChatRoom roomId={1} /> : <Navigate to="/" />} />
             </Routes>
         </Router>
     );

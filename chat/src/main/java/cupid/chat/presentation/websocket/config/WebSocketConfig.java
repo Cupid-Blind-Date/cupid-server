@@ -1,5 +1,8 @@
 package cupid.chat.presentation.websocket.config;
 
+import cupid.chat.presentation.websocket.channel.ChattingChannelConfig.ErrorChannel;
+import cupid.chat.presentation.websocket.channel.ChattingChannelConfig.ReadChatChannel;
+import cupid.chat.presentation.websocket.channel.ChattingChannelConfig.SendChatChannel;
 import cupid.chat.presentation.websocket.exception.WebsocketExceptionHandler;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -21,11 +24,6 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    public static final String CLIENT_SUBSCRIBE_PREFIX = "/sub";
-    public static final String CLIENT_ERROR_SUBSCRIBE_PREFIX = "/queue";
-    public static final String CLIENT_CHAT_SUBSCRIBE_PREFIX = "/sub/chat/";
-    public static final String CLIENT_CHAT_PUBLISH_PREFIX = "/pub/chat/";
-
     private final WebSocketProperties webSocketProperties;
     private final WebsocketExceptionHandler webSocketExceptionHandler;
     private final WebsocketAuthenticationInterceptor websocketAuthenticationInterceptor;
@@ -38,7 +36,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
         // Spring 에서 제공해주는 내장 STOMP 브로커 사용
         // 클라이언트는 /sub/~~ 를 구독한다. (stompClient.subscribe('/sub/~~~'))
-        registry.enableSimpleBroker(CLIENT_SUBSCRIBE_PREFIX, CLIENT_ERROR_SUBSCRIBE_PREFIX);
+        registry.enableSimpleBroker(
+                ErrorChannel.SUB,
+                SendChatChannel.SUB,
+                ReadChatChannel.SUB
+        );
 
         // 클라이언트가 메시지를 보낼 때 사용 (stompClient.send('/pub/~~~'))
         registry.setApplicationDestinationPrefixes("/pub");

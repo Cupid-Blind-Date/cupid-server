@@ -1,8 +1,9 @@
-package cupid.kafka.consumer;
+package cupid.chat.kafka.consumer;
 
 import static org.springframework.kafka.listener.ContainerProperties.AckMode.MANUAL_IMMEDIATE;
 
-import cupid.chat.presentation.websocket.ChatTopicMessage;
+import cupid.chat.kafka.topic.ReadChatTopicMessage;
+import cupid.chat.kafka.topic.SendChatTopicMessage;
 import cupid.common.kafka.consumer.KafkaConsumerProperty;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +26,8 @@ import org.springframework.util.backoff.FixedBackOff;
 @Configuration
 public class ChatKafkaConsumerConfig {
 
-    public static final String CHAT_CONTAINER_FACTORY = "chatContainerFactory";
+    public static final String SEND_CHAT_CONTAINER_FACTORY = "sendChatContainerFactory";
+    public static final String READ_CHAT_CONTAINER_FACTORY = "readChatContainerFactory";
 
     private final KafkaConsumerProperty property;
 
@@ -48,22 +50,53 @@ public class ChatKafkaConsumerConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, ChatTopicMessage> chatTopicMessageConsumerFactory() {
+    public ConsumerFactory<String, SendChatTopicMessage> sendChatTopicMessageConsumerFactory() {
         Map<String, Object> configs = getChatConfig();
         return new DefaultKafkaConsumerFactory<>(
                 configs,
                 new StringDeserializer(),
-                new JsonDeserializer<>(ChatTopicMessage.class, false)
+                new JsonDeserializer<>(SendChatTopicMessage.class, false)
         );
     }
 
-    @Bean(CHAT_CONTAINER_FACTORY)
-    public ConcurrentKafkaListenerContainerFactory<String, ChatTopicMessage> chatContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, ChatTopicMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    @Bean(SEND_CHAT_CONTAINER_FACTORY)
+    public ConcurrentKafkaListenerContainerFactory<String, SendChatTopicMessage> sendChatContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, SendChatTopicMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
         // 수동 커밋
         factory.getContainerProperties().setAckMode(MANUAL_IMMEDIATE);
 
-        factory.setConsumerFactory(chatTopicMessageConsumerFactory());
+        factory.setConsumerFactory(sendChatTopicMessageConsumerFactory());
+
+        // 파티션 수와 동일하게 맞춰야 성능이 좋음. 파티션에는 최대 1개의 스레드만 할당됨.
+        factory.setConcurrency(1);
+
+        // 예외처리 핸들리
+        // 1초 간격 2번 재시도
+        FixedBackOff fixedBackOff = new FixedBackOff(1000, 2);
+        DefaultErrorHandler defaultErrorHandler = new DefaultErrorHandler((consumerRecord, e) -> {
+            log.error("Unexpected exception while consume chat message topic. offset: {}", consumerRecord.offset());
+        }, fixedBackOff);
+        factory.setCommonErrorHandler(defaultErrorHandler);
+        return factory;
+    }
+
+    @Bean
+    public ConsumerFactory<String, ReadChatTopicMessage> readChatTopicMessageConsumerFactory() {
+        Map<String, Object> configs = getChatConfig();
+        return new DefaultKafkaConsumerFactory<>(
+                configs,
+                new StringDeserializer(),
+                new JsonDeserializer<>(ReadChatTopicMessage.class, false)
+        );
+    }
+
+    @Bean(READ_CHAT_CONTAINER_FACTORY)
+    public ConcurrentKafkaListenerContainerFactory<String, ReadChatTopicMessage> readChatContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, ReadChatTopicMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        // 수동 커밋
+        factory.getContainerProperties().setAckMode(MANUAL_IMMEDIATE);
+
+        factory.setConsumerFactory(readChatTopicMessageConsumerFactory());
 
         // 파티션 수와 동일하게 맞춰야 성능이 좋음. 파티션에는 최대 1개의 스레드만 할당됨.
         factory.setConcurrency(1);

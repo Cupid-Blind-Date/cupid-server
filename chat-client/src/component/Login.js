@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
-const Login = ({setToken}) => {
+const Login = ({ setToken }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -14,7 +14,15 @@ const Login = ({setToken}) => {
                 password
             });
 
-            setToken(response.data.accessToken);
+            const { accessToken, memberId } = response.data;
+
+            // ✅ localStorage 저장
+            localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("memberId", memberId);
+
+            // 필요하다면 전역 상태로도 저장
+            setToken(accessToken);
+
             navigate("/chatroom");
         } catch (error) {
             console.error("Login failed", error);
@@ -40,4 +48,5 @@ const Login = ({setToken}) => {
         </div>
     );
 };
+
 export default Login;
