@@ -1,6 +1,6 @@
-package cupid.common.evnet.outbox;
+package cupid.common.event.outbox;
 
-import cupid.common.evnet.DomainEvent;
+import cupid.common.event.DomainEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

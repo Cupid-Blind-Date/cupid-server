@@ -1,8 +1,8 @@
-package cupid.common.evnet.producer;
+package cupid.common.event.producer;
 
-import static cupid.common.evnet.producer.EventAsyncTaskExecutorConfig.EVENT_ASYNC_TASK_EXECUTOR;
+import static cupid.common.event.producer.EventAsyncTaskExecutorConfig.EVENT_ASYNC_TASK_EXECUTOR;
 
-import cupid.common.evnet.DomainEvent;
+import cupid.common.event.DomainEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;

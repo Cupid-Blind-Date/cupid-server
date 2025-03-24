@@ -1,4 +1,4 @@
-package cupid.common.evnet;
+package cupid.common.event;
 
 public enum EventState {
 

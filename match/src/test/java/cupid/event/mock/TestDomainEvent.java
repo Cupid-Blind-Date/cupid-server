@@ -1,7 +1,7 @@
-package cupid.evnet.mock;
+package cupid.event.mock;
 
-import cupid.common.evnet.DomainEvent;
-import cupid.common.evnet.EventState;
+import cupid.common.event.DomainEvent;
+import cupid.common.event.EventState;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 

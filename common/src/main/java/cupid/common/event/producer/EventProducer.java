@@ -1,6 +1,6 @@
-package cupid.common.evnet.producer;
+package cupid.common.event.producer;
 
-import cupid.common.evnet.DomainEvent;
+import cupid.common.event.DomainEvent;
 
 public interface EventProducer {
 

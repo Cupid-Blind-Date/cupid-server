@@ -1,15 +1,15 @@
-package cupid.evnet.producer;
+package cupid.event.producer;
 
-import static cupid.common.evnet.EventState.PRODUCE_FAIL;
-import static cupid.common.evnet.EventState.PRODUCE_SUCCESS;
+import static cupid.common.event.EventState.PRODUCE_FAIL;
+import static cupid.common.event.EventState.PRODUCE_SUCCESS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.willThrow;
 
-import cupid.common.evnet.DomainEventRepository;
+import cupid.common.event.DomainEventRepository;
 import cupid.common.kafka.KafkaDomainEventMessage;
 import cupid.common.kafka.producer.KafkaProducer;
-import cupid.evnet.mock.TestEventService;
+import cupid.event.mock.TestEventService;
 import cupid.support.ApplicationTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Disabled;

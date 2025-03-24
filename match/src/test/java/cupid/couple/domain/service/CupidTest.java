@@ -6,8 +6,8 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import cupid.common.evnet.DomainEvent;
-import cupid.common.evnet.publisher.DomainEventPublisher;
+import cupid.common.event.DomainEvent;
+import cupid.common.event.publisher.DomainEventPublisher;
 import cupid.couple.domain.Arrow;
 import cupid.couple.domain.ArrowRepository;
 import cupid.couple.domain.Couple;

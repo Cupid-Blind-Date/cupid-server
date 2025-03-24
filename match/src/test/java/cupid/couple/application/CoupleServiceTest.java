@@ -4,7 +4,7 @@ import static cupid.couple.domain.LikeType.DISLIKE;
 import static cupid.couple.domain.LikeType.LIKE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import cupid.common.evnet.DomainEventRepository;
+import cupid.common.event.DomainEventRepository;
 import cupid.couple.application.command.LikeCommand;
 import cupid.couple.domain.Arrow;
 import cupid.couple.domain.ArrowRepository;

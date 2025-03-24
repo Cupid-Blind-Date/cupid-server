@@ -1,13 +1,13 @@
-package cupid.evnet.outbox;
+package cupid.event.outbox;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import cupid.common.evnet.DomainEvent;
-import cupid.common.evnet.outbox.EventRecordListener;
-import cupid.common.evnet.outbox.EventRecorder;
+import cupid.common.event.DomainEvent;
+import cupid.common.event.outbox.EventRecordListener;
+import cupid.common.event.outbox.EventRecorder;
 import cupid.support.UnitTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;

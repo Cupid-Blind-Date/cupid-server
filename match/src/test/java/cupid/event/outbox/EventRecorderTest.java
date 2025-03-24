@@ -1,12 +1,12 @@
-package cupid.evnet.outbox;
+package cupid.event.outbox;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import cupid.common.evnet.DomainEvent;
-import cupid.common.evnet.DomainEventRepository;
-import cupid.common.evnet.EventState;
-import cupid.common.evnet.outbox.EventRecorder;
-import cupid.evnet.mock.TestDomainEvent;
+import cupid.common.event.DomainEvent;
+import cupid.common.event.DomainEventRepository;
+import cupid.common.event.EventState;
+import cupid.common.event.outbox.EventRecorder;
+import cupid.event.mock.TestDomainEvent;
 import cupid.support.ApplicationTest;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;

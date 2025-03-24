@@ -1,4 +1,4 @@
-package cupid.common.evnet.exception;
+package cupid.common.event.exception;
 
 import cupid.common.exception.ExceptionCode;
 import org.springframework.http.HttpStatus;

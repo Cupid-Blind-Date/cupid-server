@@ -9,7 +9,7 @@ import cupid.chat.client.CoupleClient;
 import cupid.chat.client.response.GetCoupleResponse;
 import cupid.chat.presentation.websocket.ChatSender;
 import cupid.chat.presentation.websocket.ChatTopicMessage;
-import cupid.common.evnet.CoupleMatchEvent;
+import cupid.common.event.CoupleMatchEvent;
 import cupid.common.kafka.KafkaDomainEventMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
