@@ -22,6 +22,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
+    // mybatis
+    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3")
+    
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
     implementation("org.springframework.boot:spring-boot-starter-cache")
