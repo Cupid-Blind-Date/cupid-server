@@ -1,4 +1,9 @@
 spring:
+  datasource:
+    url: jdbc:mysql://localhost:3307/match_db
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
     properties:
@@ -8,11 +13,11 @@ spring:
         highlight_sql: true
 
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
 
   kafka:
     consumer:
-      group-id: "cupid-group"
+      group-id: "cupid-match-server-group"
 
 
 redis:

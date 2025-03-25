@@ -23,7 +23,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Table(
         name = "chat_room",
         uniqueConstraints = {
-                @UniqueConstraint(name = "unique_chat_room_higher_id_lower_id", columnNames = {"higherId", "lowerId"})
+                @UniqueConstraint(name = "UK_chat_room_higher_id_lower_id", columnNames = {"higherId", "lowerId"})
         }
 )
 @Getter

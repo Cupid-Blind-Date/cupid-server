@@ -8,8 +8,12 @@ spring:
         common-local
 
       stage:
+        common-local
 
       prod:
-
-
     active: local
+
+mybatis:
+  mapper-locations: classpath:/mappers/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

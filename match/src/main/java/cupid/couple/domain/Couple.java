@@ -20,7 +20,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Table(
         name = "couple",
         uniqueConstraints = {
-                @UniqueConstraint(name = "unique_couple_higher_id_lower_id", columnNames = {"higherId", "lowerId"})
+                @UniqueConstraint(name = "UK_couple_higher_id_lower_id", columnNames = {"higherId", "lowerId"})
         }
 )
 @Getter
