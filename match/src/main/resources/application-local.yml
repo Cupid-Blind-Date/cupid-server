@@ -14,6 +14,11 @@ spring:
     consumer:
       group-id: "cupid-group"
 
+
+redis:
+  host: localhost
+  port: 6379
+
 cors:
   allowedOrigins: http://localhost:3000
 
