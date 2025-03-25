@@ -25,7 +25,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Table(
         name = "arrow",
         uniqueConstraints = {
-                @UniqueConstraint(name = "unique_arrow_sender_target", columnNames = {"senderId", "targetId"})
+                @UniqueConstraint(name = "UK_arrow_sender_id_target_id", columnNames = {"senderId", "targetId"})
         }
 )
 @Getter

@@ -4,7 +4,10 @@ import static cupid.common.SQLRestrictionClause.DELETED_AT_IS_NULL;
 
 import cupid.common.domain.SoftDeletedDomain;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,8 +31,13 @@ public class Filter extends SoftDeletedDomain {
     @Column(nullable = false, unique = true)
     private Long memberId;
 
+    @Embedded
     private AgeCondition ageCondition;
+    
+    @Embedded
     private DistanceCondition distanceCondition;
+
+    @Enumerated(EnumType.STRING)
     private GenderCondition genderCondition;
 
     public Filter(

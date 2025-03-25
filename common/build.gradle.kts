@@ -44,6 +44,9 @@ dependencies {
     // MapStruct
     implementation("org.mapstruct:mapstruct:1.5.5.Final")
 
+    // Flyway - MySQL 8.X 버전이거나, MariaDB를 사용하는 경우
+    implementation("org.flywaydb:flyway-mysql")
+
     testFixturesImplementation("org.springframework.boot:spring-boot-starter-test")
     testFixturesRuntimeOnly("org.junit.platform:junit-platform-launcher")
 

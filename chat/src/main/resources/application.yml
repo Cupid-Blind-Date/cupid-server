@@ -8,6 +8,7 @@ spring:
         common-local
 
       stage:
+        common-local
 
       prod:
 

@@ -3,14 +3,13 @@ package cupid.chat.domain;
 import static cupid.common.SQLRestrictionClause.DELETED_AT_IS_NULL;
 
 import cupid.common.domain.SoftDeletedDomain;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Index;
-import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +21,6 @@ import org.hibernate.annotations.SQLRestriction;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(
-        // TODO flyway 설정 후 제거
-        indexes = @Index(name = "idx_chat_message_chat_room_id_target_id", columnList = "chat_room_id, target_id")
-)
 public class ChatMessage extends SoftDeletedDomain {
 
     @Id
@@ -42,6 +37,7 @@ public class ChatMessage extends SoftDeletedDomain {
     @Enumerated(EnumType.STRING)
     private ChatMessageType chatMessageType;
 
+    @Column(name = "`read`")
     private boolean read;
 
     public ChatMessage(Long chatRoomId, Long senderId, Long targetId, String message, ChatMessageType chatMessageType) {
