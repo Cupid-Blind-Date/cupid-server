@@ -15,5 +15,5 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @MappedSuperclass
 public abstract class SoftDeletedDomain extends BaseDomain {
 
-    private LocalDateTime deletedAt;
+    private LocalDateTime deletedDate;
 }

@@ -1,6 +1,6 @@
 package cupid.couple.domain;
 
-import static cupid.common.SQLRestrictionClause.DELETED_AT_IS_NULL;
+import static cupid.common.SQLRestrictionClause.DELETED_DATE_IS_NULL;
 import static cupid.couple.exception.CoupleExceptionCode.SAME_SENDER_TARGET;
 import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
@@ -20,8 +20,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-@SQLRestriction(DELETED_AT_IS_NULL)
-@SQLDelete(sql = "UPDATE arrow SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
+@SQLRestriction(DELETED_DATE_IS_NULL)
+@SQLDelete(sql = "UPDATE arrow SET deleted_date = CURRENT_TIMESTAMP WHERE id = ?")
 @Table(
         name = "arrow",
         uniqueConstraints = {

@@ -1,6 +1,6 @@
 package cupid.common.kafka.consumer;
 
-import static cupid.common.SQLRestrictionClause.DELETED_AT_IS_NULL;
+import static cupid.common.SQLRestrictionClause.DELETED_DATE_IS_NULL;
 
 import cupid.common.domain.SoftDeletedDomain;
 import cupid.common.kafka.KafkaDomainEventMessage;
@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-@SQLRestriction(DELETED_AT_IS_NULL)
-@SQLDelete(sql = "UPDATE kafka_message_consume_history SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
+@SQLRestriction(DELETED_DATE_IS_NULL)
+@SQLDelete(sql = "UPDATE kafka_message_consume_history SET deleted_date = CURRENT_TIMESTAMP WHERE id = ?")
 @Table(name = "kafka_message_consume_history")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

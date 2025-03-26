@@ -1,7 +1,7 @@
 package cupid.chat.domain;
 
 import static cupid.chat.exception.ChatExceptionCode.NO_AUTHORITY_FOR_CHAT_ROOM;
-import static cupid.common.SQLRestrictionClause.DELETED_AT_IS_NULL;
+import static cupid.common.SQLRestrictionClause.DELETED_DATE_IS_NULL;
 
 import cupid.common.domain.SoftDeletedDomain;
 import cupid.common.exception.ApplicationException;
@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-@SQLRestriction(DELETED_AT_IS_NULL)
-@SQLDelete(sql = "UPDATE chat_room SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
+@SQLRestriction(DELETED_DATE_IS_NULL)
+@SQLDelete(sql = "UPDATE chat_room SET deleted_date = CURRENT_TIMESTAMP WHERE id = ?")
 @Table(
         name = "chat_room",
         uniqueConstraints = {

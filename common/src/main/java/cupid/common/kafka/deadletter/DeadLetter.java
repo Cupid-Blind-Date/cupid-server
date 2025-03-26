@@ -1,5 +1,7 @@
 package cupid.common.kafka.deadletter;
 
+import static cupid.common.SQLRestrictionClause.DELETED_DATE_IS_NULL;
+
 import cupid.common.domain.SoftDeletedDomain;
 import cupid.common.kafka.KafkaDomainEventMessage;
 import jakarta.persistence.Column;
@@ -10,6 +12,11 @@ import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+
+@SQLRestriction(DELETED_DATE_IS_NULL)
+@SQLDelete(sql = "UPDATE dead_letter SET deleted_date = CURRENT_TIMESTAMP WHERE id = ?")
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

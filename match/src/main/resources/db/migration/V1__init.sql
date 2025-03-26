@@ -8,7 +8,7 @@ create table if not exists domain_event
     state            varchar(255) null,
     created_date     datetime     not null DEFAULT CURRENT_TIMESTAMP,
     updated_date     datetime     null,
-    deleted_at       datetime     null,
+    deleted_date     datetime     null,
     constraint UK_domain_event_uuid unique (uuid)
 );
 
@@ -20,7 +20,7 @@ create table if not exists kafka_message_consume_history
     topic        varchar(255) not null,
     created_date datetime     not null DEFAULT CURRENT_TIMESTAMP,
     updated_date datetime     null,
-    deleted_at   datetime     null,
+    deleted_date datetime     null,
     constraint UK_kafka_message_consume_history_uuid unique (uuid)
 );
 
@@ -32,7 +32,7 @@ create table if not exists dead_letter
     created_date datetime     not null DEFAULT CURRENT_TIMESTAMP,
     fail_reason  varchar(255) null,
     updated_date datetime     null,
-    deleted_at   datetime     null
+    deleted_date datetime     null
 );
 
 create table if not exists member
@@ -45,7 +45,7 @@ create table if not exists member
     gender          varchar(6)   not null,
     created_date    datetime     not null DEFAULT CURRENT_TIMESTAMP,
     updated_date    datetime     null,
-    deleted_at      datetime     null,
+    deleted_date    datetime     null,
     constraint UK_member_username unique (username)
 );
 
@@ -61,7 +61,7 @@ create table if not exists filter
     permit_excess_distance       bool        not null,
     created_date                 datetime    not null DEFAULT CURRENT_TIMESTAMP,
     updated_date                 datetime    null,
-    deleted_at                   datetime    null,
+    deleted_date                 datetime    null,
     constraint UK_filter_member_id unique (member_id)
 );
 
@@ -73,7 +73,7 @@ create table if not exists arrow
     like_type    varchar(7) not null,
     created_date datetime   not null DEFAULT CURRENT_TIMESTAMP,
     updated_date datetime   null,
-    deleted_at   datetime   null,
+    deleted_date datetime   null,
     constraint UK_arrow_sender_id_target_id unique (sender_id, target_id)
 );
 
@@ -84,6 +84,6 @@ create table if not exists couple
     higher_id    bigint   not null,
     created_date datetime not null DEFAULT CURRENT_TIMESTAMP,
     updated_date datetime null,
-    deleted_at   datetime null,
+    deleted_date datetime null,
     constraint UK_couple_higher_id_lower_id unique (higher_id, lower_id)
 );
