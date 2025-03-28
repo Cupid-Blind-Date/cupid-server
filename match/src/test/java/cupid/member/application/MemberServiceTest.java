@@ -3,12 +3,15 @@ package cupid.member.application;
 
 import static cupid.member.exception.MemberExceptionCode.DUPLICATE_USERNAME;
 import static cupid.member.exception.MemberExceptionCode.INVALID_CREDENTIALS;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import cupid.fixture.MemberFixture;
 import cupid.member.application.command.SignUpCommand;
 import cupid.member.domain.MemberRepository;
+import cupid.member.domain.RecentActiveInfo;
 import cupid.support.ApplicationTest;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -93,5 +96,22 @@ class MemberServiceTest extends ApplicationTest {
                 memberService.login(command.username(), command.password());
             });
         }
+    }
+
+    @Test
+    void 최근_활동상태_업데이트() {
+        // given
+        SignUpCommand command = MemberFixture.donghunSignupCommand();
+        Long memberId = memberService.signUp(command);
+        RecentActiveInfo recentActiveInfo = new RecentActiveInfo(LocalDateTime.now(), 10.0, -10.0);
+
+        // when
+        memberService.updateRecentActiveInfo(memberId, recentActiveInfo);
+
+        // then
+        RecentActiveInfo updated = memberRepository.getById(memberId).getRecentActiveInfo();
+        assertThat(updated.getLastActiveDate()).isNotNull();
+        assertThat(updated.getLastActiveLatitude()).isEqualTo(10.0);
+        assertThat(updated.getLastActiveLongitude()).isEqualTo(-10.0);
     }
 }

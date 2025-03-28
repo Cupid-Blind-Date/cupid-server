@@ -21,7 +21,7 @@ class PasswordTest {
         Password password = Password.hashPassword(value);
 
         // then
-        assertThat(password.hashedPassword()).isNotEqualTo(value);
+        assertThat(password.getHashedPassword()).isNotEqualTo(value);
     }
 
     @Test

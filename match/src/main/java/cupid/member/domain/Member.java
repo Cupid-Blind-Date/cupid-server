@@ -46,6 +46,8 @@ public class Member extends SoftDeletedDomain {
     @Enumerated(STRING)
     private Gender gender;
 
+    private RecentActiveInfo recentActiveInfo;
+
     public Member(String username, String password, String nickname, int age, Gender gender) {
         this.username = username;
         this.password = Password.hashPassword(password);
@@ -59,5 +61,9 @@ public class Member extends SoftDeletedDomain {
         if (!same) {
             throw new ApplicationException(INVALID_CREDENTIALS);
         }
+    }
+
+    public void updateRecentActiveInfo(RecentActiveInfo recentActiveInfo) {
+        this.recentActiveInfo = recentActiveInfo;
     }
 }

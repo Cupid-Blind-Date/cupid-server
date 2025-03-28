@@ -4,6 +4,7 @@ import cupid.common.exception.ApplicationException;
 import cupid.member.application.command.SignUpCommand;
 import cupid.member.domain.Member;
 import cupid.member.domain.MemberRepository;
+import cupid.member.domain.RecentActiveInfo;
 import cupid.member.domain.service.MemberRegister;
 import cupid.member.exception.MemberExceptionCode;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,11 @@ public class MemberService {
         });
         member.login(password);
         return member.getId();
+    }
+
+    public void updateRecentActiveInfo(Long memberId, RecentActiveInfo recentActiveInfo) {
+        Member member = memberRepository.getById(memberId);
+        member.updateRecentActiveInfo(recentActiveInfo);
+        memberRepository.save(member);
     }
 }
