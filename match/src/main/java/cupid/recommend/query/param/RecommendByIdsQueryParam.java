@@ -9,7 +9,7 @@ public record RecommendByIdsQueryParam(
         List<Long> memberIds,
         int maxIncludeDistanceFromMe, // 나와의 거리
         boolean permitExcessDistance,
-        Double lat,  // 위도
+        Double lat, // 위도
         Double lng  // 경도
 ) {
     public static RecommendByIdsQueryParam of(
