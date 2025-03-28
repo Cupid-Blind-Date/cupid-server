@@ -55,8 +55,6 @@ public class RecommendService {
         RecommendByIdsQueryParam param = RecommendByIdsQueryParam.of(recommendedMemberIds, filter, point);
         // 거리조건 재확인하여 부합하는 대상만 남김
         recommendedMemberIds = recommendQuery.findRecommendedByIdsIn(param);
-
-        // 추천 대상이 있는 경우 셔플 후 한 명 뽑아서 반환한다.
         return recommendRandom(memberId, recommendedMemberIds, point);
     }
 
