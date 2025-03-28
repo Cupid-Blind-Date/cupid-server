@@ -2,11 +2,14 @@ package cupid.recommend.query;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import cupid.common.value.Point;
 import cupid.member.domain.Gender;
 import cupid.member.domain.Member;
 import cupid.member.domain.MemberRepository;
 import cupid.member.domain.RecentActiveInfo;
+import cupid.recommend.query.param.RecommendByIdsQueryParam;
 import cupid.recommend.query.param.RecommendQueryParam;
+import cupid.recommend.query.param.RecommendWithoutDistanceQueryParam;
 import cupid.support.ApplicationTest;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,15 +43,15 @@ class RecommendQueryTest extends ApplicationTest {
 
     @BeforeEach
     void setUp() {
-        member1.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), 0.0, 0.0));
-        member2.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), 0.0, 0.0));
-        member3.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), 0.0, 0.0));
-        member4.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), 0.0, 0.0));
-        member5.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), 0.0, 0.0));
-        member6.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), 0.0, 0.0));
-        member7.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), 0.0, 0.0));
-        member8.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), 0.0, 0.0));
-        member9.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), 0.0, 0.0));
+        member1.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), new Point(0.0, 0.0)));
+        member2.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), new Point(0.0, 0.0)));
+        member3.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), new Point(0.0, 0.0)));
+        member4.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), new Point(0.0, 0.0)));
+        member5.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), new Point(0.0, 0.0)));
+        member6.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), new Point(0.0, 0.0)));
+        member7.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), new Point(0.0, 0.0)));
+        member8.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), new Point(0.0, 0.0)));
+        member9.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), new Point(0.0, 0.0)));
         memberRepository.saveAll(List.of(
                 member1,
                 member2,
@@ -180,23 +183,57 @@ class RecommendQueryTest extends ApplicationTest {
     @Test
     void test6() {
         // given
-        RecommendQueryParam param = new RecommendQueryParam(
+        RecommendWithoutDistanceQueryParam param = new RecommendWithoutDistanceQueryParam(
                 100L,
                 Gender.FEMALE,
-                0,
                 100,
+                0,
                 false,
-                20,
-                false,
-                null,
-                2.0,
                 100
         );
 
         // when
-        List<Long> candidates = recommendQuery.findRecommended(param);
+        List<Long> candidates = recommendQuery.findRecommendedWithoutDistance(param);
 
         // then
         assertThat(candidates).hasSize(5);
+    }
+
+    @Test
+    void test7() {
+        // given
+        RecommendByIdsQueryParam param = new RecommendByIdsQueryParam(
+                100L,
+                List.of(member1.getId(), member2.getId(), member3.getId()),
+                100,
+                true,
+                10.0,
+                10.0
+        );
+
+        // when
+        List<Long> candidates = recommendQuery.findRecommendedByIdsIn(param);
+
+        // then
+        assertThat(candidates).hasSize(0);
+    }
+
+    @Test
+    void test8() {
+        // given
+        RecommendByIdsQueryParam param = new RecommendByIdsQueryParam(
+                100L,
+                List.of(member1.getId(), member2.getId(), member3.getId()),
+                100,
+                true,
+                0.0,
+                0.0
+        );
+
+        // when
+        List<Long> candidates = recommendQuery.findRecommendedByIdsIn(param);
+
+        // then
+        assertThat(candidates).hasSize(3);
     }
 }

@@ -1,6 +1,7 @@
 package cupid.recommend.presentation;
 
 import cupid.common.auth.Auth;
+import cupid.common.value.Point;
 import cupid.recommend.application.RecommendService;
 import cupid.recommend.query.result.RecommendedProfile;
 import java.util.Optional;
@@ -24,7 +25,7 @@ public class RecommendController {
             @RequestParam(value = "latitude", required = false) Double latitude,
             @RequestParam(value = "longitude", required = false) Double longitude
     ) {
-        Optional<RecommendedProfile> recommend = recommendService.recommend(memberId, latitude, longitude);
+        Optional<RecommendedProfile> recommend = recommendService.recommend(memberId, new Point(latitude, longitude));
         return ResponseEntity.ok(recommend.orElse(null));
     }
 }

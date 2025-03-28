@@ -29,8 +29,7 @@ public class RecommendEventListener {
         log.info("Try to consume filter update event. reload recommended cache. memberId: {}", memberId);
         recommendService.reloadCache(
                 memberId,
-                info.getLastActiveLatitude(),
-                info.getLastActiveLongitude()
+                info.getPoint()
         );
         log.info("Successfully consumed filter update event. reload recommended cache. memberId: {}", memberId);
     }

@@ -1,6 +1,8 @@
 package cupid.member.domain;
 
+import cupid.common.value.Point;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -13,15 +15,15 @@ public class RecentActiveInfo {
 
     private LocalDateTime lastActiveDate;
 
-    // 위도
-    private Double lastActiveLatitude;
+    @Embedded
+    private Point point;
 
-    // 위도 (경도)
-    private Double lastActiveLongitude;
-
-    public RecentActiveInfo(LocalDateTime lastActiveDate, Double lastActiveLatitude, Double lastActiveLongitude) {
+    public RecentActiveInfo(LocalDateTime lastActiveDate, Point point) {
         this.lastActiveDate = lastActiveDate;
-        this.lastActiveLatitude = lastActiveLatitude;
-        this.lastActiveLongitude = lastActiveLongitude;
+        this.point = point;
+    }
+
+    public Point getPoint() {
+        return point == null ? new Point() : point;
     }
 }

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
+import cupid.common.value.Point;
 import cupid.filter.domain.AgeCondition;
 import cupid.filter.domain.DistanceCondition;
 import cupid.filter.domain.Filter;
@@ -76,7 +77,7 @@ class RecommendServiceTest extends ApplicationTest {
         recommendCacheManager.update(1L, new ArrayList<>(List.of(member1.getId(), member2.getId())));
 
         // when
-        Optional<RecommendedProfile> recommend = recommendService.recommend(1L, null, null);
+        Optional<RecommendedProfile> recommend = recommendService.recommend(1L, new Point());
 
         // then
         assertThat(recommend).isPresent();
@@ -97,7 +98,7 @@ class RecommendServiceTest extends ApplicationTest {
                 .willReturn(new ArrayList<>(List.of(member3.getId(), member3.getId())));
 
         // when
-        Optional<RecommendedProfile> recommend = recommendService.recommend(1L, null, null);
+        Optional<RecommendedProfile> recommend = recommendService.recommend(1L, new Point());
 
         // then
         assertThat(recommend).isPresent();
@@ -118,7 +119,7 @@ class RecommendServiceTest extends ApplicationTest {
                 .willReturn(Collections.emptyList());
 
         // when
-        Optional<RecommendedProfile> recommend = recommendService.recommend(1L, null, null);
+        Optional<RecommendedProfile> recommend = recommendService.recommend(1L, new Point());
 
         // then
         assertThat(recommend).isEmpty();

@@ -6,6 +6,7 @@ import static cupid.member.exception.MemberExceptionCode.INVALID_CREDENTIALS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import cupid.common.value.Point;
 import cupid.fixture.MemberFixture;
 import cupid.member.application.command.SignUpCommand;
 import cupid.member.domain.MemberRepository;
@@ -103,7 +104,7 @@ class MemberServiceTest extends ApplicationTest {
         // given
         SignUpCommand command = MemberFixture.donghunSignupCommand();
         Long memberId = memberService.signUp(command);
-        RecentActiveInfo recentActiveInfo = new RecentActiveInfo(LocalDateTime.now(), 10.0, -10.0);
+        RecentActiveInfo recentActiveInfo = new RecentActiveInfo(LocalDateTime.now(), new Point(10.0, -10.0));
 
         // when
         memberService.updateRecentActiveInfo(memberId, recentActiveInfo);
@@ -111,7 +112,7 @@ class MemberServiceTest extends ApplicationTest {
         // then
         RecentActiveInfo updated = memberRepository.getById(memberId).getRecentActiveInfo();
         assertThat(updated.getLastActiveDate()).isNotNull();
-        assertThat(updated.getLastActiveLatitude()).isEqualTo(10.0);
-        assertThat(updated.getLastActiveLongitude()).isEqualTo(-10.0);
+        assertThat(updated.getPoint().getLatitude()).isEqualTo(10.0);
+        assertThat(updated.getPoint().getLongitude()).isEqualTo(-10.0);
     }
 }

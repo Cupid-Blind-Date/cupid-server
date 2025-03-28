@@ -1,10 +1,19 @@
 package cupid.recommend.application;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import cupid.common.value.Point;
 import cupid.filter.event.FilterUpdateEvent;
+import cupid.member.domain.Gender;
+import cupid.member.domain.Member;
+import cupid.member.domain.MemberRepository;
+import cupid.member.domain.RecentActiveInfo;
 import cupid.support.ApplicationTest;
+import java.time.LocalDateTime;
 import java.util.concurrent.CountDownLatch;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -29,15 +38,22 @@ class RecommendEventListenerTest extends ApplicationTest {
     @MockitoBean
     private RecommendService recommendService;
 
+    @MockitoBean
+    private MemberRepository memberRepository;
+
     @Test
     void 필터_업데이트_이벤트를_받아_회원_추천_캐시를_업데이트한다() throws InterruptedException {
         // given
+        Member member = new Member("", "", "", 20, Gender.FEMALE);
+        member.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), new Point()));
+        given(memberRepository.getById(1L))
+                .willReturn(member);
         CountDownLatch countDownLatch = new CountDownLatch(1);
         Mockito.doAnswer(invocationOnMock -> {
                     countDownLatch.countDown();
                     return null;
                 }).when(recommendService)
-                .reloadCache(1L, null, null);
+                .reloadCache(anyLong(), any(Point.class));
 
         // when
         publisher.publishEvent(new FilterUpdateEvent(1L));
@@ -45,6 +61,6 @@ class RecommendEventListenerTest extends ApplicationTest {
 
         // then
         verify(recommendService, times(1))
-                .reloadCache(1L, null, null);
+                .reloadCache(anyLong(), any(Point.class));
     }
 }
