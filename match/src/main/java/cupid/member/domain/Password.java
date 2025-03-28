@@ -3,13 +3,25 @@ package cupid.member.domain;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-public record Password(
-        @Column(nullable = false)
-        String hashedPassword
-) {
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Embeddable
+public class Password {
+
+    @Column(nullable = false)
+    private String hashedPassword;
+
+    public Password(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
     public static Password hashPassword(String password) {
         return new Password(hash(password));
     }

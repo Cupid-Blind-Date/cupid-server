@@ -37,17 +37,29 @@ create table if not exists dead_letter
 
 create table if not exists member
 (
-    id              bigint auto_increment primary key,
-    age             int          not null,
-    nickname        varchar(10)  not null,
-    username        varchar(50)  not null,
-    hashed_password varchar(255) not null,
-    gender          varchar(6)   not null,
-    created_date    datetime     not null DEFAULT CURRENT_TIMESTAMP,
-    updated_date    datetime     null,
-    deleted_date    datetime     null,
+    id               bigint auto_increment primary key,
+    age              int            not null,
+    nickname         varchar(10)    not null,
+    username         varchar(50)    not null,
+    hashed_password  varchar(255)   not null,
+    gender           varchar(6)     not null,
+    -- 가장 최근 활동일시
+    last_active_date datetime       null,
+    -- 가장 최근 접속한 지역의 위도 (-90.00000000 ~ +90.00000000, 소수점 아래 8자리)
+    latitude         DECIMAL(10, 8) null,
+    -- 가장 최근 접속한 지역의 경도 (-180.00000000 ~ +180.00000000, 소수점 아래 8자리)
+    longitude        DECIMAL(11, 8) null,
+    created_date     datetime       not null DEFAULT CURRENT_TIMESTAMP,
+    updated_date     datetime       null,
+    deleted_date     datetime       null,
     constraint UK_member_username unique (username)
 );
+
+CREATE INDEX idx_member_last_active_date ON member (last_active_date);
+CREATE INDEX idx_member_age ON member (age);
+CREATE INDEX idx_member_gender_lat_lng_last_active_date ON member (gender, latitude,
+                                                                   longitude, last_active_date);
+CREATE INDEX idx_member_gender_last_active_date ON member (gender, last_active_date);
 
 create table if not exists filter
 (

@@ -37,7 +37,7 @@ class FilterServiceTest extends ApplicationTest {
                 false,
                 10,
                 true,
-                GenderCondition.BOTH
+                GenderCondition.ONLY_FEMALE
         );
 
         // when
@@ -51,7 +51,7 @@ class FilterServiceTest extends ApplicationTest {
         assertThat(filter.getAgeCondition().isPermitExcessAge()).isFalse();
         assertThat(filter.getDistanceCondition().getMaxIncludeDistanceFromMe()).isEqualTo(10);
         assertThat(filter.getDistanceCondition().isPermitExcessDistance()).isTrue();
-        assertThat(filter.getGenderCondition()).isEqualTo(GenderCondition.BOTH);
+        assertThat(filter.getGenderCondition()).isEqualTo(GenderCondition.ONLY_FEMALE);
     }
 
     @Test
@@ -63,7 +63,7 @@ class FilterServiceTest extends ApplicationTest {
                 false,
                 10,
                 true,
-                GenderCondition.BOTH
+                GenderCondition.ONLY_FEMALE
         );
         Long id = filterService.createFilter(condition);
         FilterUpdateCommand update = new FilterUpdateCommand(
@@ -100,7 +100,7 @@ class FilterServiceTest extends ApplicationTest {
                 false,
                 10,
                 true,
-                GenderCondition.BOTH
+                GenderCondition.ONLY_FEMALE
         );
         filterService.createFilter(condition);
 

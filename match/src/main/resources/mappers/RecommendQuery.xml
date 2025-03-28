@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cupid.recommend.query.RecommendQuery">
-    <select id="findMaleRecommended"
+    <select id="findRecommended"
             resultType="java.lang.Long"
             parameterType="cupid.recommend.query.param.RecommendQueryParam">
         <![CDATA[
@@ -16,14 +16,26 @@
           AND m.id != #{memberId}
           AND #{minIncludeAge} <= m.age
           AND m.age <= #{maxIncludeAge}
-          AND m.gender = 'MALE'
+          AND m.gender = #{targetGender}
+          AND m.latitude BETWEEN (#{lat} - (#{maxIncludeDistanceFromMe} / 111.0)) AND (#{lat} + (#{maxIncludeDistanceFromMe} / 111.0))
+          AND m.longitude BETWEEN (#{lng} -
+                                   (#{maxIncludeDistanceFromMe} / (111.0 * COS(RADIANS(#{lat}))))) AND (
+            #{lng} + (#{maxIncludeDistanceFromMe} / (111.0 * COS(RADIANS(#{lat})))))
+          AND (
+                  6371 * ACOS(
+                          COS(RADIANS(#{lat})) * COS(RADIANS(m.latitude)) *
+                          COS(RADIANS(m.longitude) - RADIANS(#{lng})) +
+                          SIN(RADIANS(#{lat})) * SIN(RADIANS(m.latitude))
+                         )
+                  ) <= #{maxIncludeDistanceFromMe}
+        ORDER BY m.last_active_date DESC
         LIMIT ${size}
         ]]>
     </select>
 
-    <select id="findFemaleRecommended"
+    <select id="findRecommendedWithoutDistance"
             resultType="java.lang.Long"
-            parameterType="cupid.recommend.query.param.RecommendQueryParam">
+            parameterType="cupid.recommend.query.param.RecommendWithoutDistanceQueryParam">
         <![CDATA[
         SELECT m.id
         FROM member m
@@ -33,24 +45,34 @@
           AND m.id != #{memberId}
           AND #{minIncludeAge} <= m.age
           AND m.age <= #{maxIncludeAge}
-          AND m.gender = 'FEMALE'
+          AND m.gender = #{targetGender}
+        ORDER BY m.last_active_date DESC
         LIMIT ${size}
         ]]>
     </select>
 
-    <select id="findBothGenderRecommended"
+    <select id="findRecommendedByIdsIn"
             resultType="java.lang.Long"
-            parameterType="cupid.recommend.query.param.RecommendQueryParam">
+            parameterType="cupid.recommend.query.param.RecommendByIdsQueryParam">
         <![CDATA[
-        SELECT m.id
-        FROM member m
-                 LEFT JOIN arrow a
-                           ON a.sender_id = #{memberId} AND a.target_id = m.id
-        WHERE a.id IS NULL
-          AND m.id != #{memberId}
-          AND #{minIncludeAge} <= m.age
-          AND m.age <= #{maxIncludeAge}
-        LIMIT ${size}
-        ]]>
+    SELECT m.id
+    FROM member m
+             LEFT JOIN arrow a
+                       ON a.sender_id = #{memberId} AND a.target_id = m.id
+    WHERE a.id IS NULL
+      AND m.id IN
+    ]]>
+        <foreach collection="memberIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        <![CDATA[
+      AND (
+              6371 * ACOS(
+                      COS(RADIANS(#{lat})) * COS(RADIANS(m.latitude)) *
+                      COS(RADIANS(m.longitude) - RADIANS(#{lng})) +
+                      SIN(RADIANS(#{lat})) * SIN(RADIANS(m.latitude))
+                     )
+              ) <= #{maxIncludeDistanceFromMe}
+    ]]>
     </select>
 </mapper>
