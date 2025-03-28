@@ -13,7 +13,7 @@ public class Point {
     // 위도
     private Double latitude;
 
-    // 위도 (경도)
+    // 경도
     private Double longitude;
 
     public Point() {
