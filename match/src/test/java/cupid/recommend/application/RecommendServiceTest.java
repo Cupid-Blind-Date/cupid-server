@@ -76,7 +76,7 @@ class RecommendServiceTest extends ApplicationTest {
         recommendCacheManager.update(1L, new ArrayList<>(List.of(member1.getId(), member2.getId())));
 
         // when
-        Optional<RecommendedProfile> recommend = recommendService.recommend(1L);
+        Optional<RecommendedProfile> recommend = recommendService.recommend(1L, null, null);
 
         // then
         assertThat(recommend).isPresent();
@@ -90,14 +90,14 @@ class RecommendServiceTest extends ApplicationTest {
                 .willReturn(new Filter(1L,
                                 new AgeCondition(10, 20, true),
                                 new DistanceCondition(10, true),
-                                GenderCondition.BOTH
+                                GenderCondition.ONLY_FEMALE
                         )
                 );
-        given(recommendQuery.findBothGenderRecommended(any()))
+        given(recommendQuery.findRecommendedWithoutDistance(any()))
                 .willReturn(new ArrayList<>(List.of(member3.getId(), member3.getId())));
 
         // when
-        Optional<RecommendedProfile> recommend = recommendService.recommend(1L);
+        Optional<RecommendedProfile> recommend = recommendService.recommend(1L, null, null);
 
         // then
         assertThat(recommend).isPresent();
@@ -111,14 +111,14 @@ class RecommendServiceTest extends ApplicationTest {
                 .willReturn(new Filter(1L,
                                 new AgeCondition(10, 20, true),
                                 new DistanceCondition(10, true),
-                                GenderCondition.BOTH
+                                GenderCondition.ONLY_MALE
                         )
                 );
-        given(recommendQuery.findBothGenderRecommended(any()))
+        given(recommendQuery.findRecommendedWithoutDistance(any()))
                 .willReturn(Collections.emptyList());
 
         // when
-        Optional<RecommendedProfile> recommend = recommendService.recommend(1L);
+        Optional<RecommendedProfile> recommend = recommendService.recommend(1L, null, null);
 
         // then
         assertThat(recommend).isEmpty();

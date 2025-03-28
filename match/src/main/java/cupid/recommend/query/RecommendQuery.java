@@ -7,9 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RecommendQuery {
 
-    List<Long> findMaleRecommended(RecommendQueryParam param);
+    List<Long> findRecommended(RecommendQueryParam param);
 
-    List<Long> findFemaleRecommended(RecommendQueryParam param);
-
-    List<Long> findBothGenderRecommended(RecommendQueryParam param);
+    List<Long> findRecommendedWithoutDistance(RecommendQueryParam param);
 }

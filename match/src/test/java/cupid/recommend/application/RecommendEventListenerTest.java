@@ -37,7 +37,7 @@ class RecommendEventListenerTest extends ApplicationTest {
                     countDownLatch.countDown();
                     return null;
                 }).when(recommendService)
-                .reloadCache(1L);
+                .reloadCache(1L, null, null);
 
         // when
         publisher.publishEvent(new FilterUpdateEvent(1L));
@@ -45,6 +45,6 @@ class RecommendEventListenerTest extends ApplicationTest {
 
         // then
         verify(recommendService, times(1))
-                .reloadCache(1L);
+                .reloadCache(1L, null, null);
     }
 }

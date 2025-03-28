@@ -42,7 +42,7 @@ create table if not exists member
     nickname              varchar(10)    not null,
     username              varchar(50)    not null,
     hashed_password       varchar(255)   not null,
-    gender                varchar(6)     not null,
+    targetGender          varchar(6)     not null,
     -- 가장 최근 활동일시
     last_active_date      datetime       null,
     -- 가장 최근 접속한 지역의 위도 (-90.00000000 ~ +90.00000000, 소수점 아래 8자리)
@@ -57,7 +57,9 @@ create table if not exists member
 
 CREATE INDEX idx_member_last_active_date ON member (last_active_date);
 CREATE INDEX idx_member_age ON member (age);
-CREATE INDEX idx_member_gender_last_active_date ON member (gender, last_active_date);
+CREATE INDEX idx_member_gender_lat_lng_last_active_date ON member (targetGender, last_active_latitude,
+                                                                   last_active_longitude, last_active_date);
+CREATE INDEX idx_member_gender_last_active_date ON member (targetGender, last_active_date);
 
 create table if not exists filter
 (

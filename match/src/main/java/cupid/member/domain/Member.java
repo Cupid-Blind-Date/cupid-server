@@ -46,6 +46,7 @@ public class Member extends SoftDeletedDomain {
     @Enumerated(STRING)
     private Gender gender;
 
+    @Embedded
     private RecentActiveInfo recentActiveInfo;
 
     public Member(String username, String password, String nickname, int age, Gender gender) {
@@ -65,5 +66,9 @@ public class Member extends SoftDeletedDomain {
 
     public void updateRecentActiveInfo(RecentActiveInfo recentActiveInfo) {
         this.recentActiveInfo = recentActiveInfo;
+    }
+
+    public RecentActiveInfo getRecentActiveInfo() {
+        return recentActiveInfo == null ? new RecentActiveInfo() : recentActiveInfo;
     }
 }
