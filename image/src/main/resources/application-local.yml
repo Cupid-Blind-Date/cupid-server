@@ -1,0 +1,12 @@
+server:
+  port: 8082
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+
+cors:
+  allowedOrigins: http://localhost:3000

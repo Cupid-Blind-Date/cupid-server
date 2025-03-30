@@ -15,9 +15,15 @@ java {
 }
 
 dependencies {
+    implementation(project(":common"))
+    testImplementation(testFixtures(project(":common")))
+
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("com.drewnoakes:metadata-extractor:2.18.0")
+
+    // s3
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.174")
 
     runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
