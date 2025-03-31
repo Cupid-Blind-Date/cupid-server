@@ -55,11 +55,8 @@ create table if not exists member
     constraint UK_member_username unique (username)
 );
 
-CREATE INDEX idx_member_last_active_date ON member (last_active_date);
-CREATE INDEX idx_member_age ON member (age);
-CREATE INDEX idx_member_gender_lat_lng_last_active_date ON member (gender, latitude,
-                                                                   longitude, last_active_date);
-CREATE INDEX idx_member_gender_last_active_date ON member (gender, last_active_date);
+CREATE INDEX idx_member_gender_lat_lng_last_active_date_age ON member (gender, latitude, longitude, last_active_date, age);
+CREATE INDEX idx_member_age_gender_lat_lng_last_active_date ON member (age, gender, latitude, longitude, last_active_date);
 
 create table if not exists filter
 (

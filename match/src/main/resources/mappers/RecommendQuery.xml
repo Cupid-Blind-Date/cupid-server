@@ -17,10 +17,10 @@
           AND #{minIncludeAge} <= m.age
           AND m.age <= #{maxIncludeAge}
           AND m.gender = #{targetGender}
-          AND m.latitude BETWEEN (#{lat} - (#{maxIncludeDistanceFromMe} / 111.0)) AND (#{lat} + (#{maxIncludeDistanceFromMe} / 111.0))
+          AND m.latitude BETWEEN (#{lat} - (#{maxIncludeDistanceFromMe} / 111.5)) AND (#{lat} + (#{maxIncludeDistanceFromMe} / 111.5))
           AND m.longitude BETWEEN (#{lng} -
-                                   (#{maxIncludeDistanceFromMe} / (111.0 * COS(RADIANS(#{lat}))))) AND (
-            #{lng} + (#{maxIncludeDistanceFromMe} / (111.0 * COS(RADIANS(#{lat})))))
+                                   (#{maxIncludeDistanceFromMe} / (111.5 * COS(RADIANS(#{lat}))))) AND (
+            #{lng} + (#{maxIncludeDistanceFromMe} / (111.5 * COS(RADIANS(#{lat})))))
           AND (
                   6371 * ACOS(
                           COS(RADIANS(#{lat})) * COS(RADIANS(m.latitude)) *
