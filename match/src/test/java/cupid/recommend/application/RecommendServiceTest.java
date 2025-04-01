@@ -13,6 +13,7 @@ import cupid.filter.domain.GenderCondition;
 import cupid.member.domain.Gender;
 import cupid.member.domain.Member;
 import cupid.member.domain.MemberRepository;
+import cupid.member.domain.RepresentativeProfileImage;
 import cupid.recommend.cache.RecommendCacheManager;
 import cupid.recommend.query.RecommendQuery;
 import cupid.recommend.query.result.RecommendedProfile;
@@ -50,10 +51,10 @@ class RecommendServiceTest extends ApplicationTest {
     @Autowired
     private MemberRepository memberRepository;
 
-    private Member member1 = new Member("u1", "p", "n", 10, Gender.FEMALE);
-    private Member member2 = new Member("u2", "p", "n", 10, Gender.FEMALE);
-    private Member member3 = new Member("u3", "p", "n", 10, Gender.FEMALE);
-    private Member member4 = new Member("u4", "p", "n", 10, Gender.FEMALE);
+    private Member member1 = new Member("u1", "p", "n", 10, Gender.FEMALE, new RepresentativeProfileImage("1", "2"));
+    private Member member2 = new Member("u2", "p", "n", 10, Gender.FEMALE, new RepresentativeProfileImage("3", "4"));
+    private Member member3 = new Member("u3", "p", "n", 10, Gender.FEMALE, new RepresentativeProfileImage("5", "6"));
+    private Member member4 = new Member("u4", "p", "n", 10, Gender.FEMALE, new RepresentativeProfileImage("7", "8"));
 
     @BeforeEach
     void setUp() {

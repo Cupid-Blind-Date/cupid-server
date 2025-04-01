@@ -49,12 +49,24 @@ public class Member extends SoftDeletedDomain {
     @Embedded
     private RecentActiveInfo recentActiveInfo;
 
-    public Member(String username, String password, String nickname, int age, Gender gender) {
+    // 대표 이미지
+    @Embedded
+    private RepresentativeProfileImage representativeProfileImage;
+
+    public Member(
+            String username,
+            String password,
+            String nickname,
+            int age,
+            Gender gender,
+            RepresentativeProfileImage profileImage
+    ) {
         this.username = username;
         this.password = Password.hashPassword(password);
         this.nickname = nickname;
         this.age = age;
         this.gender = gender;
+        this.representativeProfileImage = profileImage;
     }
 
     public void login(String plainPassword) {
@@ -62,6 +74,10 @@ public class Member extends SoftDeletedDomain {
         if (!same) {
             throw new ApplicationException(INVALID_CREDENTIALS);
         }
+    }
+
+    public void updateRepresentativeProfileImage(ProfileImage profileImage) {
+        this.representativeProfileImage = new RepresentativeProfileImage(profileImage);
     }
 
     public void updateRecentActiveInfo(RecentActiveInfo recentActiveInfo) {

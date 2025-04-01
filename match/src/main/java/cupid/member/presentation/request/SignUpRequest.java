@@ -1,10 +1,15 @@
 package cupid.member.presentation.request;
 
 import cupid.member.application.command.SignUpCommand;
+import cupid.member.application.command.SignUpCommand.ProfileImageCommand;
 import cupid.member.domain.Gender;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import java.util.List;
 
 public record SignUpRequest(
         // (?!.*\\s) : 공백(띄어쓰기, 탭 등)이 포함되지 않아야 함
@@ -41,9 +46,31 @@ public record SignUpRequest(
         Integer age,
 
         @NotNull(message = "성별은 null 이어서는 안됩니다.")
-        Gender gender
+        Gender gender,
+
+        @Valid
+        @NotNull(message = "프로필 사진이 없습니다.")
+        @Size(min = 1, max = 6, message = "프로필 사진은 최소 1장에서 최대 6장 사이어야 합니다.")
+        List<ProfileImageRequest> profileImages
 ) {
     public SignUpCommand toCommand() {
-        return new SignUpCommand(username, password, nickname, age, gender);
+        return new SignUpCommand(
+                username,
+                password,
+                nickname,
+                age,
+                gender,
+                profileImages.stream()
+                        .map(it -> new ProfileImageCommand(it.originalName, it.blurredName))
+                        .toList()
+        );
+    }
+
+    public record ProfileImageRequest(
+            @NotEmpty(message = "사진 이름이 없습니다.")
+            String originalName,
+            @NotEmpty(message = "블러링된 사진 이름이 없습니다.")
+            String blurredName
+    ) {
     }
 }

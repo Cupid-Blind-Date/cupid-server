@@ -1,0 +1,18 @@
+server:
+  port: 8082
+
+spring:
+  profiles:
+    group:
+      local:
+        common-local
+
+      stage:
+        common-local
+
+      prod:
+    active: local
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB

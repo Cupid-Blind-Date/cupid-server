@@ -37,26 +37,43 @@ create table if not exists dead_letter
 
 create table if not exists member
 (
-    id               bigint auto_increment primary key,
-    age              int            not null,
-    nickname         varchar(10)    not null,
-    username         varchar(50)    not null,
-    hashed_password  varchar(255)   not null,
-    gender           varchar(6)     not null,
+    id                  bigint auto_increment primary key,
+    age                 int            not null,
+    nickname            varchar(10)    not null,
+    username            varchar(50)    not null,
+    hashed_password     varchar(255)   not null,
+    gender              varchar(6)     not null,
     -- 가장 최근 활동일시
-    last_active_date datetime       null,
+    last_active_date    datetime       null,
     -- 가장 최근 접속한 지역의 위도 (-90.00000000 ~ +90.00000000, 소수점 아래 8자리)
-    latitude         DECIMAL(10, 8) null,
+    latitude            DECIMAL(10, 8) null,
     -- 가장 최근 접속한 지역의 경도 (-180.00000000 ~ +180.00000000, 소수점 아래 8자리)
-    longitude        DECIMAL(11, 8) null,
-    created_date     datetime       not null DEFAULT CURRENT_TIMESTAMP,
-    updated_date     datetime       null,
-    deleted_date     datetime       null,
-    constraint UK_member_username unique (username)
+    longitude           DECIMAL(11, 8) null,
+    original_image_name varchar(255)   not null,
+    blurred_image_name  varchar(255)   not null,
+    created_date        datetime       not null DEFAULT CURRENT_TIMESTAMP,
+    updated_date        datetime       null,
+    deleted_date        datetime       null,
+    constraint UK_member_username unique (username),
+    constraint UK_member_original_image_name unique (original_image_name),
+    constraint UK_member_blurred_image_name unique (blurred_image_name)
 );
 
 CREATE INDEX idx_member_gender_lat_lng_last_active_date_age ON member (gender, latitude, longitude, last_active_date, age);
 CREATE INDEX idx_member_age_gender_lat_lng_last_active_date ON member (age, gender, latitude, longitude, last_active_date);
+
+create table if not exists profile_image
+(
+    id                  bigint auto_increment primary key,
+    member_id           bigint       not null,
+    original_image_name varchar(255) not null,
+    blurred_image_name  varchar(255) not null,
+    created_date        timestamp(6),
+    deleted_date        timestamp(6),
+    updated_date        timestamp(6),
+    constraint UK_profile_image_original_image_name unique (original_image_name),
+    constraint UK_profile_image_blurred_image_name unique (blurred_image_name)
+);
 
 create table if not exists filter
 (

@@ -1,10 +1,13 @@
 package cupid.member.presentation.request;
 
 import cupid.member.domain.Gender;
+import cupid.member.presentation.request.SignUpRequest.ProfileImageRequest;
 import cupid.support.RequestDataTest;
+import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
@@ -24,7 +27,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     "Aa1!password",    // ✅ 8~50자, 대소문자+숫자+특수문자 포함
                     "닉네임123",         // ✅ 2~10자, 한글/영문/숫자 포함
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -43,7 +47,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     "Aa1!password",    // ✅ 8~50자, 대소문자+숫자+특수문자 포함
                     "닉네임123",         // ✅ 2~10자, 한글/영문/숫자 포함
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -63,7 +68,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     "Aa1!password",    // ✅ 8~50자, 대소문자+숫자+특수문자 포함
                     "닉네임123",         // ✅ 2~10자, 한글/영문/숫자 포함
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -79,7 +85,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     "Aa1!password",    // ✅ 8~50자, 대소문자+숫자+특수문자 포함
                     "닉네임123",         // ✅ 2~10자, 한글/영문/숫자 포함
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -100,7 +107,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     "Aa1!password",    // ✅ 8~50자, 대소문자+숫자+특수문자 포함
                     "닉네임123",         // ✅ 2~10자, 한글/영문/숫자 포함
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -122,7 +130,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     "Aa1!password",    // ✅ 8~50자, 대소문자+숫자+특수문자 포함
                     "닉네임123",         // ✅ 2~10자, 한글/영문/숫자 포함
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -146,7 +155,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     password,
                     "닉네임123",         // ✅ 2~10자, 한글/영문/숫자 포함
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -168,7 +178,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     password,
                     "닉네임123",         // ✅ 2~10자, 한글/영문/숫자 포함
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,       // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -186,7 +197,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     password,
                     "닉네임123",         // ✅ 2~10자, 한글/영문/숫자 포함
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -205,7 +217,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     password,
                     "닉네임123",         // ✅ 2~10자, 한글/영문/숫자 포함
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -224,7 +237,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     password,
                     "닉네임123",         // ✅ 2~10자, 한글/영문/숫자 포함
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -245,7 +259,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     password,
                     "닉네임123",         // ✅ 2~10자, 한글/영문/숫자 포함
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -268,7 +283,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     "Aa1!password",    // ✅ 8~50자, 대소문자+숫자+특수문자 포함
                     nickname,
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -287,7 +303,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     "Aa1!password",    // ✅ 8~50자, 대소문자+숫자+특수문자 포함
                     nickname,
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -309,7 +326,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     "Aa1!password",    // ✅ 8~50자, 대소문자+숫자+특수문자 포함
                     nickname,
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -331,7 +349,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     "Aa1!password",    // ✅ 8~50자, 대소문자+숫자+특수문자 포함
                     nickname,
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -354,7 +373,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     "Aa1!password",    // ✅ 8~50자, 대소문자+숫자+특수문자 포함
                     nickname,
                     25,                // ✅ 0 이상
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -374,7 +394,8 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     "Aa1!password",    // ✅ 8~50자, 대소문자+숫자+특수문자 포함
                     "닉네임123",         // ✅ 2~10자, 한글/영문/숫자 포함
                     age,
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
@@ -392,11 +413,103 @@ class SignUpRequestTest extends RequestDataTest<SignUpRequest> {
                     "Aa1!password",    // ✅ 8~50자, 대소문자+숫자+특수문자 포함
                     "닉네임123",         // ✅ 2~10자, 한글/영문/숫자 포함
                     age,
-                    Gender.MALE        // ✅ NotNull
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(new ProfileImageRequest("1", "1")) // ✅ 이미지 1장 이상
             );
 
             // when & then
             validateSuccess(request);
+        }
+    }
+
+    @Nested
+    class 프로필_사진은 {
+
+        @ParameterizedTest
+        @NullAndEmptySource
+        void 없으면_예외(List<ProfileImageRequest> images) {
+            // given
+            SignUpRequest request = new SignUpRequest(
+                    "username",  // ✅ 4~50자, 대소문자+숫자 포함
+                    "Aa1!password",     // ✅ 8~50자, 대소문자+숫자+특수문자 포함
+                    "닉네임123",          // ✅ 2~10자, 한글/영문/숫자 포함
+                    20,                 // ✅ 0 이상
+                    Gender.MALE,        // ✅ NotNull
+                    images
+            );
+
+            // when & then
+            validateFailWithMessage(request);
+        }
+
+        @Test
+        void 개수가_6개_초과면_예외() {
+            // given
+            SignUpRequest request = new SignUpRequest(
+                    "username",  // ✅ 4~50자, 대소문자+숫자 포함
+                    "Aa1!password",     // ✅ 8~50자, 대소문자+숫자+특수문자 포함
+                    "닉네임123",          // ✅ 2~10자, 한글/영문/숫자 포함
+                    20,                 // ✅ 0 이상
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(
+                            new ProfileImageRequest("1", "1"),
+                            new ProfileImageRequest("1", "1"),
+                            new ProfileImageRequest("1", "1"),
+                            new ProfileImageRequest("1", "1"),
+                            new ProfileImageRequest("1", "1"),
+                            new ProfileImageRequest("1", "1"),
+                            new ProfileImageRequest("1", "1")
+                    )
+            );
+
+            // when & then
+            validateFailWithMessage(request);
+        }
+
+        @NullAndEmptySource
+        @ParameterizedTest
+        void 원본_이미지_중_이름이_없는게_있다면_예외(String name) {
+            // given
+            SignUpRequest request = new SignUpRequest(
+                    "username",  // ✅ 4~50자, 대소문자+숫자 포함
+                    "Aa1!password",     // ✅ 8~50자, 대소문자+숫자+특수문자 포함
+                    "닉네임123",          // ✅ 2~10자, 한글/영문/숫자 포함
+                    20,                 // ✅ 0 이상
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(
+                            new ProfileImageRequest("1", "1"),
+                            new ProfileImageRequest(name, "1"),
+                            new ProfileImageRequest("1", "1"),
+                            new ProfileImageRequest("1", "1"),
+                            new ProfileImageRequest("1", "1")
+                    )
+            );
+
+            // when & then
+            validateFailWithMessage(request);
+        }
+
+        @NullAndEmptySource
+        @ParameterizedTest
+        void 블러처리된_이미지_중_이름이_없는게_있다면_예외(String name) {
+            // given
+            SignUpRequest request = new SignUpRequest(
+                    "username",  // ✅ 4~50자, 대소문자+숫자 포함
+                    "Aa1!password",     // ✅ 8~50자, 대소문자+숫자+특수문자 포함
+                    "닉네임123",          // ✅ 2~10자, 한글/영문/숫자 포함
+                    20,                 // ✅ 0 이상
+                    Gender.MALE,        // ✅ NotNull
+                    List.of(
+                            new ProfileImageRequest("1", "1"),
+                            new ProfileImageRequest("1", name),
+                            new ProfileImageRequest("1", "1"),
+                            new ProfileImageRequest("1", "1"),
+                            new ProfileImageRequest("1", "1")
+                    )
+            );
+
+            // when & then
+            validateFailWithMessage(request);
         }
     }
 }
