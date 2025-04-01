@@ -1,9 +1,11 @@
 package cupid.recommend.query;
 
+import static cupid.fixture.MemberFixture.member;
+import static cupid.member.domain.Gender.FEMALE;
+import static cupid.member.domain.Gender.MALE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import cupid.common.value.Point;
-import cupid.member.domain.Gender;
 import cupid.member.domain.Member;
 import cupid.member.domain.MemberRepository;
 import cupid.member.domain.RecentActiveInfo;
@@ -13,7 +15,6 @@ import cupid.recommend.query.param.RecommendWithoutDistanceQueryParam;
 import cupid.support.ApplicationTest;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -31,15 +32,16 @@ class RecommendQueryTest extends ApplicationTest {
 
     @Autowired
     private MemberRepository memberRepository;
-    private Member member1 = new Member(UUID.randomUUID().toString(), "p", "1", 10, Gender.FEMALE);
-    private Member member2 = new Member(UUID.randomUUID().toString(), "p", "1", 20, Gender.FEMALE);
-    private Member member3 = new Member(UUID.randomUUID().toString(), "p", "1", 30, Gender.FEMALE);
-    private Member member4 = new Member(UUID.randomUUID().toString(), "p", "1", 40, Gender.FEMALE);
-    private Member member5 = new Member(UUID.randomUUID().toString(), "p", "1", 50, Gender.FEMALE);
-    private Member member6 = new Member(UUID.randomUUID().toString(), "p", "1", 10, Gender.MALE);
-    private Member member7 = new Member(UUID.randomUUID().toString(), "p", "1", 20, Gender.MALE);
-    private Member member8 = new Member(UUID.randomUUID().toString(), "p", "1", 30, Gender.MALE);
-    private Member member9 = new Member(UUID.randomUUID().toString(), "p", "1", 40, Gender.MALE);
+
+    private Member member1 = member(10, FEMALE);
+    private Member member2 = member(20, FEMALE);
+    private Member member3 = member(30, FEMALE);
+    private Member member4 = member(40, FEMALE);
+    private Member member5 = member(50, FEMALE);
+    private Member member6 = member(10, MALE);
+    private Member member7 = member(20, MALE);
+    private Member member8 = member(30, MALE);
+    private Member member9 = member(40, MALE);
 
     @BeforeEach
     void setUp() {
@@ -70,7 +72,7 @@ class RecommendQueryTest extends ApplicationTest {
         // given
         RecommendQueryParam param = new RecommendQueryParam(
                 100L,
-                Gender.FEMALE,
+                FEMALE,
                 30,
                 20,
                 false,
@@ -93,7 +95,7 @@ class RecommendQueryTest extends ApplicationTest {
         // given
         RecommendQueryParam param = new RecommendQueryParam(
                 100L,
-                Gender.FEMALE,
+                FEMALE,
                 29,
                 20,
                 false,
@@ -116,7 +118,7 @@ class RecommendQueryTest extends ApplicationTest {
         // given
         RecommendQueryParam param = new RecommendQueryParam(
                 100L,
-                Gender.MALE,
+                MALE,
                 50,
                 50,
                 false,
@@ -139,7 +141,7 @@ class RecommendQueryTest extends ApplicationTest {
         // given
         RecommendQueryParam param = new RecommendQueryParam(
                 100L,
-                Gender.FEMALE,
+                FEMALE,
                 50,
                 50,
                 false,
@@ -162,7 +164,7 @@ class RecommendQueryTest extends ApplicationTest {
         // given
         RecommendQueryParam param = new RecommendQueryParam(
                 100L,
-                Gender.FEMALE,
+                FEMALE,
                 50,
                 50,
                 false,
@@ -185,7 +187,7 @@ class RecommendQueryTest extends ApplicationTest {
         // given
         RecommendWithoutDistanceQueryParam param = new RecommendWithoutDistanceQueryParam(
                 100L,
-                Gender.FEMALE,
+                FEMALE,
                 100,
                 0,
                 false,

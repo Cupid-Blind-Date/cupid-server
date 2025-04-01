@@ -12,6 +12,7 @@ import cupid.member.domain.Gender;
 import cupid.member.domain.Member;
 import cupid.member.domain.MemberRepository;
 import cupid.member.domain.RecentActiveInfo;
+import cupid.member.domain.RepresentativeProfileImage;
 import cupid.support.ApplicationTest;
 import java.time.LocalDateTime;
 import java.util.concurrent.CountDownLatch;
@@ -44,7 +45,7 @@ class RecommendEventListenerTest extends ApplicationTest {
     @Test
     void 필터_업데이트_이벤트를_받아_회원_추천_캐시를_업데이트한다() throws InterruptedException {
         // given
-        Member member = new Member("", "", "", 20, Gender.FEMALE);
+        Member member = new Member("", "", "", 20, Gender.FEMALE, new RepresentativeProfileImage("1", "2"));
         member.updateRecentActiveInfo(new RecentActiveInfo(LocalDateTime.now(), new Point()));
         given(memberRepository.getById(1L))
                 .willReturn(member);

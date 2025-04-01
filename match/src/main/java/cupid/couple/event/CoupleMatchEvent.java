@@ -1,7 +1,8 @@
-package cupid.common.event;
+package cupid.couple.event;
 
 import static lombok.AccessLevel.PROTECTED;
 
+import cupid.common.event.DomainEvent;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Getter;

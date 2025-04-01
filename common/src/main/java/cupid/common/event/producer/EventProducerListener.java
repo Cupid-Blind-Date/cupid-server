@@ -19,7 +19,7 @@ public class EventProducerListener {
 
     // 트랜잭션 커밋 후, 메세지 브로커에 메시지 전송
     @Async(EVENT_ASYNC_TASK_EXECUTOR)
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @TransactionalEventListener(value = DomainEvent.class, phase = TransactionPhase.AFTER_COMMIT)
     public void publishEvent(DomainEvent domainEvent) {
         Long eventId = domainEvent.getId();
         String topic = domainEvent.getTopic();
