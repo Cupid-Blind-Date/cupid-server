@@ -59,6 +59,11 @@ create table if not exists member
     constraint UK_member_blurred_image_name unique (blurred_image_name)
 );
 
+-- 거리 조건 없이 쿼리하는 경우
+CREATE INDEX idx_member_gender_age_last_active_date ON member (age, gender, last_active_date);
+CREATE INDEX idx_member_gender_last_active_date_age ON member (gender, last_active_date, age);
+
+-- 거리 조건과 함께 쿼리하는 경우
 CREATE INDEX idx_member_gender_lat_lng_last_active_date_age ON member (gender, latitude, longitude, last_active_date, age);
 CREATE INDEX idx_member_age_gender_lat_lng_last_active_date ON member (age, gender, latitude, longitude, last_active_date);
 
