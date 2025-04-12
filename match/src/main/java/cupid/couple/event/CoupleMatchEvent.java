@@ -3,6 +3,7 @@ package cupid.couple.event;
 import static lombok.AccessLevel.PROTECTED;
 
 import cupid.common.event.DomainEvent;
+import cupid.common.kafka.topic.KafkaTopic;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -14,14 +15,12 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("CoupleMatchEvent")
 public class CoupleMatchEvent extends DomainEvent {
 
-    public static final String COUPLE_MATCH_EVENT_TOPIC = "CoupleMatchEvent";
-
     public CoupleMatchEvent(Long targetDomainId) {
         super(targetDomainId);
     }
 
     @Override
     public String getTopic() {
-        return COUPLE_MATCH_EVENT_TOPIC;
+        return KafkaTopic.COUPLE_MATCH_EVENT_TOPIC;
     }
 }

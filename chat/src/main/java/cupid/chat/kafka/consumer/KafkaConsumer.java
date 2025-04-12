@@ -12,8 +12,8 @@ import cupid.chat.kafka.producer.SendChatProducer;
 import cupid.chat.kafka.topic.ReadChatTopicMessage;
 import cupid.chat.kafka.topic.SendChatTopicMessage;
 import cupid.chat.presentation.websocket.StompChatSender;
-import cupid.common.event.CoupleMatchEvent;
 import cupid.common.kafka.KafkaDomainEventMessage;
+import cupid.common.kafka.topic.KafkaTopic;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -27,11 +27,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaConsumer {
 
-    private final CoupleClient client;
+    private final CoupleClient coupleClient;
     private final ChatRoomService chatRoomService;
     private final StompChatSender stompChatSender;
 
-    @KafkaListener(topics = CoupleMatchEvent.COUPLE_MATCH_EVENT_TOPIC, containerFactory = DOMAIN_EVENT_CONTAINER_FACTORY)
+    @KafkaListener(topics = KafkaTopic.COUPLE_MATCH_EVENT_TOPIC, containerFactory = DOMAIN_EVENT_CONTAINER_FACTORY)
     public void consumeCoupleMatchEvent(
             KafkaDomainEventMessage message,
             Acknowledgment ack,
@@ -43,7 +43,7 @@ public class KafkaConsumer {
                 message.uuid(),
                 offset
         );
-        GetCoupleResponse couple = client.getCoupleById(coupleId);
+        GetCoupleResponse couple = coupleClient.getCoupleById(coupleId);
         chatRoomService.createChatRoom(couple.higherId(), couple.lowerId());
         ack.acknowledge();
         log.info("Successfully consume couple match event topic. coupleId:{}, uuid: {}, offset: {}",

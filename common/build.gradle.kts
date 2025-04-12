@@ -47,9 +47,14 @@ dependencies {
     // Flyway - MySQL 8.X 버전이거나, MariaDB를 사용하는 경우
     implementation("org.flywaydb:flyway-mysql")
 
-    testFixturesImplementation("org.springframework.boot:spring-boot-starter-test")
-    testFixturesRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
     // Fixture Monkey
     testFixturesApi("com.navercorp.fixturemonkey:fixture-monkey-starter:1.1.9")
+
+    annotationProcessor("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testFixturesImplementation("org.springframework.boot:spring-boot-starter-test")
+    testFixturesRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }

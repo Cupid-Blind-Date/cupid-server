@@ -22,8 +22,8 @@ public record RecommendByIdsQueryParam(
                 memberIds,
                 filter.getDistanceCondition().getMaxIncludeDistanceFromMe(),
                 filter.getDistanceCondition().isPermitExcessDistance(),
-                point.getLatitude(),
-                point.getLongitude()
+                point.getLatitude().doubleValue(),
+                point.getLongitude().doubleValue()
         );
     }
 }

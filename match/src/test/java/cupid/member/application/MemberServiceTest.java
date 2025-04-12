@@ -12,6 +12,7 @@ import cupid.member.application.command.SignUpCommand;
 import cupid.member.domain.MemberRepository;
 import cupid.member.domain.RecentActiveInfo;
 import cupid.support.ApplicationTest;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -112,7 +113,7 @@ class MemberServiceTest extends ApplicationTest {
         // then
         RecentActiveInfo updated = memberRepository.getById(memberId).getRecentActiveInfo();
         assertThat(updated.getLastActiveDate()).isNotNull();
-        assertThat(updated.getPoint().getLatitude()).isEqualTo(10.0);
-        assertThat(updated.getPoint().getLongitude()).isEqualTo(-10.0);
+        assertThat(updated.getPoint().getLatitude()).isEqualTo(BigDecimal.valueOf(10.0));
+        assertThat(updated.getPoint().getLongitude()).isEqualTo(BigDecimal.valueOf(-10.0));
     }
 }

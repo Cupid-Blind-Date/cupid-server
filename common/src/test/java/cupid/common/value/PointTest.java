@@ -28,7 +28,7 @@ class PointTest {
     @Test
     void 널_좌표_테스트() {
         Point valid = new Point(37.0, 127.0);
-        Point invalid = new Point(null, null);
+        Point invalid = new Point();
 
         assertThat(valid.distance(null)).isNull();
         assertThat(valid.distance(invalid)).isNull();

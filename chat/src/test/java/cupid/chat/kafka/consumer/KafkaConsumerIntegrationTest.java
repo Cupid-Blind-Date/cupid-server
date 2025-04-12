@@ -13,9 +13,11 @@ import cupid.chat.domain.ChatRoomRepository;
 import cupid.chat.kafka.producer.SendChatProducer;
 import cupid.chat.kafka.topic.SendChatTopicMessage;
 import cupid.chat.presentation.websocket.channel.ChattingChannelConfig.SendChatChannel;
-import cupid.common.event.CoupleMatchEvent;
-import cupid.common.event.publisher.DomainEventPublisher;
+import cupid.common.kafka.KafkaDomainEventMessage;
+import cupid.common.kafka.producer.KafkaProducer;
+import cupid.common.kafka.topic.KafkaTopic;
 import cupid.support.ApplicationWithKafkaTest;
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
@@ -33,10 +35,10 @@ class KafkaConsumerIntegrationTest extends ApplicationWithKafkaTest {
     private ChatRoomRepository chatRoomRepository;
 
     @Autowired
-    private DomainEventPublisher domainEventPublisher;
+    private KafkaProducer<KafkaDomainEventMessage> kafkaProducer;
 
     @MockitoBean
-    private CoupleClient client;
+    private CoupleClient coupleClient;
 
     @MockitoBean
     private SimpMessagingTemplate messagingTemplate;
@@ -47,12 +49,13 @@ class KafkaConsumerIntegrationTest extends ApplicationWithKafkaTest {
     @Test
     void 커플_매치_이벤트를_받아_채팅방을_생성한다() {
         // given
-        given(client.getCoupleById(1L))
+        given(coupleClient.getCoupleById(1L))
                 .willReturn(new GetCoupleResponse(1L, 2L, 1L));
 
         // when
-        domainEventPublisher.publishWithTx(new CoupleMatchEvent(1L));
-        waitingConsumeTopicSync(CoupleMatchEvent.COUPLE_MATCH_EVENT_TOPIC);
+        kafkaProducer.produce(KafkaTopic.COUPLE_MATCH_EVENT_TOPIC,
+                new KafkaDomainEventMessage(1L, UUID.randomUUID().toString(), 1L));
+        waitingConsumeTopicSync(KafkaTopic.COUPLE_MATCH_EVENT_TOPIC);
 
         // then
         assertThat(chatRoomRepository.findAll()).hasSize(1);

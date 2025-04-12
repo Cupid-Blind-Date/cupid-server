@@ -2,6 +2,7 @@ package cupid.common.value;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Embeddable;
+import java.math.BigDecimal;
 import lombok.Getter;
 
 @Getter
@@ -11,15 +12,20 @@ public class Point {
     private static final int EARTH_RADIUS_KM = 6371;
 
     // 위도
-    private Double latitude;
+    private BigDecimal latitude;
 
     // 경도
-    private Double longitude;
+    private BigDecimal longitude;
 
     public Point() {
     }
 
     public Point(Double latitude, Double longitude) {
+        this.latitude = BigDecimal.valueOf(latitude);
+        this.longitude = BigDecimal.valueOf(longitude);
+    }
+
+    public Point(BigDecimal latitude, BigDecimal longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -34,10 +40,10 @@ public class Point {
             return null;
         }
 
-        double lat1Rad = Math.toRadians(this.latitude);
-        double lat2Rad = Math.toRadians(point.getLatitude());
-        double deltaLat = Math.toRadians(point.getLatitude() - this.latitude);
-        double deltaLng = Math.toRadians(point.getLongitude() - this.longitude);
+        double lat1Rad = Math.toRadians(this.latitude.doubleValue());
+        double lat2Rad = Math.toRadians(point.getLatitude().doubleValue());
+        double deltaLat = Math.toRadians(point.getLatitude().doubleValue() - this.latitude.doubleValue());
+        double deltaLng = Math.toRadians(point.getLongitude().doubleValue() - this.longitude.doubleValue());
 
         double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
                    Math.cos(lat1Rad) * Math.cos(lat2Rad) *

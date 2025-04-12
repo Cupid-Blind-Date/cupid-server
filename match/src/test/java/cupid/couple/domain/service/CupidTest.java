@@ -7,19 +7,20 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import cupid.common.event.DomainEvent;
-import cupid.common.event.publisher.DomainEventPublisher;
 import cupid.couple.domain.Arrow;
 import cupid.couple.domain.ArrowRepository;
 import cupid.couple.domain.Couple;
 import cupid.couple.domain.CoupleRepository;
 import cupid.couple.domain.LikeType;
+import cupid.couple.domain.service.Cupid.TransactionalCupid;
 import cupid.support.UnitTest;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataIntegrityViolationException;
 
 @DisplayName("Cupid 은(는)")
@@ -27,8 +28,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 @DisplayNameGeneration(ReplaceUnderscores.class)
 class CupidTest extends UnitTest {
 
-    @InjectMocks
     private Cupid cupid;
+    private TransactionalCupid transactionalCupid;
 
     @Mock
     private ArrowRepository arrowRepository;
@@ -37,10 +38,16 @@ class CupidTest extends UnitTest {
     private CoupleRepository coupleRepository;
 
     @Mock
-    private DomainEventPublisher domainEventPublisher;
+    private ApplicationEventPublisher applicationEventPublisher;
 
     private Long myId = 1L;
     private Long targetId = 2L;
+
+    @BeforeEach
+    void setUp() {
+        transactionalCupid = new TransactionalCupid(coupleRepository, applicationEventPublisher);
+        cupid = new Cupid(arrowRepository, transactionalCupid);
+    }
 
     @Test
     void 상대방이_나에게_좋아요를_보낸_상태에서_나도_상대방을_좋아하면_커플을_탄생시킨다() {
@@ -54,8 +61,8 @@ class CupidTest extends UnitTest {
 
         // then
         assertThat(result).isEqualTo(MatchResult.SUCCESS);
-        verify(domainEventPublisher, times(1))
-                .publishWithTx(any(DomainEvent.class));
+        verify(applicationEventPublisher, times(1))
+                .publishEvent(any(DomainEvent.class));
     }
 
     @Test
