@@ -1,6 +1,7 @@
 package cupid.chat.domain;
 
 import static cupid.chat.exception.ChatExceptionCode.NOT_COUNT_CHAT_MESSAGE;
+import static org.springframework.transaction.annotation.Isolation.READ_COMMITTED;
 
 import cupid.common.exception.ApplicationException;
 import org.springframework.data.domain.Page;
@@ -33,13 +34,14 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
             """)
     Page<ChatMessage> findAllByRoomAndTargetAndIdBefore(Long chatRoomId, Long lastReadId, Pageable pageable);
 
-    @Transactional
+    @Transactional(isolation = READ_COMMITTED)
     @Modifying
     @Query("""
             UPDATE ChatMessage m
             SET m.read = TRUE
             WHERE m.chatRoomId = :chatRoomId
                 AND m.targetId = :memberId
+                AND m.read = FALSE
             """)
     void updateReadAllMessage(Long chatRoomId, Long memberId);
 }
