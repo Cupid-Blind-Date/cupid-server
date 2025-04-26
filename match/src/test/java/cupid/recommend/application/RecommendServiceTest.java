@@ -73,7 +73,7 @@ class RecommendServiceTest extends ApplicationTest {
     }
 
     @Test
-    void 추천_시_캐시에_값이_있다면_캐시를_조회한다() {
+    void 추천_시_캐시에_값이_있으며_거리정보가_없는_경우_캐시의_값을_반환한다() {
         // given
         recommendCacheManager.update(1L, new ArrayList<>(List.of(member1.getId(), member2.getId())));
 
@@ -83,6 +83,53 @@ class RecommendServiceTest extends ApplicationTest {
         // then
         assertThat(recommend).isPresent();
         assertThat(recommend.get().id()).isIn(member1.getId(), member2.getId());
+    }
+
+    @Test
+    void 추천_시_캐시에_값이_있으며_거리정보가_있는_경우_캐시에_있는_값들_중에서_거리필터에_부합하는_회원만_조회한다() {
+        // given
+        recommendCacheManager.update(1L, new ArrayList<>(List.of(member1.getId(), member2.getId())));
+        given(filterRepository.getByMemberId(1L))
+                .willReturn(new Filter(1L,
+                                new AgeCondition(10, 20, true),
+                                new DistanceCondition(10, true),
+                                GenderCondition.ONLY_MALE
+                        )
+                );
+        given(recommendQuery.findRecommendedByIdsIn(any()))
+                .willReturn(new ArrayList<>(List.of(member1.getId())));
+
+        // when
+        Optional<RecommendedProfile> recommend = recommendService.recommend(1L, new Point(1.1, 2.2));
+
+        // then
+        assertThat(recommend).isPresent();
+        assertThat(recommend.get().id()).isIn(member1.getId(), member2.getId());
+    }
+
+    @Test
+    void 추천_시_캐시에_값이_있으나_거리필터에_부합하는_회원이_캐시_내에_없다면_DB에서_조회한다() {
+        // given
+        recommendCacheManager.update(1L, new ArrayList<>(List.of(member1.getId(), member2.getId())));
+        given(filterRepository.getByMemberId(1L))
+                .willReturn(new Filter(1L,
+                                new AgeCondition(10, 20, true),
+                                new DistanceCondition(10, true),
+                                GenderCondition.ONLY_MALE
+                        )
+                );
+        given(recommendQuery.findRecommendedByIdsIn(any()))
+                .willReturn(new ArrayList<>());
+        given(recommendQuery.findRecommended(any()))
+                .willReturn(new ArrayList<>(List.of(member3.getId())));
+
+
+        // when
+        Optional<RecommendedProfile> recommend = recommendService.recommend(1L, new Point(1.1, 2.2));
+
+        // then
+        assertThat(recommend).isPresent();
+        assertThat(recommend.get().id()).isEqualTo(member3.getId());
     }
 
     @Test

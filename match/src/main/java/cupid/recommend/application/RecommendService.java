@@ -53,8 +53,16 @@ public class RecommendService {
         // 캐시에 값이 있고 거리정보가 필요한 경우
         Filter filter = filterRepository.getByMemberId(memberId);
         RecommendByIdsQueryParam param = RecommendByIdsQueryParam.of(recommendedMemberIds, filter, point);
+
         // 거리조건 재확인하여 부합하는 대상만 남김
         recommendedMemberIds = recommendQuery.findRecommendedByIdsIn(param);
+
+        // 캐시 내에 있는 값들 중 거리정보에 부합하는 회원이 없다면
+        if (recommendedMemberIds.isEmpty()) {
+            recommendedMemberIds = reloadCache(memberId, point);
+            return recommendRandom(memberId, recommendedMemberIds, point);
+        }
+
         return recommendRandom(memberId, recommendedMemberIds, point);
     }
 
