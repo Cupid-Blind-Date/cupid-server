@@ -5,13 +5,11 @@ import cupid.chat.presentation.websocket.channel.ChattingChannelConfig.ReadChatC
 import cupid.chat.presentation.websocket.channel.ChattingChannelConfig.SendChatChannel;
 import cupid.chat.presentation.websocket.exception.WebsocketExceptionHandler;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.task.support.TaskExecutorAdapter;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -76,7 +74,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Bean
     public Executor websocketVirtualThreadTaskExecutor() {
-        ExecutorService concurrentExecutor = Executors.newVirtualThreadPerTaskExecutor();
-        return new TaskExecutorAdapter(concurrentExecutor);
+        SimpleAsyncTaskExecutor executor = new SimpleAsyncTaskExecutor();
+        executor.setThreadNamePrefix("CHAT_VP-");
+        executor.setVirtualThreads(true);
+        executor.setTaskTerminationTimeout(30000);  // 30 초
+        return executor;
     }
 }
